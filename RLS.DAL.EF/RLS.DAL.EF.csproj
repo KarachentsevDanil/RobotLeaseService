@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="1.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RLS.DAL.EF.Shared\RLS.DAL.EF.Shared.csproj" />
+    <ProjectReference Include="..\RLS.DAL.Shared\RLS.DAL.Shared.csproj" />
+    <ProjectReference Include="..\RLS.DAL\RLS.DAL.csproj" />
+    <ProjectReference Include="..\RLS.Domain.Shared\RLS.Domain.Shared.csproj" />
+    <ProjectReference Include="..\RLS.Domain\RLS.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
