@@ -7,6 +7,8 @@ using RLS.DAL.UnitOfWork.Contracts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.DAL.EF.Repositories.Rentals;
+using RLS.DAL.EF.Repositories.Users;
 
 namespace RLS.DAL.EF.UnitOfWork
 {

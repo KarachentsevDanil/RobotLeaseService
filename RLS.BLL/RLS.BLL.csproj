@@ -16,9 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Rentals\" />
-    <Folder Include="DTOs\Users\" />
-    <Folder Include="DTOs\Robots\" />
+    <Folder Include="Services\Contracts\Rentals\" />
   </ItemGroup>
 
 </Project>

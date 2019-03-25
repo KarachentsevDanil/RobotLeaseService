@@ -4,6 +4,7 @@ using RLS.Domain.Shared.Models;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.Domain.FilterParams.Robots;
 
 namespace RLS.DAL.Repositories.Contracts.Robots
 {

@@ -6,7 +6,7 @@ using RLS.Domain.Users;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RLS.DAL.EF.Repositories.Robots
+namespace RLS.DAL.EF.Repositories.Users
 {
     public class UserRepository : BaseRepository<int, User, RentalDbContext>, IUserRepository
     {

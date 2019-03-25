@@ -3,7 +3,7 @@ using RLS.DAL.EF.Shared.Repositories;
 using RLS.DAL.Repositories.Contracts.Rentals;
 using RLS.Domain.Rentals;
 
-namespace RLS.DAL.EF.Repositories.Robots
+namespace RLS.DAL.EF.Repositories.Rentals
 {
     public class RentalRobotRepository : BaseRepository<int, RentalRobot, RentalDbContext>, IRentalRobotRepository
     {

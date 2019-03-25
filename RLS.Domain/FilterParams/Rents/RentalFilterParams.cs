@@ -1,7 +1,8 @@
 ﻿using RLS.Domain.Enums;
-using RLS.Domain.Shared.Shared.Models;
+using RLS.Domain.Rentals;
+using RLS.Domain.Shared.Models;
 
-namespace RLS.Domain.Rentals
+namespace RLS.Domain.FilterParams.Rents
 {
     public class RentalFilterParams : BaseFilterParams<Rental>
     {

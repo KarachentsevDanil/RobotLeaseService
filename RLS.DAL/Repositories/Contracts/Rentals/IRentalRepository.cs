@@ -3,6 +3,7 @@ using RLS.Domain.Rentals;
 using RLS.Domain.Shared.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.Domain.FilterParams.Rents;
 
 namespace RLS.DAL.Repositories.Contracts.Rentals
 {

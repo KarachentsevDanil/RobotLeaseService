@@ -1,8 +1,9 @@
-﻿using RLS.Domain.Shared.Shared.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using RLS.Domain.Robots;
+using RLS.Domain.Shared.Models;
 
-namespace RLS.Domain.Robots
+namespace RLS.Domain.FilterParams.Robots
 {
     public class RobotFilterParams : BaseFilterParams<Robot>
     {

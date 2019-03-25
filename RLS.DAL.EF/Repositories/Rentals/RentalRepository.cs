@@ -4,6 +4,7 @@ using RLS.DAL.EF.Context;
 using RLS.DAL.EF.Shared.Extensions;
 using RLS.DAL.EF.Shared.Repositories;
 using RLS.DAL.Repositories.Contracts.Rentals;
+using RLS.Domain.FilterParams.Rents;
 using RLS.Domain.Rentals;
 using RLS.Domain.Shared.Models;
 using System;
@@ -13,7 +14,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RLS.DAL.EF.Repositories.Robots
+namespace RLS.DAL.EF.Repositories.Rentals
 {
     public class RentalRepository : BaseRepository<int, Rental, RentalDbContext>, IRentalRepository
     {

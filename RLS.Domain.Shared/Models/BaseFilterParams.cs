@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace RLS.Domain.Shared.Shared.Models
+namespace RLS.Domain.Shared.Models
 {
     public class BaseFilterParams<TEntity> where TEntity : class
     {

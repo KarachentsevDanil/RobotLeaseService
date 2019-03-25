@@ -12,6 +12,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.Domain.FilterParams.Robots;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {

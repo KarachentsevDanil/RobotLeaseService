@@ -1,4 +1,4 @@
-﻿using RLS.Domain.Shared.Shared.Models;
+﻿using RLS.Domain.Shared.Models;
 
 namespace RLS.Domain.Robots
 {
