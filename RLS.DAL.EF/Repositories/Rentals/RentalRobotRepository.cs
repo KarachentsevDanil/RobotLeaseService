@@ -1,5 +1,4 @@
 ﻿using RLS.DAL.EF.Context;
-using RLS.DAL.EF.Shared.Repositories;
 using RLS.DAL.Repositories.Contracts.Rentals;
 using RLS.Domain.Rentals;
 

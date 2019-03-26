@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RLS.DAL.Shared\RLS.DAL.Shared.csproj" />
+    <Folder Include="Context\Mappings\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 </Project>

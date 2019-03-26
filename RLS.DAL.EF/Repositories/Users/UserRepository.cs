@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RLS.DAL.EF.Context;
-using RLS.DAL.EF.Shared.Repositories;
 using RLS.DAL.Repositories.Contracts.Users;
 using RLS.Domain.Users;
 using System.Threading;

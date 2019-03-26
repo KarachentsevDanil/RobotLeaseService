@@ -1,9 +1,8 @@
-﻿using RLS.DAL.Shared.Repositories.Contracts;
-using RLS.Domain.Robots;
-using RLS.Domain.Shared.Models;
+﻿using RLS.Domain.Robots;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.Domain.Models;
 
 namespace RLS.DAL.Repositories.Contracts.Robots
 {

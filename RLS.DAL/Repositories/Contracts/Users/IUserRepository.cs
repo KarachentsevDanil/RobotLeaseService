@@ -1,5 +1,4 @@
-﻿using RLS.DAL.Shared.Repositories.Contracts;
-using RLS.Domain.Users;
+﻿using RLS.Domain.Users;
 using System.Threading;
 using System.Threading.Tasks;
 

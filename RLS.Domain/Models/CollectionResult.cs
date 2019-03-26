@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RLS.Domain.Shared.Models
+namespace RLS.Domain.Models
 {
     public class CollectionResult<TEntity> where TEntity : class
     {

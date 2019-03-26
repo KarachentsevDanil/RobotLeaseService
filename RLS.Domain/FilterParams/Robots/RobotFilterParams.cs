@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using RLS.Domain.Models;
 using RLS.Domain.Robots;
-using RLS.Domain.Shared.Models;
 
 namespace RLS.Domain.FilterParams.Robots
 {

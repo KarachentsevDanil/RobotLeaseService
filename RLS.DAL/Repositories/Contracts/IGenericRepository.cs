@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RLS.DAL.Shared.Repositories.Contracts
+namespace RLS.DAL.Repositories.Contracts
 {
     public interface IGenericRepository<TId, TEntity>
         where TEntity : class

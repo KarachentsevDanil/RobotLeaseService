@@ -11,12 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RLS.DAL.Shared\RLS.DAL.Shared.csproj" />
     <ProjectReference Include="..\RLS.DAL\RLS.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Contracts\Rentals\" />
   </ItemGroup>
 
 </Project>

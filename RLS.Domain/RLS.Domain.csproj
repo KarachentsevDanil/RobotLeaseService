@@ -5,15 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FilterParams\Users\**" />
+    <EmbeddedResource Remove="FilterParams\Users\**" />
+    <None Remove="FilterParams\Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RLS.Domain.Shared\RLS.Domain.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="FilterParams\Users\" />
   </ItemGroup>
 
 </Project>

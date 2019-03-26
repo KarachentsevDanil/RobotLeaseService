@@ -1,17 +1,16 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using RLS.DAL.EF.Context;
-using RLS.DAL.EF.Shared.Extensions;
-using RLS.DAL.EF.Shared.Repositories;
 using RLS.DAL.Repositories.Contracts.Robots;
 using RLS.Domain.Robots;
-using RLS.Domain.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.DAL.EF.Extensions;
+using RLS.Domain.Models;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {

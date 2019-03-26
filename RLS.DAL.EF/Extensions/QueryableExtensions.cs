@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace RLS.DAL.EF.Shared.Extensions
+namespace RLS.DAL.EF.Extensions
 {
     public static class QueryableExtensions
     {

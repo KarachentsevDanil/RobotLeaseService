@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RLS.DAL.Shared\RLS.DAL.Shared.csproj" />
-    <ProjectReference Include="..\RLS.Domain.Shared\RLS.Domain.Shared.csproj" />
     <ProjectReference Include="..\RLS.Domain\RLS.Domain.csproj" />
   </ItemGroup>
 

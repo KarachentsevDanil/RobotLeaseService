@@ -1,6 +1,6 @@
 ﻿using RLS.Domain.Enums;
+using RLS.Domain.Models;
 using RLS.Domain.Rentals;
-using RLS.Domain.Shared.Models;
 
 namespace RLS.Domain.FilterParams.Rents
 {

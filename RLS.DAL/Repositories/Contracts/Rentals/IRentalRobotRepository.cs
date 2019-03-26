@@ -1,5 +1,4 @@
-﻿using RLS.DAL.Shared.Repositories.Contracts;
-using RLS.Domain.Rentals;
+﻿using RLS.Domain.Rentals;
 
 namespace RLS.DAL.Repositories.Contracts.Rentals
 {

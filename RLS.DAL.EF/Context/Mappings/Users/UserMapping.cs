@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RLS.DAL.EF.Shared.Context.Mappings.Contract;
+using RLS.DAL.EF.Context.Mappings.Contract;
 using RLS.Domain.Users;
 
 namespace RLS.DAL.EF.Context.Mappings.Users

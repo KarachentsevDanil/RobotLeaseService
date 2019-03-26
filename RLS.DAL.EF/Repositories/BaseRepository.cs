@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RLS.DAL.Shared.Repositories.Contracts;
+using RLS.DAL.Repositories.Contracts;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RLS.DAL.EF.Shared.Repositories
+namespace RLS.DAL.EF.Repositories
 {
     public class BaseRepository<TId, TEntity, TContext> : IGenericRepository<TId, TEntity>
         where TEntity : class, new()
