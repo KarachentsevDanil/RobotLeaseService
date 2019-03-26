@@ -1,8 +1,8 @@
-﻿using RLS.Domain.Rentals;
+﻿using RLS.Domain.FilterParams.Rents;
+using RLS.Domain.Models;
+using RLS.Domain.Rentals;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.Domain.FilterParams.Rents;
-using RLS.Domain.Models;
 
 namespace RLS.DAL.Repositories.Contracts.Rentals
 {
