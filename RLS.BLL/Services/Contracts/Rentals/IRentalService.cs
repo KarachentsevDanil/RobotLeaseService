@@ -12,5 +12,6 @@ namespace RLS.BLL.Services.Contracts.Rentals
             RentalFilterParamsDto filterParams,
             CancellationToken ct = default);
 
+        Task<GetRentalDto> CreateRentalAsync(CreateRentalDto item, CancellationToken ct = default);
     }
 }

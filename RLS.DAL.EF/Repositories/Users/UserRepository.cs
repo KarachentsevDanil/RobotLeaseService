@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RLS.DAL.EF.Repositories.Users
 {
-    public class UserRepository : BaseRepository<int, User, RentalDbContext>, IUserRepository
+    public class UserRepository : BaseRepository<string, User, RentalDbContext>, IUserRepository
     {
         public UserRepository(RentalDbContext context) : base(context)
         {
