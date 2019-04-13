@@ -13,5 +13,7 @@ namespace RLS.BLL.Services.Contracts.Rentals
             CancellationToken ct = default);
 
         Task<GetRentalDto> CreateRentalAsync(CreateRentalDto item, CancellationToken ct = default);
+
+        Task<GetRentalDto> GetRentalAsync(int id, CancellationToken ct = default);
     }
 }

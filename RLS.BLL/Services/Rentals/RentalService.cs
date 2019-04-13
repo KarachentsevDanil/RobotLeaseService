@@ -47,5 +47,12 @@ namespace RLS.BLL.Services.Rentals
 
             return _mapper.Map<GetRentalDto>(newItem);
         }
+
+        public async Task<GetRentalDto> GetRentalAsync(int id, CancellationToken ct = default)
+        {
+            var result = await _unitOfWork.RentalRepository.GetAsync(id);
+
+            return _mapper.Map<GetRentalDto>(result);
+        }
     }
 }
