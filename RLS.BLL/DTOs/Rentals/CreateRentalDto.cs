@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RLS.BLL.DTOs.Rentals
 {
@@ -7,5 +8,9 @@ namespace RLS.BLL.DTOs.Rentals
         public string UserId { get; set; }
 
         public IEnumerable<CreateRentalRobotDto> Robots { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
     }
 }

@@ -25,8 +25,8 @@ namespace RLS.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCompaniesAsync([FromQuery] RobotCompanyFilterParamsDto filterParams)
         {
-            var comanies = await _robotCompanyService.GetCompaniesByFilterParamsAsync(filterParams);
-            return Json(JsonResultData.Success(comanies));
+            var companies = await _robotCompanyService.GetCompaniesByFilterParamsAsync(filterParams);
+            return Json(JsonResultData.Success(companies));
         }
 
         [HttpGet("{id}")]
@@ -52,7 +52,7 @@ namespace RLS.WebApi.Controllers
         }
 
         [HttpDelete("robot-companies/{term}")]
-        public async Task<ActionResult> GetRobotCompanysByTermAsync(string term)
+        public async Task<ActionResult> GetRobotCompaniesByTermAsync(string term)
         {
             var companies = await _robotCompanyService.GetRobotCompaniesByTermAsync(term);
             return Json(JsonResultData.Success(companies));

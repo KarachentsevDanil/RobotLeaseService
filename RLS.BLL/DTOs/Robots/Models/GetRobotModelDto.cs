@@ -11,6 +11,8 @@ namespace RLS.BLL.DTOs.Robots.Models
 
         public string Description { get; set; }
 
+        public int ReleaseYear { get; set; }
+
         public GetRobotTypeDto Type { get; set; }
 
         public GetRobotCompanyDto Company { get; set; }

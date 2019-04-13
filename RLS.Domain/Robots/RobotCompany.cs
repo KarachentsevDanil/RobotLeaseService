@@ -10,6 +10,8 @@ namespace RLS.Domain.Robots
 
         public string Description { get; set; }
 
+        public string Country { get; set; }
+
         public ICollection<RobotModel> Models { get; set; }
 
         public RobotCompany()

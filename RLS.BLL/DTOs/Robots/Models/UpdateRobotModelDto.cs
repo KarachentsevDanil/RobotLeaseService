@@ -8,6 +8,8 @@
 
         public string Description { get; set; }
 
+        public int ReleaseYear { get; set; }
+
         public int TypeId { get; set; }
 
         public int CompanyId { get; set; }

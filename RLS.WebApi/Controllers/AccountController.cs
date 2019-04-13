@@ -12,6 +12,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using RLS.Domain.Enums;
 
 namespace RLS.WebApi.Controllers
 {
@@ -75,7 +76,8 @@ namespace RLS.WebApi.Controllers
                     UserName = data.Email,
                     Email = data.Email,
                     FirstName = data.FirstName,
-                    LastName = data.LastName
+                    LastName = data.LastName,
+                    Role = Role.User
                 };
 
                 var result = await _userManager.CreateAsync(user, data.Password);
