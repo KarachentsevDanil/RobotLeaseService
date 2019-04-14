@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RLS.BLL.DTOs.FilterParams.Robots;
 using RLS.BLL.DTOs.Robots;
 using RLS.BLL.Services.Contracts.Robots;
+using RLS.Domain.Enums;
 using RLS.WebApi.Models;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,11 +15,11 @@ namespace RLS.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class RobotController : Controller
+    public class RobotController : BaseApiController
     {
         private readonly IRobotService _robotService;
 
-        public RobotController(IRobotService robotService)
+        public RobotController(IRobotService robotService, IMapper mapper) : base(mapper)
         {
             _robotService = robotService;
         }
@@ -25,6 +27,11 @@ namespace RLS.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetRobotsAsync([FromQuery] RobotFilterParamsDto filterParams)
         {
+            if (ApiUser.Role == Role.User)
+            {
+                filterParams.UserId = ApiUser.Id;
+            }
+
             var robots = await _robotService.GetRobotsByFilterParamsAsync(filterParams);
             return Json(JsonResultData.Success(robots));
         }
@@ -33,7 +40,7 @@ namespace RLS.WebApi.Controllers
         public async Task<ActionResult> GetRobotByIdAsync(int id)
         {
             var robot = await _robotService.GetRobotAsync(id);
-            return Json(JsonResultData.Success(robot));
+            return ValidateAccessToEntity(robot.User.Id, robot);
         }
 
         [HttpPost]
@@ -47,8 +54,8 @@ namespace RLS.WebApi.Controllers
         public async Task<ActionResult> UpdateRobotAsync(int id, [FromBody] UpdateRobotDto robot)
         {
             robot.Id = id;
-            var resutl = await _robotService.UpdateRobotAsync(robot);
-            return Json(JsonResultData.Success(resutl));
+            var result = await _robotService.UpdateRobotAsync(robot);
+            return Json(JsonResultData.Success(result));
         }
     }
 }

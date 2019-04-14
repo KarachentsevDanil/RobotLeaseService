@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RLS.BLL.DTOs.FilterParams.Robots;
@@ -13,11 +14,11 @@ namespace RLS.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class RobotTypeController : Controller
+    public class RobotTypeController : BaseApiController
     {
         private readonly IRobotTypeService _robotTypeService;
 
-        public RobotTypeController(IRobotTypeService robotTypeService)
+        public RobotTypeController(IRobotTypeService robotTypeService, IMapper mapper) : base(mapper)
         {
             _robotTypeService = robotTypeService;
         }
@@ -33,7 +34,7 @@ namespace RLS.WebApi.Controllers
         public async Task<ActionResult> GetTypeByIdAsync(int id)
         {
             var type = await _robotTypeService.GetRobotTypeAsync(id);
-            return Json(JsonResultData.Success(type));
+            return NullEntityCheckResponse(type);
         }
 
         [HttpPost]

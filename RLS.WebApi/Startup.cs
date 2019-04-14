@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RLS.BLL.Configurations.MapperProfiles;
 using RLS.DAL.EF.Context;
+using RLS.WebApi.Configurations.MapperProfiles;
 using RLS.WebApi.Extensions;
 
 namespace RLS.WebApi
@@ -40,6 +41,7 @@ namespace RLS.WebApi
 
             var config = new MapperConfiguration(c =>
             {
+                c.AddProfile<RobotLeaseApiMapperProfile>();
                 c.AddProfile<RobotLeaseMapperProfile>();
             });
 

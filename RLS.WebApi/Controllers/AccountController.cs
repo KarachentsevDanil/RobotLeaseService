@@ -88,7 +88,7 @@ namespace RLS.WebApi.Controllers
                 }
             }
 
-            return JsonResultData.Error("User already exists.");
+            return JsonResultData.Error("ApiUser already exists.");
         }
 
         private string GenerateToken(GetUserDto user)
