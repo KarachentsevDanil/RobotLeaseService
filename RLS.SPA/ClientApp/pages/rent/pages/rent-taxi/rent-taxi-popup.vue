@@ -75,16 +75,12 @@ export default {
         endDate: this.endDate
       };
 
-      let result = (await rentService.addRent(data)).data;
+      let result = await rentService.addRent(data);
 
-      if (!result.Data.ErrorMessage) {
-        $(".close-add-popup").click();
-        this.clearForm();
-        this.$noty.success(this.$locale({i: 'rent.rentAdded'}));
-        this.added();
-      }else{
-        this.$noty.error(this.$locale({i: 'rent.rentError'}));          
-      }
+      $(".close-add-popup").click();
+      this.clearForm();
+      this.$noty.success(this.$locale({i: 'rent.rentAdded'}));
+      this.added();
     }
   },
   computed: {

@@ -126,8 +126,6 @@ export default {
     },
     clearForm() {
       this.name = "";
-      this.taxiCompanyId = null;
-      this.taxiTypeId = null;
       this.description = "";
       this.releaseYear = 0;
       this.maximumRangeFlight = 0;

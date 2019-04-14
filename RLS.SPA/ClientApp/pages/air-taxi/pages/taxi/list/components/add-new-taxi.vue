@@ -128,9 +128,6 @@ export default {
   },
   methods: {
     clearForm() {
-      this.taxiCompanyId = null;
-      this.taxiTypeId = null;
-      this.taxiModelId = null;
       this.dailyCosts = 0;
     },
     loadModels() {
