@@ -6,7 +6,7 @@ namespace RLS.WebApi.Models
     {
         public bool IsSuccess { get; set; } = true;
 
-        public string Data { get; set; }
+        public object Data { get; set; }
 
         public string ErrorMessage { get; set; }
 
@@ -14,7 +14,7 @@ namespace RLS.WebApi.Models
         {
             return new JsonResultData
             {
-                Data = JsonConvert.SerializeObject(data ?? string.Empty)
+                Data = data ?? new { }
             };
         }
 

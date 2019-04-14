@@ -19,8 +19,6 @@ namespace RLS.BLL.Services.Contracts.Robots
             RobotModelFilterParamsDto filterParams,
             CancellationToken ct = default);
 
-        Task<IEnumerable<GetRobotModelDto>> GetRobotModelsByTypeAsync(
-            int typeId,
-            CancellationToken ct = default);
+        Task<IEnumerable<GetRobotModelDto>> GetRobotModelsAsync(CancellationToken ct = default);
     }
 }

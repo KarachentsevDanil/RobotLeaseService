@@ -1,7 +1,7 @@
 ﻿using RLS.Domain.Enums;
+using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
-using System.Collections.Generic;
 
 namespace RLS.Domain.Rentals
 {
@@ -19,11 +19,8 @@ namespace RLS.Domain.Rentals
 
         public RentalStatus Status { get; set; }
 
-        public ICollection<RentalRobot> Robots { get; set; }
+        public int RobotId { get; set; }
 
-        public Rental()
-        {
-            Robots = new List<RentalRobot>();
-        }
+        public Robot Robot { get; set; }
     }
 }

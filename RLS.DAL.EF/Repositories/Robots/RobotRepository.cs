@@ -24,6 +24,7 @@ namespace RLS.DAL.EF.Repositories.Robots
         public async Task<CollectionResult<Robot>> GetRobotByFilterParamsAsync(RobotFilterParams filterParams, CancellationToken ct = default)
         {
             IQueryable<Robot> query = DbContext.Robots
+                .Include(x=> x.User)
                 .Include(x=> x.Model)
                 .Include(x=> x.Model.Type)
                 .Include(x=> x.Model.Company)
@@ -37,7 +38,7 @@ namespace RLS.DAL.EF.Repositories.Robots
 
             List<Robot> items = await query
                 .OrderBy(x => x.Model.Name)
-                .WithPagination(filterParams.PageNumber, filterParams.PageSize)
+                .WithPagination(filterParams.Skip, filterParams.Take)
                 .AsNoTracking()
                 .ToListAsync(ct);
 
@@ -78,7 +79,7 @@ namespace RLS.DAL.EF.Repositories.Robots
             if (filterParams.StartDate.HasValue && filterParams.EndDate.HasValue)
             {
                 predicate = predicate.And(t =>
-                    !t.Rentals.Any(r => filterParams.StartDate.Value <= r.Rental.EndDate && filterParams.EndDate.Value >= r.Rental.StartDate));
+                    !t.Rentals.Any(r => filterParams.StartDate.Value <= r.EndDate && filterParams.EndDate.Value >= r.StartDate));
             }
 
             filterParams.Expression = predicate;

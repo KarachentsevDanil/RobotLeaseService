@@ -27,6 +27,8 @@ namespace RLS.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetRentalsAsync([FromQuery] RentalFilterParamsDto filterParams)
         {
+            BuildUserPrincipal();
+
             if (ApiUser.Role == Role.User)
             {
                 filterParams.UserId = ApiUser.Id;
@@ -39,17 +41,19 @@ namespace RLS.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetRentalByIdAsync(int id)
         {
+            BuildUserPrincipal();
             var rental = await _rentalService.GetRentalAsync(id);
-            return ValidateAccessToEntity(rental.User.Id, rental);
+            return ValidateAccessToEntity(rental.Owner.Id, rental);
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateRentalAsync([FromBody] CreateRentalDto rental)
         {
+            BuildUserPrincipal();
             rental.UserId = ApiUser.Id;
 
             var result = await _rentalService.CreateRentalAsync(rental);
-            return StatusCode((int) HttpStatusCode.Created, Json(JsonResultData.Success(result)));
+            return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(result)));
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using RLS.DAL.EF.Context;
+using RLS.DAL.EF.Extensions;
 using RLS.DAL.Repositories.Contracts.Robots;
+using RLS.Domain.FilterParams.Robots;
+using RLS.Domain.Models;
 using RLS.Domain.Robots;
 using System;
 using System.Collections.Generic;
@@ -9,9 +12,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.DAL.EF.Extensions;
-using RLS.Domain.FilterParams.Robots;
-using RLS.Domain.Models;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {
@@ -23,7 +23,10 @@ namespace RLS.DAL.EF.Repositories.Robots
 
         public async Task<CollectionResult<RobotModel>> GetModelsByFilterParamsAsync(RobotModelFilterParams filterParams, CancellationToken ct = default)
         {
-            IQueryable<RobotModel> query = DbContext.RobotModels.AsQueryable();
+            IQueryable<RobotModel> query = DbContext.RobotModels
+                .Include(m => m.Company)
+                .Include(m => m.Type)
+                .AsQueryable();
 
             FillFilterExpression(filterParams);
 
@@ -33,7 +36,7 @@ namespace RLS.DAL.EF.Repositories.Robots
 
             List<RobotModel> items = await query
                 .OrderBy(x => x.Name)
-                .WithPagination(filterParams.PageNumber, filterParams.PageSize)
+                .WithPagination(filterParams.Skip, filterParams.Take)
                 .AsNoTracking()
                 .ToListAsync(ct);
 
@@ -46,9 +49,10 @@ namespace RLS.DAL.EF.Repositories.Robots
             return result;
         }
 
-        public async Task<IEnumerable<RobotModel>> GetRobotModelsByTypeAsync(int typeId, CancellationToken ct = default)
+        public async Task<IEnumerable<RobotModel>> GetRobotModelsAsync(CancellationToken ct = default)
         {
-            IEnumerable<RobotModel> items = await DbContext.RobotModels.Where(t => t.TypeId == typeId).AsNoTracking()
+            IEnumerable<RobotModel> items = await DbContext.RobotModels
+                .AsNoTracking()
                 .Include(t => t.Company)
                 .Include(t => t.Type)
                 .ToListAsync(ct);

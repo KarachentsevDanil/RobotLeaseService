@@ -7,7 +7,7 @@ namespace RLS.BLL.DTOs.Rentals
     {
         public string UserId { get; set; }
 
-        public IEnumerable<CreateRentalRobotDto> Robots { get; set; }
+        public int RobotId { get; set; }
 
         public DateTime StartDate { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLS.DAL", "RLS.DAL\RLS.DAL.csproj", "{FF4F31BA-2B0D-491B-8D7F-57C4C9249B06}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLS.DAL.EF", "RLS.DAL.EF\RL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLS.BLL", "RLS.BLL\RLS.BLL.csproj", "{2A3DB026-4D0E-4744-AA11-0C340B240E6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RLS.WebApi", "RLS.WebApi\RLS.WebApi.csproj", "{BFA23F08-9806-4814-A1DF-69F6A225982C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLS.WebApi", "RLS.WebApi\RLS.WebApi.csproj", "{BFA23F08-9806-4814-A1DF-69F6A225982C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLS.SPA", "RLS.SPA\RLS.SPA.csproj", "{A2B6991C-12AD-4443-A82D-9FC4F48840BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BFA23F08-9806-4814-A1DF-69F6A225982C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFA23F08-9806-4814-A1DF-69F6A225982C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFA23F08-9806-4814-A1DF-69F6A225982C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2B6991C-12AD-4443-A82D-9FC4F48840BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B6991C-12AD-4443-A82D-9FC4F48840BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B6991C-12AD-4443-A82D-9FC4F48840BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B6991C-12AD-4443-A82D-9FC4F48840BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

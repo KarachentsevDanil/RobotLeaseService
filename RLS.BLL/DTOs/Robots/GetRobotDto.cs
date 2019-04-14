@@ -1,7 +1,4 @@
-﻿using RLS.BLL.DTOs.Robots.Models;
-using RLS.BLL.DTOs.Users;
-
-namespace RLS.BLL.DTOs.Robots
+﻿namespace RLS.BLL.DTOs.Robots
 {
     public class GetRobotDto
     {
@@ -9,8 +6,14 @@ namespace RLS.BLL.DTOs.Robots
 
         public double DailyCosts { get; set; }
 
-        public GetRobotModelDto Model { get; set; }
+        public string ModelName { get; set; }
 
-        public GetUserDto User { get; set; }
+        public string TypeName { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public string UserId { get; set; }
+
+        public string UserName { get; set; }
     }
 }

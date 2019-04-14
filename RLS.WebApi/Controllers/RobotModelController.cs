@@ -52,10 +52,10 @@ namespace RLS.WebApi.Controllers
             return Json(JsonResultData.Success(model));
         }
 
-        [HttpDelete("model/{id}")]
-        public async Task<ActionResult> GetModelsByTermAsync(int id)
+        [HttpGet("models")]
+        public async Task<ActionResult> GetModelsByTermAsync()
         {
-            var models = await _robotModelService.GetRobotModelsByTypeAsync(id);
+            var models = await _robotModelService.GetRobotModelsAsync();
             return Json(JsonResultData.Success(models));
         }
     }

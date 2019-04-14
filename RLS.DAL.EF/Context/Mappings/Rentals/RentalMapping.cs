@@ -23,6 +23,10 @@ namespace RLS.DAL.EF.Context.Mappings.Rentals
                 .WithMany(p => p.Rentals)
                 .HasForeignKey(p => p.UserId);
 
+            builder.HasOne(p => p.Robot)
+                .WithMany(p => p.Rentals)
+                .HasForeignKey(p => p.RobotId);
+
             builder.ToTable("Rentals", "rental");
         }
     }

@@ -1,9 +1,9 @@
-﻿using RLS.Domain.Robots;
+﻿using RLS.Domain.FilterParams.Robots;
+using RLS.Domain.Models;
+using RLS.Domain.Robots;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.Domain.FilterParams.Robots;
-using RLS.Domain.Models;
 
 namespace RLS.DAL.Repositories.Contracts.Robots
 {
@@ -11,6 +11,6 @@ namespace RLS.DAL.Repositories.Contracts.Robots
     {
         Task<CollectionResult<RobotModel>> GetModelsByFilterParamsAsync(RobotModelFilterParams filterParams, CancellationToken ct = default);
 
-        Task<IEnumerable<RobotModel>> GetRobotModelsByTypeAsync(int typeId, CancellationToken ct = default);
+        Task<IEnumerable<RobotModel>> GetRobotModelsAsync(CancellationToken ct = default);
     }
 }

@@ -1,8 +1,10 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using RLS.DAL.EF.Context;
+using RLS.DAL.EF.Extensions;
 using RLS.DAL.Repositories.Contracts.Rentals;
 using RLS.Domain.FilterParams.Rents;
+using RLS.Domain.Models;
 using RLS.Domain.Rentals;
 using System;
 using System.Collections.Generic;
@@ -10,8 +12,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.DAL.EF.Extensions;
-using RLS.Domain.Models;
 
 namespace RLS.DAL.EF.Repositories.Rentals
 {
@@ -23,7 +23,14 @@ namespace RLS.DAL.EF.Repositories.Rentals
 
         public async Task<CollectionResult<Rental>> GetRentalsByFilterParamsAsync(RentalFilterParams filterParams, CancellationToken ct = default)
         {
-            IQueryable<Rental> query = DbContext.Rentals.AsQueryable();
+            IQueryable<Rental> query = DbContext.Rentals
+                .Include(x=> x.User)
+                .Include(x=> x.Robot)
+                .Include(x=> x.Robot.User)
+                .Include(x=> x.Robot.Model)
+                .Include(x=> x.Robot.Model.Type)
+                .Include(x=> x.Robot.Model.Company)
+                .AsQueryable();
 
             FillFilterExpression(filterParams);
 
@@ -33,7 +40,7 @@ namespace RLS.DAL.EF.Repositories.Rentals
 
             List<Rental> items = await query
                 .OrderByDescending(x => x.StartDate)
-                .WithPagination(filterParams.PageNumber, filterParams.PageSize)
+                .WithPagination(filterParams.Skip, filterParams.Take)
                 .AsNoTracking()
                 .ToListAsync(ct);
 

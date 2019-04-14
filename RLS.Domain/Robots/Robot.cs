@@ -18,11 +18,11 @@ namespace RLS.Domain.Robots
 
         public RobotModel Model { get; set; }
 
-        public ICollection<RentalRobot> Rentals { get; set; }
+        public ICollection<Rental> Rentals { get; set; }
 
         public Robot()
         {
-            Rentals = new List<RentalRobot>();
+            Rentals = new List<Rental>();
         }
     }
 }

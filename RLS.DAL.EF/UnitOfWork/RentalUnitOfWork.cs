@@ -18,8 +18,6 @@ namespace RLS.DAL.EF.UnitOfWork
 
         public IRentalRepository RentalRepository { get; }
 
-        public IRentalRobotRepository RentalRobotRepository { get; }
-
         public IRobotRepository RobotRepository { get; }
 
         public IRobotModelRepository RobotModelRepository { get; }
@@ -35,7 +33,6 @@ namespace RLS.DAL.EF.UnitOfWork
             _context = context;
 
             RentalRepository = new RentalRepository(context);
-            RentalRobotRepository = new RentalRobotRepository(context);
             RobotRepository = new RobotRepository(context);
             RobotModelRepository = new RobotModelRepository(context);
             RobotTypeRepository = new RobotTypeRepository(context);

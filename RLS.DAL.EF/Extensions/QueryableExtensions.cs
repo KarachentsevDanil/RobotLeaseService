@@ -4,9 +4,9 @@ namespace RLS.DAL.EF.Extensions
 {
     public static class QueryableExtensions
     {
-        public static IQueryable<TEntity> WithPagination<TEntity>(this IQueryable<TEntity> query, int pageNumber, int pageSize)
+        public static IQueryable<TEntity> WithPagination<TEntity>(this IQueryable<TEntity> query, int skip, int take)
         {
-            return query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return query.Skip(skip).Take(take);
         }
     }
 }

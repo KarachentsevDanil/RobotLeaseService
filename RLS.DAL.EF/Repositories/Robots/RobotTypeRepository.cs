@@ -41,7 +41,7 @@ namespace RLS.DAL.EF.Repositories.Robots
 
             List<RobotType> items = await query
                 .OrderBy(x => x.Name)
-                .WithPagination(filterParams.PageNumber, filterParams.PageSize)
+                .WithPagination(filterParams.Skip, filterParams.Take)
                 .AsNoTracking()
                 .ToListAsync(ct);
 

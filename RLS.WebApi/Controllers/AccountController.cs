@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RLS.BLL.DTOs.Users;
 using RLS.BLL.Services.Contracts.Users;
+using RLS.Domain.Enums;
 using RLS.Domain.Users;
 using RLS.WebApi.Configurations;
 using RLS.WebApi.Extensions;
@@ -12,7 +13,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using RLS.Domain.Enums;
 
 namespace RLS.WebApi.Controllers
 {

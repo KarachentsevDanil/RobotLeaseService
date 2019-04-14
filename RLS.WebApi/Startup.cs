@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using RLS.BLL.Configurations.MapperProfiles;
 using RLS.DAL.EF.Context;
 using RLS.WebApi.Configurations.MapperProfiles;
@@ -23,9 +24,18 @@ namespace RLS.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver
+                    = new DefaultContractResolver();
+            });
 
             var authConfig = services.AddAuthenticationConfiguration(Configuration);
 
@@ -58,6 +68,7 @@ namespace RLS.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();

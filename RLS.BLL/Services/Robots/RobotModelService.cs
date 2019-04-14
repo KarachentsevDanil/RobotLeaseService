@@ -66,9 +66,9 @@ namespace RLS.BLL.Services.Robots
             return _mapper.Map<CollectionResult<GetRobotModelDto>>(robotModels);
         }
 
-        public async Task<IEnumerable<GetRobotModelDto>> GetRobotModelsByTypeAsync(int typeId, CancellationToken ct = default)
+        public async Task<IEnumerable<GetRobotModelDto>> GetRobotModelsAsync(CancellationToken ct = default)
         {
-            var item = await _unitOfWork.RobotModelRepository.GetRobotModelsByTypeAsync(typeId, ct);
+            var item = await _unitOfWork.RobotModelRepository.GetRobotModelsAsync(ct);
 
             return _mapper.Map<IEnumerable<GetRobotModelDto>>(item);
         }

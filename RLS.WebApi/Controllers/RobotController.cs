@@ -27,6 +27,8 @@ namespace RLS.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetRobotsAsync([FromQuery] RobotFilterParamsDto filterParams)
         {
+            BuildUserPrincipal();
+
             if (ApiUser.Role == Role.User)
             {
                 filterParams.UserId = ApiUser.Id;
@@ -39,13 +41,17 @@ namespace RLS.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetRobotByIdAsync(int id)
         {
+            BuildUserPrincipal();
             var robot = await _robotService.GetRobotAsync(id);
-            return ValidateAccessToEntity(robot.User.Id, robot);
+            return ValidateAccessToEntity(robot.UserId, robot);
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateRobotAsync([FromBody] CreateRobotDto robot)
         {
+            BuildUserPrincipal();
+            robot.UserId = ApiUser.Id;
+
             var result = await _robotService.CreateRobotAsync(robot);
             return StatusCode((int) HttpStatusCode.Created, Json(JsonResultData.Success(result)));
         }

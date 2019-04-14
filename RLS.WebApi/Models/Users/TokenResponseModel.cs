@@ -7,10 +7,10 @@ namespace RLS.WebApi.Models.Users
     {
         public GetUserDto User { get; set; }
 
-        [JsonProperty("access_token")]
+        [JsonProperty("token")]
         public string AccessToken { get; set; }
 
-        [JsonProperty("expires_in")]
+        [JsonProperty("tokenExpireData")]
         public int ExpiresIn { get; set; }
     }
 }

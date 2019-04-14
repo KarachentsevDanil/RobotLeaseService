@@ -1,7 +1,4 @@
-﻿using RLS.BLL.DTOs.Robots.Companies;
-using RLS.BLL.DTOs.Robots.Types;
-
-namespace RLS.BLL.DTOs.Robots.Models
+﻿namespace RLS.BLL.DTOs.Robots.Models
 {
     public class GetRobotModelDto
     {
@@ -13,8 +10,12 @@ namespace RLS.BLL.DTOs.Robots.Models
 
         public int ReleaseYear { get; set; }
 
-        public GetRobotTypeDto Type { get; set; }
+        public string TypeId { get; set; }
 
-        public GetRobotCompanyDto Company { get; set; }
+        public string CompanyId { get; set; }
+
+        public string TypeName { get; set; }
+
+        public string CompanyName { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace RLS.WebApi.Controllers
             return Json(JsonResultData.Success(entity));
         }
 
-        private void BuildUserPrincipal()
+        protected void BuildUserPrincipal()
         {
             if (ApiUser == null)
             {
