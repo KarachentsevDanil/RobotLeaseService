@@ -21,6 +21,16 @@ namespace RLS.DAL.EF.Repositories.Robots
         {
         }
 
+        public override async Task<Robot> GetAsync(int id, CancellationToken ct = default)
+        {
+            return await DbContext.Robots
+                .Include(x => x.User)
+                .Include(x => x.Model)
+                .Include(x => x.Model.Type)
+                .Include(x => x.Model.Company)
+                .FirstOrDefaultAsync(r => r.Id == id, ct);
+        }
+
         public async Task<CollectionResult<Robot>> GetRobotByFilterParamsAsync(RobotFilterParams filterParams, CancellationToken ct = default)
         {
             IQueryable<Robot> query = DbContext.Robots
@@ -63,12 +73,19 @@ namespace RLS.DAL.EF.Repositories.Robots
 
             if (!string.IsNullOrEmpty(filterParams.UserId))
             {
-                predicate = predicate.And(t => t.UserId == filterParams.UserId);
+                predicate = filterParams.IsSearchView ?
+                    predicate.And(t => t.UserId != filterParams.UserId) :
+                    predicate.And(t => t.UserId == filterParams.UserId);
             }
 
             if (filterParams.ModelIds != null && filterParams.ModelIds.Any())
             {
                 predicate = predicate.And(t => filterParams.ModelIds.Contains(t.ModelId));
+            }
+
+            if (filterParams.CompaniesIds != null && filterParams.CompaniesIds.Any())
+            {
+                predicate = predicate.And(t => filterParams.CompaniesIds.Contains(t.Model.CompanyId));
             }
 
             if (filterParams.TypeIds != null && filterParams.TypeIds.Any())

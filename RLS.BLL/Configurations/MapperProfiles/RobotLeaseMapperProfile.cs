@@ -12,6 +12,7 @@ using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Rentals;
 using RLS.Domain.Robots;
 using RLS.Domain.Users;
+using System;
 
 namespace RLS.BLL.Configurations.MapperProfiles
 {
@@ -63,8 +64,10 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<Robot, GetRobotDto>()
                 .ForMember(x => x.UserId, t => t.MapFrom(p => p.User.Id))
                 .ForMember(x => x.UserName, t => t.MapFrom(p => p.User.Email))
+                .ForMember(x => x.UserFullName, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"))
                 .ForMember(x => x.CompanyName, t => t.MapFrom(p => p.Model.Company.Name))
                 .ForMember(x => x.TypeName, t => t.MapFrom(p => p.Model.Type.Name))
+                .ForMember(x => x.Description, t => t.MapFrom(p => p.Model.Description))
                 .ForMember(x => x.ModelName, t => t.MapFrom(p => p.Model.Name));
 
             CreateMap<Rental, GetRentalDto>()
@@ -78,6 +81,12 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<CreateRentalDto, Rental>()
                 .ForMember(x => x.Id, t => t.Ignore())
                 .ForMember(x => x.Status, t => t.Ignore());
+
+            CreateMap<Rental, GetRentalForCalendarDto>()
+                .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName} - {p.User.Email}"))
+                .ForMember(x => x.Start, t => t.MapFrom(p => p.StartDate.ToString("O")))
+                .ForMember(x => x.End, t => t.MapFrom(p => p.EndDate.ToString("O")))
+                .ForMember(x => x.Color, t => t.MapFrom(p => DateTime.UtcNow > p.EndDate ? "#607D8B" : "#2196F3"));
         }
     }
 }

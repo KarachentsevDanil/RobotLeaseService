@@ -38,6 +38,14 @@ namespace RLS.WebApi.Controllers
             return Json(JsonResultData.Success(rentals));
         }
 
+        [HttpGet("calendar")]
+        public async Task<ActionResult> GetRentalsForCalendarAsync(
+            [FromQuery] RentalFilterParamsDto filterParams)
+        {
+            var rentals = await _rentalService.GetRentalsForCalendarByFilterParamsAsync(filterParams);
+            return Json(rentals.Collection);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetRentalByIdAsync(int id)
         {

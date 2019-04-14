@@ -31,10 +31,10 @@ export default {
         defaultView: "month",
         editable: false,
         events: {
-          url: "http://localhost:53689/api/rent/getRentsForCalendarByParams",
+          url: "https://localhost:5001/api/rental/calendar",
           headers: { Authorization: `Bearer ${localStorage.token}` },
           data: {
-            airTaxiId: this.id,
+            robotId: this.id,
             isCalendarView: true
           }
         },

@@ -12,6 +12,10 @@ namespace RLS.BLL.Services.Contracts.Rentals
             RentalFilterParamsDto filterParams,
             CancellationToken ct = default);
 
+        Task<CollectionResult<GetRentalForCalendarDto>> GetRentalsForCalendarByFilterParamsAsync(
+            RentalFilterParamsDto filterParams,
+            CancellationToken ct = default);
+
         Task<GetRentalDto> CreateRentalAsync(CreateRentalDto item, CancellationToken ct = default);
 
         Task<GetRentalDto> GetRentalAsync(int id, CancellationToken ct = default);

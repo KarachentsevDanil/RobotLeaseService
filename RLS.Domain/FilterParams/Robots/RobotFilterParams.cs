@@ -11,6 +11,8 @@ namespace RLS.Domain.FilterParams.Robots
 
         public IEnumerable<int> ModelIds { get; set; }
 
+        public IEnumerable<int> CompaniesIds { get; set; }
+
         public IEnumerable<int> TypeIds { get; set; }
 
         public string Term { get; set; }
@@ -18,5 +20,7 @@ namespace RLS.Domain.FilterParams.Robots
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        public bool IsSearchView { get; set; }
     }
 }

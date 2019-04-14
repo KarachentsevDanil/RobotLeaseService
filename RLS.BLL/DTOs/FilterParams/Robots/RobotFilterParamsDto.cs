@@ -11,10 +11,14 @@ namespace RLS.BLL.DTOs.FilterParams.Robots
 
         public IEnumerable<int> TypeIds { get; set; }
 
+        public IEnumerable<int> CompaniesIds { get; set; }
+
         public string Term { get; set; }
 
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        public bool IsSearchView { get; set; }
     }
 }

@@ -37,6 +37,17 @@ namespace RLS.BLL.Services.Rentals
 
         }
 
+        public async Task<CollectionResult<GetRentalForCalendarDto>> GetRentalsForCalendarByFilterParamsAsync(
+            RentalFilterParamsDto filterParams, CancellationToken ct = default)
+        {
+            var rentalFilterParams = _mapper.Map<RentalFilterParams>(filterParams);
+
+            var rentals =
+                await _unitOfWork.RentalRepository.GetRentalsByFilterParamsAsync(rentalFilterParams, ct);
+
+            return _mapper.Map<CollectionResult<GetRentalForCalendarDto>>(rentals);
+        }
+
         public async Task<GetRentalDto> CreateRentalAsync(CreateRentalDto item, CancellationToken ct = default)
         {
             var newItem = _mapper.Map<Rental>(item);

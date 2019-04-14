@@ -10,7 +10,7 @@
                         <li>
                             <router-link :to="'/rent-taxi'" v-localize="{i: 'rent.rentTaxi'}"></router-link>
                         </li>
-                        <li class="active">{{taxi.AirTaxiCompanyName}} {{taxi.AirTaxiModelName}}</li>
+                        <li class="active">{{taxi.CompanyName}} {{taxi.ModelName}}</li>
                     </ul>
                 </div>
                 
@@ -38,7 +38,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" v-localize="{i: 'rent.owner'}"></label>
                                                 <div class="col-sm-10">
-                                                    <p class="form-control-static">{{taxi.CustomerName}}</p>
+                                                    <p class="form-control-static">{{taxi.UserFullName}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -46,7 +46,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" v-localize="{i: 'rent.company'}"></label>
                                                 <div class="col-sm-10">
-                                                    <p class="form-control-static">{{taxi.AirTaxiCompanyName}}</p>
+                                                    <p class="form-control-static">{{taxi.CompanyName}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +54,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" v-localize="{i: 'rent.model'}"></label>
                                                 <div class="col-sm-10">
-                                                    <p class="form-control-static">{{taxi.AirTaxiModelName}}</p>
+                                                    <p class="form-control-static">{{taxi.ModelName}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,7 +62,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" v-localize="{i: 'rent.type'}"></label>
                                                 <div class="col-sm-10">
-                                                    <p class="form-control-static">{{taxi.AirTaxiTypeName}}</p>
+                                                    <p class="form-control-static">{{taxi.TypeName}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -70,15 +70,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" v-localize="{i: 'rent.description'}"></label>
                                                 <div class="col-sm-10">
-                                                    <p class="form-control-static">{{taxi.AirTaxiDescription}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label" v-localize="{i: 'rent.capacity'}"></label>
-                                                <div class="col-sm-10">
-                                                    <p class="form-control-static">{{taxi.AirTaxiCapacity}}</p>
+                                                    <p class="form-control-static">{{taxi.Description}}</p>
                                                 </div>
                                             </div>
                                         </div>

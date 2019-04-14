@@ -24,8 +24,8 @@ namespace RLS.WebApi.Controllers
             _robotService = robotService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetRobotsAsync([FromQuery] RobotFilterParamsDto filterParams)
+        [HttpPost("list")]
+        public async Task<ActionResult> GetRobotsAsync([FromBody] RobotFilterParamsDto filterParams)
         {
             BuildUserPrincipal();
 
@@ -41,9 +41,8 @@ namespace RLS.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetRobotByIdAsync(int id)
         {
-            BuildUserPrincipal();
             var robot = await _robotService.GetRobotAsync(id);
-            return ValidateAccessToEntity(robot.UserId, robot);
+            return NullEntityCheckResponse(robot);
         }
 
         [HttpPost]

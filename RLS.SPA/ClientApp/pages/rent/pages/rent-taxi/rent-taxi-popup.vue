@@ -13,13 +13,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" v-localize="{i: 'rent.owner'}"></label>
                                 <div class="col-sm-10">
-                                    <p class="form-control-static">{{taxi.CustomerName}}</p>
+                                    <p class="form-control-static">{{taxi.UserFullName}} - {{taxi.UserEmail}}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                     <label class="col-sm-2 control-label" v-localize="{i: 'rent.taxi'}"></label>
                                     <div class="col-sm-10">
-                                        <p class="form-control-static">{{taxi.AirTaxiId}} - {{taxi.AirTaxiCompanyName}} {{taxi.AirTaxiModelName}}</p>
+                                        <p class="form-control-static">{{taxi.Id}} - {{taxi.CompanyName}} {{taxi.ModelName}}</p>
                                     </div>
                             </div>
                             <div class="form-group">
@@ -70,15 +70,14 @@ export default {
     },
     async rentTaxi() {
       let data = {
-        customerId: this.getUser.CustomerId,
-        airTaxiId: this.taxi.AirTaxiId,
+        robotId: this.taxi.Id,
         startDate: this.startDate,
         endDate: this.endDate
       };
 
       let result = (await rentService.addRent(data)).data;
 
-      if (result.Data) {
+      if (!result.Data.ErrorMessage) {
         $(".close-add-popup").click();
         this.clearForm();
         this.$noty.success(this.$locale({i: 'rent.rentAdded'}));

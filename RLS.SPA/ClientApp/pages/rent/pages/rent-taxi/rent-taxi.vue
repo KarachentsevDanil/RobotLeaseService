@@ -207,7 +207,8 @@ export default {
         skip:
           this.filters.pagination.pageSize *
           (this.filters.pagination.currentPage - 1),
-        take: this.filters.pagination.pageSize
+        take: this.filters.pagination.pageSize,
+        isSearchView: true
       };
 
       let data = (await taxiService.getTaxiesByParams(params)).data.Data;
@@ -223,13 +224,12 @@ export default {
           this.filters.pagination.pageSize *
           (this.filters.pagination.currentPage - 1),
         take: this.filters.pagination.pageSize,
-        selectedTypeIds: this.selectedTypes,
-        selectedCompanyIds: this.selectedCompanies,
-        selectedModelIds: this.selectedModels,
+        typeIds: this.selectedTypes,
+        companiesIds: this.selectedCompanies,
+        modelIds: this.selectedModels,
         startDate: this.startDate,
         endDate: this.endDate,
-        customerId: this.getUser.CustomerId,
-        isRentTaxi: true
+        isSearchView: true
       };
 
       let data = (await taxiService.getTaxiesByParams(params)).data.Data;

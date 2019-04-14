@@ -57,7 +57,7 @@ namespace RLS.DAL.EF.Repositories.Rentals
         {
             Expression<Func<Rental, bool>> predicate = PredicateBuilder.New<Rental>(true);
 
-            if (!string.IsNullOrEmpty(filterParams.UserId))
+            if (!string.IsNullOrEmpty(filterParams.UserId) && !filterParams.IsCalendarView)
             {
                 predicate = predicate.And(t => t.UserId == filterParams.UserId);
             }
@@ -65,6 +65,16 @@ namespace RLS.DAL.EF.Repositories.Rentals
             if (filterParams.Status.HasValue)
             {
                 predicate = predicate.And(t => t.Status == filterParams.Status);
+            }
+
+            if (filterParams.RobotId.HasValue)
+            {
+                predicate = predicate.And(t => t.RobotId == filterParams.RobotId);
+            }
+
+            if (filterParams.Start.HasValue && filterParams.End.HasValue)
+            {
+                predicate = predicate.And(r => filterParams.Start.Value <= r.EndDate && filterParams.End.Value >= r.StartDate);
             }
 
             filterParams.Expression = predicate;

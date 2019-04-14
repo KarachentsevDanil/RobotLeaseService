@@ -41,11 +41,11 @@ export const getAirTaxiTypes = data => {
 
 export const getTaxiesByParams = data => {
     let params = {
-        url: apiTaxi,
+        url: apiTaxi + "list",
         data: data
     }
 
-    return httpService.getData(params);
+    return httpService.postData(params);
 }
 
 export const addAirTaxi = data => {
