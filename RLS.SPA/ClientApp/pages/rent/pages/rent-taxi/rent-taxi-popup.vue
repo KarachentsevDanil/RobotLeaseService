@@ -73,7 +73,7 @@ export default {
         robotId: this.taxi.Id,
         startDate: this.startDate,
         endDate: this.endDate
-      };
+      };  
 
       let result = await rentService.addRent(data);
 
