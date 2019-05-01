@@ -122,11 +122,6 @@ export default {
     setLocatization(localization) {
       this.$store.dispatch("setCurrentLanguage", localization);
     }
-  },
-  watch:{
-      currentLanguage(){
-          console.log(this.currentLanguage);
-      }
   }
 };
 </script>

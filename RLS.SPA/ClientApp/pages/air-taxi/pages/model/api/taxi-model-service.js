@@ -39,3 +39,21 @@ export const addTaxiModel = data => {
 
     return httpService.postData(params);
 }
+
+export const getTopRobotModelsByRobotCount = data => {
+    let params = {
+        url: apiTaxiModel + "chart/robot",
+        data: data
+    }
+
+    return httpService.getData(params);
+}
+
+export const getTopRobotModelsByRentCount = data => {
+    let params = {
+        url: apiTaxiModel + "chart/rents",
+        data: data
+    }
+
+    return httpService.getData(params);
+}

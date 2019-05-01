@@ -10,7 +10,8 @@ export const uaLocalization = {
         details: "Деталі",
         filter: "Фільтер",
         totalItems: "Всього",
-        itemsPages: "записи / сторинка"
+        itemsPages: "записи / сторинка",
+        dashboard: "Панель приладів"
     },
     authorization: {
         email: "Електронна пошта",
@@ -70,6 +71,11 @@ export const uaLocalization = {
         typeName: "Ім'я...",
         typeDescription: "Опис...",
         taxiTypeAdded: "Тип робота було успішно додана."
+    },
+    chart: {
+        modelPieChartTitle: "Моделi Роботiв",
+        modelPieChartSubText: "Моделi Роботiв, що мають бiльше всiх роботiв",
+        modelPieChartName: "Модель Робота",
     },
     rent: {
         rents: "Оренди",
@@ -139,26 +145,32 @@ export const uaLocalization = {
     }
 }
 
-export const adminTaxiItems = [{
+export const adminTaxiItems = [
+    {
+        title: "Панель приладів",
+        icon: "icon-home4",
+        url: "/dashboard"
+    },
+    {
         title: "Роботи",
         icon: "icon-users2",
         url: "",
         children: [{
-                title: "Компанії",
-                url: "/companies"
-            },
-            {
-                title: "Типи Роботиів",
-                url: "/taxi-types"
-            },
-            {
-                title: "Моделі Роботиів",
-                url: "/taxi-models"
-            },
-            {
-                title: "Роботи",
-                url: "/taxies"
-            }
+            title: "Компанії",
+            url: "/companies"
+        },
+        {
+            title: "Типи Роботиів",
+            url: "/taxi-types"
+        },
+        {
+            title: "Моделі Роботиів",
+            url: "/taxi-models"
+        },
+        {
+            title: "Роботи",
+            url: "/taxies"
+        }
         ]
     },
     {
@@ -171,18 +183,24 @@ export const adminTaxiItems = [{
         }]
     }
 ];
-export const userTaxiItems = [{
+export const userTaxiItems = [
+    {
+        title: "Панель приладів",
+        icon: "icon-home4",
+        url: "/dashboard"
+    },
+    {
         title: "Роботи",
         icon: "icon-users2",
         url: "",
         children: [{
-                title: "Моделі Роботиів",
-                url: "/taxi-models"
-            },
-            {
-                title: "Мої Роботи",
-                url: "/taxies"
-            }
+            title: "Моделі Роботиів",
+            url: "/taxi-models"
+        },
+        {
+            title: "Мої Роботи",
+            url: "/taxies"
+        }
         ]
     },
     {
@@ -190,13 +208,13 @@ export const userTaxiItems = [{
         icon: "icon-cog3",
         url: "",
         children: [{
-                title: "Орендувати Робота",
-                url: "/rent-taxi"
-            },
-            {
-                title: "Мої Оренди",
-                url: "/rent-list"
-            }
+            title: "Орендувати Робота",
+            url: "/rent-taxi"
+        },
+        {
+            title: "Мої Оренди",
+            url: "/rent-list"
+        }
         ]
     }
 ]

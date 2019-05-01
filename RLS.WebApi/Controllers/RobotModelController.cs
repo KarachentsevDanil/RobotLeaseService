@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ using RLS.BLL.Services.Contracts.Robots;
 using RLS.WebApi.Models;
 using System.Net;
 using System.Threading.Tasks;
+using RLS.Domain.Enums;
+using RLS.WebApi.Models.Charts;
 
 namespace RLS.WebApi.Controllers
 {
@@ -41,7 +44,7 @@ namespace RLS.WebApi.Controllers
         public async Task<ActionResult> CreateRobotModelAsync([FromBody] CreateRobotModelDto robotModel)
         {
             var model = await _robotModelService.CreateRobotModelAsync(robotModel);
-            return StatusCode((int) HttpStatusCode.Created, Json(JsonResultData.Success(model)));
+            return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(model)));
         }
 
         [HttpPut("{id}")]
@@ -57,6 +60,42 @@ namespace RLS.WebApi.Controllers
         {
             var models = await _robotModelService.GetRobotModelsAsync();
             return Json(JsonResultData.Success(models));
+        }
+
+        [HttpGet("chart/robot")]
+        public async Task<ActionResult> GetTopRobotModelsByRobotCountAsync(int? count)
+        {
+            var filterParams = new RobotPopularityFilterParamsDto
+            {
+                Type = RobotPopularity.ByRobotCount,
+                CountToTake = count ?? 5
+            };
+
+            var companies = await _robotModelService.GetTopNPopularModelsAsync(filterParams);
+
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRobots > 0).Select(t => new BarChartModel
+            {
+                Name = t.Title,
+                Value = t.CountOfRobots
+            })));
+        }
+
+        [HttpGet("chart/rents")]
+        public async Task<ActionResult> GetTopRobotModelsByRentsCountAsync(int? count)
+        {
+            var filterParams = new RobotPopularityFilterParamsDto
+            {
+                Type = RobotPopularity.ByRentCount,
+                CountToTake = count ?? 5
+            };
+
+            var companies = await _robotModelService.GetTopNPopularModelsAsync(filterParams);
+
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRents > 0).Select(t => new BarChartModel
+            {
+                Name = t.Title,
+                Value = t.CountOfRents
+            })));
         }
     }
 }

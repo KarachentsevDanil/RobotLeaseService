@@ -122,7 +122,12 @@
                         ></textarea>
                       </div>
                       <div class="text-right">
-                        <button @click="leaveFeedback" type="button" :disabled="!feedback.feedback || feedback.rating > 5 || feedback.rating < 1" class="btn btn-primary">
+                        <button
+                          @click="leaveFeedback"
+                          type="button"
+                          :disabled="!feedback.feedback || feedback.rating > 5 || feedback.rating < 1"
+                          class="btn btn-primary"
+                        >
                           <span v-localize="{i: 'rent.feedback'}"></span>
                           <i class="icon-arrow-right14 position-right"></i>
                         </button>
@@ -177,11 +182,13 @@ export default {
     this.rent = rent;
 
     if (this.getUser.Id == this.rent.Owner.Id) {
-        this.feedback.feedback = this.rent.OwnerFeedback;
-        this.feedback.rating = !this.rent.CustomerRating ? 5 : this.rent.CustomerRating;
-    }else{
-        this.feedback.feedback = this.rent.CustomerFeedback;
-        this.feedback.rating = !this.rent.RobotRating ? 5 : this.rent.RobotRating;
+      this.feedback.feedback = this.rent.OwnerFeedback;
+      this.feedback.rating = !this.rent.CustomerRating
+        ? 5
+        : this.rent.CustomerRating;
+    } else {
+      this.feedback.feedback = this.rent.CustomerFeedback;
+      this.feedback.rating = !this.rent.RobotRating ? 5 : this.rent.RobotRating;
     }
   },
   methods: {
@@ -214,4 +221,3 @@ export default {
   }
 };
 </script>
-

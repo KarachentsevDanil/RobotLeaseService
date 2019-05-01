@@ -10,7 +10,8 @@ export const enLocalization = {
         details: "Details",
         filter: "Filter",
         totalItems: "Total",
-        itemsPages: "items / page"
+        itemsPages: "items / page",
+        dashboard: "Dashboard"
     },
     authorization: {
         email: "E-mail",
@@ -70,6 +71,26 @@ export const enLocalization = {
         typeName: "Type Name...",
         typeDescription: "Description...",
         taxiTypeAdded: "Robot type was successfully added."
+    },
+    chart: {
+        model: {
+            pieChartTitle: "Robot Models",
+            pieChartSubText: "Models that have most of the robots",
+            rentPieChartSubText: "Models that have most of the rents",
+            pieChartName: "Robot Model",
+        },
+        type: {
+            pieChartTitle: "Robot Types",
+            pieChartSubText: "Types that have most of the robots",
+            rentPieChartSubText: "Types that have most of the rents",
+            pieChartName: "Robot Type",
+        },
+        company: {
+            pieChartTitle: "Robot Companies",
+            pieChartSubText: "Companies that have most of the robots",
+            rentPieChartSubText: "Companies that have most of the rents",
+            pieChartName: "Robot Company",
+        }
     },
     rent: {
         rents: "Rents",
@@ -139,26 +160,32 @@ export const enLocalization = {
     }
 }
 
-export const adminTaxiItems = [{
+export const adminTaxiItems = [
+    {
+        title: "Dashboard",
+        icon: "icon-home4",
+        url: "/dashboard"
+    },
+    {
         title: "Robot",
         icon: "icon-users2",
         url: "",
         children: [{
-                title: "Company List",
-                url: "/companies"
-            },
-            {
-                title: "Type List",
-                url: "/taxi-types"
-            },
-            {
-                title: "Model List",
-                url: "/taxi-models"
-            },
-            {
-                title: "Robot List",
-                url: "/taxies"
-            }
+            title: "Company List",
+            url: "/companies"
+        },
+        {
+            title: "Type List",
+            url: "/taxi-types"
+        },
+        {
+            title: "Model List",
+            url: "/taxi-models"
+        },
+        {
+            title: "Robot List",
+            url: "/taxies"
+        }
         ]
     },
     {
@@ -171,18 +198,24 @@ export const adminTaxiItems = [{
         }]
     }
 ];
-export const userTaxiItems = [{
+export const userTaxiItems = [
+    {
+        title: "Dashboard",
+        icon: "icon-home4",
+        url: "/dashboard"
+    },
+    {
         title: "Robot",
         icon: "icon-users2",
         url: "",
         children: [{
-                title: "Model List",
-                url: "/taxi-models"
-            },
-            {
-                title: "My Robot List",
-                url: "/taxies"
-            }
+            title: "Model List",
+            url: "/taxi-models"
+        },
+        {
+            title: "My Robot List",
+            url: "/taxies"
+        }
         ]
     },
     {
@@ -190,13 +223,13 @@ export const userTaxiItems = [{
         icon: "icon-cog3",
         url: "",
         children: [{
-                title: "Rent Robot",
-                url: "/rent-taxi"
-            },
-            {
-                title: "My Rents List",
-                url: "/rent-list"
-            }
+            title: "Rent Robot",
+            url: "/rent-taxi"
+        },
+        {
+            title: "My Rents List",
+            url: "/rent-list"
+        }
         ]
     }
 ]

@@ -73,7 +73,7 @@ namespace RLS.DAL.EF.Repositories.Robots
             switch (filterParams.Type)
             {
                 case RobotPopularity.ByRentCount:
-                    query = query.OrderByDescending(t => t.Robots.OrderByDescending(r => r.Rentals.Count));
+                    query = query.OrderByDescending(t => t.Robots.Sum(r => r.Rentals.Count));
                     break;
                 case RobotPopularity.ByRobotCount:
                     query = query.OrderByDescending(t => t.Robots.Count);

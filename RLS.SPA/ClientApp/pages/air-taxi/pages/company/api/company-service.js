@@ -19,3 +19,21 @@ export const addCompany = data => {
 
     return httpService.postData(params);
 }
+
+export const getTopRobotCompaniesByRobotCount = data => {
+    let params = {
+        url: apiCompany + "chart/robot",
+        data: data
+    }
+
+    return httpService.getData(params);
+}
+
+export const getTopRobotCompaniesByRentCount = data => {
+    let params = {
+        url: apiCompany + "chart/rents",
+        data: data
+    }
+
+    return httpService.getData(params);
+}

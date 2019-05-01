@@ -2,6 +2,7 @@ import CompanyListPage from "../pages/air-taxi/pages/company/list/company-list";
 import TaxiModelListPage from "../pages/air-taxi/pages/model/list/taxi-model-list";
 import TaxiListPage from "../pages/air-taxi/pages/taxi/list/taxi-list";
 import TaxiTypeListPage from "../pages/air-taxi/pages/type/list/taxi-type-list";
+import DashboardPage from "../pages/dashboard/pages/dashboard";
 
 import * as routeGuards from "./route-guards";
 
@@ -30,6 +31,13 @@ export default [
     {
         path: "/taxi-types",
         component: TaxiTypeListPage,
+        beforeEnter: (to, from, next) => {
+            routeGuards.validateRoute(to, from, next);
+        }
+    },
+    {
+        path: "/dashboard",
+        component: DashboardPage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);
         }

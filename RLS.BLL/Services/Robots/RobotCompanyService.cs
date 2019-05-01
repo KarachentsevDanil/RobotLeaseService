@@ -77,7 +77,7 @@ namespace RLS.BLL.Services.Robots
         {
             var robotModelFilterParams = _mapper.Map<RobotPopularityFilterParams>(filterParams);
 
-            var items = await _unitOfWork.RobotModelRepository.GetTopNPopularModelsAsync(robotModelFilterParams, ct);
+            var items = await _unitOfWork.RobotCompanyRepository.GetTopNPopularCompaniesAsync(robotModelFilterParams, ct);
 
             return _mapper.Map<IEnumerable<GetRobotCompanyPopularityDto>>(items);
         }

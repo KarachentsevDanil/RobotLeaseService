@@ -15,13 +15,13 @@ namespace RLS.WebApi.Controllers
     {
         private readonly JwtSecurityTokenHandler _tokenHandler = new JwtSecurityTokenHandler();
 
-        private readonly IMapper _mapper;
+        protected IMapper Mapper;
 
         protected UserPrincipal ApiUser { get; set; }
 
         public BaseApiController(IMapper mapper)
         {
-            _mapper = mapper;
+            Mapper = mapper;
         }
 
         public ActionResult NullEntityCheckResponse<TEntity>(TEntity entity)
@@ -85,7 +85,7 @@ namespace RLS.WebApi.Controllers
                         c => c.Type,
                         c => c.Value);
 
-                    return _mapper.Map<UserPrincipal>(claims);
+                    return Mapper.Map<UserPrincipal>(claims);
                 }
                 catch (Exception exp)
                 {

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ using RLS.BLL.Services.Contracts.Robots;
 using RLS.WebApi.Models;
 using System.Net;
 using System.Threading.Tasks;
+using RLS.Domain.Enums;
+using RLS.WebApi.Models.Charts;
 
 namespace RLS.WebApi.Controllers
 {
@@ -57,6 +60,42 @@ namespace RLS.WebApi.Controllers
         {
             var types = await _robotTypeService.GetRobotTypesByTermAsync(term ?? string.Empty);
             return Json(JsonResultData.Success(types));
+        }
+
+        [HttpGet("chart/robot")]
+        public async Task<ActionResult> GetTopRobotTypesByRobotCountAsync(int? count)
+        {
+            var filterParams = new RobotPopularityFilterParamsDto
+            {
+                Type = RobotPopularity.ByRobotCount,
+                CountToTake = count ?? 5
+            };
+
+            var companies = await _robotTypeService.GetTopNPopularTypesAsync(filterParams);
+
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRobots > 0).Select(t => new BarChartModel
+            {
+                Name = t.Name,
+                Value = t.CountOfRobots
+            })));
+        }
+
+        [HttpGet("chart/rents")]
+        public async Task<ActionResult> GetTopRobotTypesByRentsCountAsync(int? count)
+        {
+            var filterParams = new RobotPopularityFilterParamsDto
+            {
+                Type = RobotPopularity.ByRentCount,
+                CountToTake = count ?? 5
+            };
+
+            var companies = await _robotTypeService.GetTopNPopularTypesAsync(filterParams);
+
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRents > 0).Select(t => new BarChartModel
+            {
+                Name = t.Name,
+                Value = t.CountOfRents
+            })));
         }
     }
 }
