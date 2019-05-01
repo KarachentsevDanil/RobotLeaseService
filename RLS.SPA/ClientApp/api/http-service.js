@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "../router";
 
-const baseApiUrl = "https://robot-api.azurewebsites.net";
+const baseApiUrl = "https://localhost:44306";
 
 axios.interceptors.response.use(
     response => {
@@ -38,7 +38,25 @@ export const getData = params => {
 
 export const postData = params => {
     const headers = getHeaders();
+    
     return axios.post(baseApiUrl + params.url, params.data, {
         headers: headers
+    });
+};
+
+export const putData = params => {
+    const headers = getHeaders();
+
+    return axios.put(baseApiUrl + params.url, params.data, {
+        headers: headers
+    });
+};
+
+export const deleteData = params => {
+    const headers = getHeaders();
+
+    return axios.delete(baseApiUrl + params.url, {
+        headers: headers,
+        params: params.data
     });
 };

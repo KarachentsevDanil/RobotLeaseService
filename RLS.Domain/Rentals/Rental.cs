@@ -22,5 +22,13 @@ namespace RLS.Domain.Rentals
         public int RobotId { get; set; }
 
         public Robot Robot { get; set; }
+
+        public double RobotRating { get; set; }
+
+        public double CustomerRating { get; set; }
+
+        public string CustomerFeedback { get; set; }
+
+        public string OwnerFeedback { get; set; }
     }
 }

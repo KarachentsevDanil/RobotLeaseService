@@ -24,12 +24,12 @@ namespace RLS.DAL.EF.Repositories.Rentals
         public async Task<CollectionResult<Rental>> GetRentalsByFilterParamsAsync(RentalFilterParams filterParams, CancellationToken ct = default)
         {
             IQueryable<Rental> query = DbContext.Rentals
-                .Include(x=> x.User)
-                .Include(x=> x.Robot)
-                .Include(x=> x.Robot.User)
-                .Include(x=> x.Robot.Model)
-                .Include(x=> x.Robot.Model.Type)
-                .Include(x=> x.Robot.Model.Company)
+                .Include(x => x.User)
+                .Include(x => x.Robot)
+                .Include(x => x.Robot.User)
+                .Include(x => x.Robot.Model)
+                .Include(x => x.Robot.Model.Type)
+                .Include(x => x.Robot.Model.Company)
                 .AsQueryable();
 
             FillFilterExpression(filterParams);
@@ -53,13 +53,33 @@ namespace RLS.DAL.EF.Repositories.Rentals
             return result;
         }
 
+        public override async Task<Rental> GetAsync(int id, CancellationToken ct = default)
+        {
+            return await DbContext.Rentals
+                .Include(x => x.User)
+                .Include(x => x.Robot).ThenInclude(x => x.User)
+                .Include(x => x.Robot).ThenInclude(x => x.Model).ThenInclude(x => x.Company)
+                .Include(x => x.Robot).ThenInclude(x => x.Model).ThenInclude(x => x.Type)
+                .FirstOrDefaultAsync(r => r.Id == id, ct);
+        }
+
         private void FillFilterExpression(RentalFilterParams filterParams)
         {
             Expression<Func<Rental, bool>> predicate = PredicateBuilder.New<Rental>(true);
 
             if (!string.IsNullOrEmpty(filterParams.UserId) && !filterParams.IsCalendarView)
             {
-                predicate = predicate.And(t => t.UserId == filterParams.UserId);
+                predicate = predicate.And(t => t.UserId == filterParams.UserId || t.Robot.UserId == filterParams.UserId);
+            }
+
+            if (!string.IsNullOrEmpty(filterParams.Term))
+            {
+                filterParams.Term = filterParams.Term.ToLower();
+
+                predicate = predicate.And(t => t.Robot.Model.Name.ToLower().Contains(filterParams.Term) ||
+                                               t.Robot.Model.Description.ToLower().Contains(filterParams.Term) ||
+                                               t.Robot.Model.Type.Name.ToLower().Contains(filterParams.Term) ||
+                                               t.Robot.Model.Company.Name.ToLower().Contains(filterParams.Term));
             }
 
             if (filterParams.Status.HasValue)

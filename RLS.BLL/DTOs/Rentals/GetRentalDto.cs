@@ -21,5 +21,13 @@ namespace RLS.BLL.DTOs.Rentals
         public string Status { get; set; }
 
         public double TotalPrice { get; set; }
+
+        public double RobotRating { get; set; }
+
+        public double CustomerRating { get; set; }
+
+        public string CustomerFeedback { get; set; }
+
+        public string OwnerFeedback { get; set; }
     }
 }

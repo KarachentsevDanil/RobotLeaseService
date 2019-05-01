@@ -59,9 +59,35 @@ namespace RLS.BLL.Services.Rentals
             return _mapper.Map<GetRentalDto>(newItem);
         }
 
+        public async Task<GetRentalDto> CustomerUpdateRentalAsync(CustomerUpdateRentalDto item, CancellationToken ct = default)
+        {
+            var itemToUpdate = await _unitOfWork.RentalRepository.GetAsync(item.RentalId, ct);
+
+            _mapper.Map(item, itemToUpdate);
+
+            _unitOfWork.RentalRepository.Update(itemToUpdate);
+
+            await _unitOfWork.CommitAsync(ct);
+
+            return _mapper.Map<GetRentalDto>(itemToUpdate);
+        }
+
+        public async Task<GetRentalDto> OwnerUpdateRentalAsync(OwnerUpdateRentalDto item, CancellationToken ct = default)
+        {
+            var itemToUpdate = await _unitOfWork.RentalRepository.GetAsync(item.RentalId, ct);
+
+            _mapper.Map(item, itemToUpdate);
+
+            _unitOfWork.RentalRepository.Update(itemToUpdate);
+
+            await _unitOfWork.CommitAsync(ct);
+
+            return _mapper.Map<GetRentalDto>(itemToUpdate);
+        }
+
         public async Task<GetRentalDto> GetRentalAsync(int id, CancellationToken ct = default)
         {
-            var result = await _unitOfWork.RentalRepository.GetAsync(id);
+            var result = await _unitOfWork.RentalRepository.GetAsync(id, ct);
 
             return _mapper.Map<GetRentalDto>(result);
         }

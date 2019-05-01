@@ -22,8 +22,11 @@ namespace RLS.WebApi.Models
         {
             return new JsonResultData
             {
-                IsSuccess = false,
-                ErrorMessage = errorMessage
+                Data = new
+                {
+                    IsSuccess = false,
+                    ErrorMessage = errorMessage
+                }
             };
         }
     }

@@ -32,6 +32,10 @@
 
 									<div class="panel-body">
 										<div>
+                      <div class="form-group">
+                      <label v-localize="{i: 'rent.search'}"> </label>
+                      <input class="form-control" v-model="term"/>
+                      </div>
 											<div class="form-group">
                       <label v-localize="{i: 'rent.companies'}"> </label>
                       <select2 style="width: 100%;"
@@ -151,6 +155,7 @@ export default {
       selectedTypes: [],
       selectedCompanies: [],
       selectedModels: [],
+      term: "",
       startDate: "",
       endDate: "",
       companySelectConfiguration: {
@@ -229,6 +234,7 @@ export default {
         modelIds: this.selectedModels,
         startDate: this.startDate,
         endDate: this.endDate,
+        term: this.term,
         isSearchView: true
       };
 

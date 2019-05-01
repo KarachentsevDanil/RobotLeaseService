@@ -7,7 +7,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a><i class="icon-pencil"></i> <span v-localize="{i: 'common.details'}"></span></a>
+                        <router-link :to="'/rent-details/'+row.Id" v-localize="{i: 'common.details'}"></router-link>
                     </li>
                 </ul>
             </li>

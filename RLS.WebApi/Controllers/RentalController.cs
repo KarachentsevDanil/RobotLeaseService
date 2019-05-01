@@ -51,7 +51,7 @@ namespace RLS.WebApi.Controllers
         {
             BuildUserPrincipal();
             var rental = await _rentalService.GetRentalAsync(id);
-            return ValidateAccessToEntity(rental.Owner.Id, rental);
+            return Json(JsonResultData.Success(rental));
         }
 
         [HttpPost]
@@ -62,6 +62,20 @@ namespace RLS.WebApi.Controllers
 
             var result = await _rentalService.CreateRentalAsync(rental);
             return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(result)));
+        }
+
+        [HttpPut("customer")]
+        public async Task<ActionResult> CustomerUpdateRentalAsync([FromBody] CustomerUpdateRentalDto rental)
+        {
+            var result = await _rentalService.CustomerUpdateRentalAsync(rental);
+            return Json(JsonResultData.Success(result));
+        }
+
+        [HttpPut("owner")]
+        public async Task<ActionResult> OwnerUpdateRentalAsync([FromBody] OwnerUpdateRentalDto rental)
+        {
+            var result = await _rentalService.OwnerUpdateRentalAsync(rental);
+            return Json(JsonResultData.Success(result));
         }
     }
 }

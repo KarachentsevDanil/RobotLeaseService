@@ -82,6 +82,10 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.Id, t => t.Ignore())
                 .ForMember(x => x.Status, t => t.Ignore());
 
+            CreateMap<CustomerUpdateRentalDto, Rental>();
+
+            CreateMap<OwnerUpdateRentalDto, Rental>();
+
             CreateMap<Rental, GetRentalForCalendarDto>()
                 .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName} - {p.User.Email}"))
                 .ForMember(x => x.Start, t => t.MapFrom(p => p.StartDate.ToString("O")))

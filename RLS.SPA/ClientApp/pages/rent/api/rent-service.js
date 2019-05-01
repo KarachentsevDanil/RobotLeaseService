@@ -11,6 +11,14 @@ export const getRentsByParams = data => {
     return httpService.getData(params);
 }
 
+export const getRentById = id => {
+    let params = {
+        url: apiRent + id
+    }
+
+    return httpService.getData(params);
+}
+
 export const addRent = data => {
     let params = {
         url: apiRent,
@@ -18,4 +26,22 @@ export const addRent = data => {
     }
 
     return httpService.postData(params);
+}
+
+export const customerUpdateRent = data => {
+    let params = {
+        url: apiRent + "customer",
+        data: data
+    }
+
+    return httpService.putData(params);
+}
+
+export const ownerUpdateRent = data => {
+    let params = {
+        url: apiRent + "owner",
+        data: data
+    }
+
+    return httpService.putData(params);
 }

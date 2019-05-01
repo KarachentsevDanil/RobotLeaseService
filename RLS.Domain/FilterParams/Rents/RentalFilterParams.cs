@@ -17,6 +17,8 @@ namespace RLS.Domain.FilterParams.Rents
 
         public DateTime? End { get; set; }
 
+        public string Term { get; set; }
+
         public bool IsCalendarView { get; set; }
     }
 }

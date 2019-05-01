@@ -11,6 +11,8 @@ namespace RLS.BLL.DTOs.FilterParams.Rents
 
         public int? RobotId { get; set; }
 
+        public string Term { get; set; }
+
         public DateTime? Start { get; set; }
 
         public DateTime? End { get; set; }
