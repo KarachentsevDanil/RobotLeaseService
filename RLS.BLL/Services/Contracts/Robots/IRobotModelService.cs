@@ -20,5 +20,7 @@ namespace RLS.BLL.Services.Contracts.Robots
             CancellationToken ct = default);
 
         Task<IEnumerable<GetRobotModelDto>> GetRobotModelsAsync(CancellationToken ct = default);
+
+        Task<IEnumerable<GetRobotModelPopularityDto>> GetTopNPopularModelsAsync(RobotPopularityFilterParamsDto filterParams, CancellationToken ct = default);
     }
 }

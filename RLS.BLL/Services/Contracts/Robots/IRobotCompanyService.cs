@@ -24,5 +24,6 @@ namespace RLS.BLL.Services.Contracts.Robots
             string term,
             CancellationToken ct = default);
 
+        Task<IEnumerable<GetRobotCompanyPopularityDto>> GetTopNPopularCompaniesAsync(RobotPopularityFilterParamsDto filterParams, CancellationToken ct = default);
     }
 }

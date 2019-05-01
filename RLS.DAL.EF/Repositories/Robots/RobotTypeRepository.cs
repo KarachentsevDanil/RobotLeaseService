@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using RLS.DAL.EF.Extensions;
+using RLS.Domain.Enums;
 using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Models;
 
@@ -27,6 +28,29 @@ namespace RLS.DAL.EF.Repositories.Robots
                 .ToListAsync(ct);
 
             return items;
+        }
+
+        public async Task<IEnumerable<RobotType>> GetTopNPopularTypesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default)
+        {
+            IQueryable<RobotType> query = DbContext.RobotTypes
+                .AsNoTracking()
+                .Include(t => t.Models)
+                .ThenInclude(t => t.Robots)
+                .ThenInclude(t => t.Rentals);
+
+            switch (filterParams.Type)
+            {
+                case RobotPopularity.ByRentCount:
+                    query = query.OrderByDescending(t => t.Models.OrderByDescending(m => m.Robots.OrderByDescending(r => r.Rentals.Count)));
+                    break;
+                case RobotPopularity.ByRobotCount:
+                    query = query.OrderByDescending(t => t.Models.OrderByDescending(m => m.Robots.Count));
+                    break;
+            }
+
+            return await query
+                .Take(filterParams.CountToTake)
+                .ToListAsync(ct);
         }
 
         public async Task<CollectionResult<RobotType>> GetTypesByFilterParamsAsync(RobotTypeFilterParams filterParams, CancellationToken ct = default)

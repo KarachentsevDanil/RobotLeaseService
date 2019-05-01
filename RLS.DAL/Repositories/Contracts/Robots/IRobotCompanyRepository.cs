@@ -1,8 +1,9 @@
-﻿using RLS.Domain.Robots;
+﻿using RLS.Domain.FilterParams.Robots;
+using RLS.Domain.Models;
+using RLS.Domain.Robots;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.Domain.Models;
 
 namespace RLS.DAL.Repositories.Contracts.Robots
 {
@@ -11,5 +12,7 @@ namespace RLS.DAL.Repositories.Contracts.Robots
         Task<CollectionResult<RobotCompany>> GetCompaniesByFilterParamsAsync(RobotCompanyFilterParams filterParams, CancellationToken ct = default);
 
         Task<IEnumerable<RobotCompany>> GetRobotCompaniesByTermAsync(string term, CancellationToken ct = default);
+
+        Task<IEnumerable<RobotCompany>> GetTopNPopularCompaniesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default);
     }
 }

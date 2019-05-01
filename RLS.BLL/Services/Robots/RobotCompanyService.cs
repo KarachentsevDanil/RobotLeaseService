@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using RLS.BLL.DTOs.FilterParams.Robots;
 using RLS.BLL.DTOs.Robots.Companies;
 using RLS.BLL.Services.Contracts.Robots;
 using RLS.DAL.UnitOfWork.Contracts;
+using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Models;
 using RLS.Domain.Robots;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -70,6 +71,15 @@ namespace RLS.BLL.Services.Robots
             var item = await _unitOfWork.RobotCompanyRepository.GetRobotCompaniesByTermAsync(term, ct);
 
             return _mapper.Map<IEnumerable<GetRobotCompanyDto>>(item);
+        }
+
+        public async Task<IEnumerable<GetRobotCompanyPopularityDto>> GetTopNPopularCompaniesAsync(RobotPopularityFilterParamsDto filterParams, CancellationToken ct = default)
+        {
+            var robotModelFilterParams = _mapper.Map<RobotPopularityFilterParams>(filterParams);
+
+            var items = await _unitOfWork.RobotModelRepository.GetTopNPopularModelsAsync(robotModelFilterParams, ct);
+
+            return _mapper.Map<IEnumerable<GetRobotCompanyPopularityDto>>(items);
         }
     }
 }

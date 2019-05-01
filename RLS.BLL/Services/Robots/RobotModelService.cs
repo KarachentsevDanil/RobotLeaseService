@@ -72,5 +72,14 @@ namespace RLS.BLL.Services.Robots
 
             return _mapper.Map<IEnumerable<GetRobotModelDto>>(item);
         }
+
+        public async Task<IEnumerable<GetRobotModelPopularityDto>> GetTopNPopularModelsAsync(RobotPopularityFilterParamsDto filterParams, CancellationToken ct = default)
+        {
+            var robotModelFilterParams = _mapper.Map<RobotPopularityFilterParams>(filterParams);
+
+            var items = await _unitOfWork.RobotModelRepository.GetTopNPopularModelsAsync(robotModelFilterParams, ct);
+
+            return _mapper.Map<IEnumerable<GetRobotModelPopularityDto>>(items);
+        }
     }
 }

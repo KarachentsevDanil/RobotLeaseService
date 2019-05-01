@@ -13,6 +13,7 @@ using RLS.Domain.Rentals;
 using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
+using System.Linq;
 
 namespace RLS.BLL.Configurations.MapperProfiles
 {
@@ -24,6 +25,8 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.Role, t => t.MapFrom(p => p.Role.ToString()));
 
             CreateMap<RobotCompanyFilterParamsDto, RobotCompanyFilterParams>();
+
+            CreateMap<RobotPopularityFilterParamsDto, RobotPopularityFilterParams>();
 
             CreateMap<RobotFilterParamsDto, RobotFilterParams>();
 
@@ -55,6 +58,19 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<RobotModel, GetRobotModelDto>()
                 .ForMember(x => x.CompanyName, t => t.MapFrom(p => p.Company.Name))
                 .ForMember(x => x.TypeName, t => t.MapFrom(p => p.Type.Name));
+
+            CreateMap<RobotModel, GetRobotModelPopularityDto>()
+                .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.Company.Name} {p.Name}"))
+                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.Robots.Count))
+                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.Robots.Sum(r => r.Rentals.Count)));
+
+            CreateMap<RobotCompany, GetRobotCompanyPopularityDto>()
+                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Count)))
+                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Sum(m => m.Rentals.Count))));
+
+            CreateMap<RobotType, GetRobotTypePopularityDto>()
+                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Count)))
+                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Sum(m => m.Rentals.Count))));
 
             CreateMap<CreateRobotDto, Robot>()
                 .ForMember(x => x.Id, t => t.Ignore());

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.Domain.Enums;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {
@@ -58,6 +59,30 @@ namespace RLS.DAL.EF.Repositories.Robots
                 .ToListAsync(ct);
 
             return items;
+        }
+
+        public async Task<IEnumerable<RobotModel>> GetTopNPopularModelsAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default)
+        {
+            IQueryable<RobotModel> query = DbContext.RobotModels
+                .AsNoTracking()
+                .Include(t => t.Type)
+                .Include(t => t.Company)
+                .Include(t => t.Robots)
+                .ThenInclude(t => t.Rentals);
+
+            switch (filterParams.Type)
+            {
+                case RobotPopularity.ByRentCount:
+                    query = query.OrderByDescending(t => t.Robots.OrderByDescending(r => r.Rentals.Count));
+                    break;
+                case RobotPopularity.ByRobotCount:
+                    query = query.OrderByDescending(t => t.Robots.Count);
+                    break;
+            }
+
+            return await query
+                .Take(filterParams.CountToTake)
+                .ToListAsync(ct);
         }
 
         private void FillFilterExpression(RobotModelFilterParams filterParams)

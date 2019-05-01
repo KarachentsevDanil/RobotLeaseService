@@ -12,5 +12,7 @@ namespace RLS.DAL.Repositories.Contracts.Robots
         Task<CollectionResult<RobotType>> GetTypesByFilterParamsAsync(RobotTypeFilterParams filterParams, CancellationToken ct = default);
 
         Task<IEnumerable<RobotType>> GetRobotTypesByTermAsync(string term, CancellationToken ct = default);
+
+        Task<IEnumerable<RobotType>> GetTopNPopularTypesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default);
     }
 }
