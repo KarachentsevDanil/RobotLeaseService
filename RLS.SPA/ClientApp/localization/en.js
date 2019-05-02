@@ -11,7 +11,9 @@ export const enLocalization = {
         filter: "Filter",
         totalItems: "Total",
         itemsPages: "items / page",
-        dashboard: "Dashboard",
+        companyDashboard: "Company Dashboard",
+        modelDashboard: "Model Dashboard",
+        typeDashboard: "Type Dashboard",
         search: "Search...",
         clear: "Clear",
         priceRange: "Price Range:"
@@ -173,9 +175,22 @@ export const enLocalization = {
 
 export const adminTaxiItems = [
     {
-        title: "Dashboard",
+        title: "Dashboards",
         icon: "icon-home4",
-        url: "/dashboard"
+        url: "",
+        children: [{
+            title: "Company Dashboard",
+            url: "/company-dashboard"
+        },
+        {
+            title: "Type Dashboard",
+            url: "/type-dashboard"
+        },
+        {
+            title: "Model Dashboard",
+            url: "/model-dashboard"
+        }
+        ]
     },
     {
         title: "Robot",
@@ -211,9 +226,22 @@ export const adminTaxiItems = [
 ];
 export const userTaxiItems = [
     {
-        title: "Dashboard",
+        title: "Dashboards",
         icon: "icon-home4",
-        url: "/dashboard"
+        url: "",
+        children: [{
+            title: "Company Dashboard",
+            url: "/company-dashboard"
+        },
+        {
+            title: "Type Dashboard",
+            url: "/type-dashboard"
+        },
+        {
+            title: "Model Dashboard",
+            url: "/model-dashboard"
+        }
+        ]
     },
     {
         title: "Robot",

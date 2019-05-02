@@ -4,6 +4,8 @@
     {
         ByRentCount = 1,
 
-        ByRobotCount = 2
+        ByRobotCount = 2,
+
+        ByRobotAndRentCount = 3
     }
 }

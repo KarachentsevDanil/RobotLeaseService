@@ -82,9 +82,12 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.UserName, t => t.MapFrom(p => p.User.Email))
                 .ForMember(x => x.UserPhone, t => t.MapFrom(p => p.User.PhoneNumber))
                 .ForMember(x => x.UserFullName, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"))
+                .ForMember(x => x.CompanyId, t => t.MapFrom(p => p.Model.CompanyId))
                 .ForMember(x => x.CompanyName, t => t.MapFrom(p => p.Model.Company.Name))
+                .ForMember(x => x.TypeId, t => t.MapFrom(p => p.Model.TypeId))
                 .ForMember(x => x.TypeName, t => t.MapFrom(p => p.Model.Type.Name))
                 .ForMember(x => x.Description, t => t.MapFrom(p => p.Model.Description))
+                .ForMember(x => x.ModelId, t => t.MapFrom(p => p.ModelId))
                 .ForMember(x => x.ModelName, t => t.MapFrom(p => p.Model.Name))
                 .ForMember(x => x.AvarageRating, t => t.MapFrom(p => 
                     p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0) 
@@ -93,6 +96,8 @@ namespace RLS.BLL.Configurations.MapperProfiles
 
             CreateMap<Rental, GetShortRobotRentalDto>()
                 .ForMember(x => x.Customer, t => t.MapFrom(p => p.User))
+                .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToShortDateString()))
+                .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToShortDateString()))
                 .ForMember(x => x.Status, t => t.MapFrom(p => p.Status.ToString()));
 
             CreateMap<Rental, GetRentalDto>()

@@ -12,6 +12,10 @@ namespace RLS.BLL.DTOs.Robots
 
         public double TotalPrice { get; set; }
 
+        public string StartDate { get; set; }
+
+        public string EndDate { get; set; }
+
         public double RobotRating { get; set; }
 
         public double CustomerRating { get; set; }

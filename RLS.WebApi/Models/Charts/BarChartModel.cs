@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RLS.WebApi.Models.Charts
 {
     public class BarChartModel
     {
-        [JsonProperty("value")]
-        public int Value { get; set; }
+        public IEnumerable<string> Titles { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        public IEnumerable<int> RobotRentsCount { get; set; }
+
+        public IEnumerable<int> RobotsCount { get; set; }
     }
 }

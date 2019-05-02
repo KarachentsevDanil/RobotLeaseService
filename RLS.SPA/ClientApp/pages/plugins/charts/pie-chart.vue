@@ -1,8 +1,17 @@
 <template>
-  <v-chart :options="chartSettings"/>
+<div class="chart-container">
+    <v-chart
+      class="chart has-fixed-height has-minimum-width"
+      :options="chartSettings"
+      :theme="theme"
+      autoresize
+    />
+  </div>
 </template>
 
 <script>
+import chartTheme from "./chart-theme";
+
 export default {
   props: {
     data: {
@@ -14,6 +23,7 @@ export default {
   },
   data() {
     return {
+      theme: {},
       chartSettings: {
         title: {
           text: "",
@@ -55,6 +65,17 @@ export default {
       deep: true
     }
   },
-  mounted() {}
+  beforeMount() {
+    this.theme = chartTheme;
+  }
 };
 </script>
+
+<style>
+.chart {
+    position: relative !important;
+    display: block;
+    width: 100% !important;
+    direction: ltr;
+}
+</style>

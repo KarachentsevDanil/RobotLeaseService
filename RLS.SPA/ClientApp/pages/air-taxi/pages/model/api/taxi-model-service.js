@@ -57,3 +57,12 @@ export const getTopRobotModelsByRentCount = data => {
 
     return httpService.getData(params);
 }
+
+export const getTopRobotModelsByRobotAndRentsCount = data => {
+    let params = {
+        url: apiTaxiModel + "bar-chart/all",
+        data: data
+    }
+
+    return httpService.getData(params);
+}

@@ -11,7 +11,9 @@ export const uaLocalization = {
         filter: "Фільтер",
         totalItems: "Всього",
         itemsPages: "записи / сторинка",
-        dashboard: "Панель приладів",
+        companyDashboard: "Панель приладів Компанії",
+        modelDashboard: "Панель приладів Моделi",
+        typeDashboard: "Панель приладів Типу",
         search: "Пошук...",
         clear: "Очистити",
         priceRange: "Цiновий Дiаназон:"
@@ -160,7 +162,20 @@ export const adminTaxiItems = [
     {
         title: "Панель приладів",
         icon: "icon-home4",
-        url: "/dashboard"
+        url: "",
+        children: [{
+            title: "Панель приладів Компанії",
+            url: "/company-dashboard"
+        },
+        {
+            title: "Панель приладів Типу",
+            url: "/type-dashboard"
+        },
+        {
+            title: "Панель приладів Моделi",
+            url: "/model-dashboard"
+        }
+        ]
     },
     {
         title: "Роботи",
@@ -198,7 +213,20 @@ export const userTaxiItems = [
     {
         title: "Панель приладів",
         icon: "icon-home4",
-        url: "/dashboard"
+        url: "",
+        children: [{
+            title: "Панель приладів Компанії",
+            url: "/company-dashboard"
+        },
+        {
+            title: "Панель приладів Типу",
+            url: "/type-dashboard"
+        },
+        {
+            title: "Панель приладів Моделi",
+            url: "/model-dashboard"
+        }
+        ]
     },
     {
         title: "Роботи",

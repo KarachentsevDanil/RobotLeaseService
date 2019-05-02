@@ -10,9 +10,15 @@ namespace RLS.BLL.DTOs.Robots
 
         public double DailyCosts { get; set; }
 
+        public string ModelId { get; set; }
+
         public string ModelName { get; set; }
 
+        public string TypeId { get; set; }
+
         public string TypeName { get; set; }
+
+        public string CompanyId { get; set; }
 
         public string CompanyName { get; set; }
 

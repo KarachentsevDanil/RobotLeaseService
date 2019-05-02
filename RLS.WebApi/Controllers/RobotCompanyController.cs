@@ -73,7 +73,7 @@ namespace RLS.WebApi.Controllers
 
             var companies = await _robotCompanyService.GetTopNPopularCompaniesAsync(filterParams);
 
-            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRobots > 0).Select(t => new BarChartModel
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRobots > 0).Select(t => new PieChartModel
             {
                 Name = t.Name,
                 Value = t.CountOfRobots
@@ -91,11 +91,32 @@ namespace RLS.WebApi.Controllers
 
             var companies = await _robotCompanyService.GetTopNPopularCompaniesAsync(filterParams);
 
-            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRents > 0).Select(t => new BarChartModel
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRents > 0).Select(t => new PieChartModel
             {
                 Name = t.Name,
                 Value = t.CountOfRents
             })));
+        }
+
+        [HttpGet("bar-chart/all")]
+        public async Task<ActionResult> GetTopRobotCompaniesByRobotAndRentsCountAsync(int? count)
+        {
+            var filterParams = new RobotPopularityFilterParamsDto
+            {
+                Type = RobotPopularity.ByRobotAndRentCount,
+                CountToTake = count ?? 5
+            };
+
+            var companies = await _robotCompanyService.GetTopNPopularCompaniesAsync(filterParams);
+
+            var response = new BarChartModel()
+            {
+                Titles = companies.Select(t => t.Name),
+                RobotRentsCount = companies.Select(t => t.CountOfRents),
+                RobotsCount = companies.Select(t => t.CountOfRobots)
+            };
+
+            return Json(JsonResultData.Success(response));
         }
     }
 }

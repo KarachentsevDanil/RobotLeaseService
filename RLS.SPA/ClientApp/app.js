@@ -15,6 +15,7 @@ import ECharts from 'vue-echarts'
 import Datatable from 'vue2-datatable-component';
 import grid from './pages/plugins/datatable/datatable';
 import pieChart from './pages/plugins/charts/pie-chart';
+import barChart from './pages/plugins/charts/bar-chart';
 import select2 from './pages/plugins/select2/select2';
 import Localize from 'v-localize';
 
@@ -75,6 +76,7 @@ Vue.component('starRating', StarRating);
 Vue.component('grid', grid);
 Vue.component('select2', select2);
 Vue.component('pie-chart', pieChart);
+Vue.component('bar-chart', barChart);
 
 const app = new Vue({
     store,

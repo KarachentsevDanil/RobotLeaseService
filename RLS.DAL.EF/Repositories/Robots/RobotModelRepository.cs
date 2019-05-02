@@ -70,6 +70,16 @@ namespace RLS.DAL.EF.Repositories.Robots
                 .Include(t => t.Robots)
                 .ThenInclude(t => t.Rentals);
 
+            if (filterParams.CompanyId.HasValue)
+            {
+                query = query.Where(t => t.CompanyId == filterParams.CompanyId);
+            }
+
+            if (filterParams.TypeId.HasValue)
+            {
+                query = query.Where(t => t.TypeId == filterParams.TypeId);
+            }
+
             switch (filterParams.Type)
             {
                 case RobotPopularity.ByRentCount:
@@ -77,6 +87,9 @@ namespace RLS.DAL.EF.Repositories.Robots
                     break;
                 case RobotPopularity.ByRobotCount:
                     query = query.OrderByDescending(t => t.Robots.Count);
+                    break;
+                case RobotPopularity.ByRobotAndRentCount:
+                    query = query.OrderByDescending(t => t.Robots.Count + t.Robots.Sum(r => r.Rentals.Count));
                     break;
             }
 

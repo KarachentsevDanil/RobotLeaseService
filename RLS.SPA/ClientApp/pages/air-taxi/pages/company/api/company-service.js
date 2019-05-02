@@ -37,3 +37,12 @@ export const getTopRobotCompaniesByRentCount = data => {
 
     return httpService.getData(params);
 }
+
+export const getTopRobotCompaniesByRobotAndRentsCount = data => {
+    let params = {
+        url: apiCompany + "bar-chart/all",
+        data: data
+    }
+
+    return httpService.getData(params);
+}

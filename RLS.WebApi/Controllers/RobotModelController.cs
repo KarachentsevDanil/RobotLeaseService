@@ -63,17 +63,19 @@ namespace RLS.WebApi.Controllers
         }
 
         [HttpGet("chart/robot")]
-        public async Task<ActionResult> GetTopRobotModelsByRobotCountAsync(int? count)
+        public async Task<ActionResult> GetTopRobotModelsByRobotCountAsync(int? count, int? companyId, int? typeId)
         {
             var filterParams = new RobotPopularityFilterParamsDto
             {
                 Type = RobotPopularity.ByRobotCount,
+                CompanyId = companyId,
+                TypeId = typeId,
                 CountToTake = count ?? 5
             };
 
             var companies = await _robotModelService.GetTopNPopularModelsAsync(filterParams);
 
-            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRobots > 0).Select(t => new BarChartModel
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRobots > 0).Select(t => new PieChartModel
             {
                 Name = t.Title,
                 Value = t.CountOfRobots
@@ -81,21 +83,46 @@ namespace RLS.WebApi.Controllers
         }
 
         [HttpGet("chart/rents")]
-        public async Task<ActionResult> GetTopRobotModelsByRentsCountAsync(int? count)
+        public async Task<ActionResult> GetTopRobotModelsByRentsCountAsync(int? count, int? companyId, int? typeId)
         {
             var filterParams = new RobotPopularityFilterParamsDto
             {
                 Type = RobotPopularity.ByRentCount,
+                CompanyId = companyId,
+                TypeId = typeId,
                 CountToTake = count ?? 5
             };
 
             var companies = await _robotModelService.GetTopNPopularModelsAsync(filterParams);
 
-            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRents > 0).Select(t => new BarChartModel
+            return Json(JsonResultData.Success(companies.Where(t => t.CountOfRents > 0).Select(t => new PieChartModel
             {
                 Name = t.Title,
                 Value = t.CountOfRents
             })));
+        }
+
+        [HttpGet("bar-chart/all")]
+        public async Task<ActionResult> GetTopRobotModelsByRobotAndRentsCountAsync(int? count, int? companyId, int? typeId)
+        {
+            var filterParams = new RobotPopularityFilterParamsDto
+            {
+                Type = RobotPopularity.ByRobotAndRentCount,
+                CompanyId = companyId,
+                TypeId = typeId,
+                CountToTake = count ?? 5
+            };
+
+            var companies = await _robotModelService.GetTopNPopularModelsAsync(filterParams);
+
+            var response = new BarChartModel()
+            {
+                Titles = companies.Select(t => t.Title),
+                RobotRentsCount = companies.Select(t => t.CountOfRents),
+                RobotsCount = companies.Select(t => t.CountOfRobots)
+            };
+
+            return Json(JsonResultData.Success(response));
         }
     }
 }

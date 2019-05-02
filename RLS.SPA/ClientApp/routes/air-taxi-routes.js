@@ -2,7 +2,9 @@ import CompanyListPage from "../pages/air-taxi/pages/company/list/company-list";
 import TaxiModelListPage from "../pages/air-taxi/pages/model/list/taxi-model-list";
 import TaxiListPage from "../pages/air-taxi/pages/taxi/list/taxi-list";
 import TaxiTypeListPage from "../pages/air-taxi/pages/type/list/taxi-type-list";
-import DashboardPage from "../pages/dashboard/pages/dashboard";
+import CompanyDashboardPage from "../pages/dashboard/pages/company-dashboard";
+import ModelDashboardPage from "../pages/dashboard/pages/model-dashboard";
+import TypeDashboardPage from "../pages/dashboard/pages/type-dashboard";
 
 import * as routeGuards from "./route-guards";
 
@@ -36,8 +38,22 @@ export default [
         }
     },
     {
-        path: "/dashboard",
-        component: DashboardPage,
+        path: "/company-dashboard",
+        component: CompanyDashboardPage,
+        beforeEnter: (to, from, next) => {
+            routeGuards.validateRoute(to, from, next);
+        }
+    },
+    {
+        path: "/model-dashboard",
+        component: ModelDashboardPage,
+        beforeEnter: (to, from, next) => {
+            routeGuards.validateRoute(to, from, next);
+        }
+    },
+    {
+        path: "/type-dashboard",
+        component: TypeDashboardPage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);
         }

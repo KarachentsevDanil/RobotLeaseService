@@ -44,6 +44,9 @@
               <a href="#taxi-details-tab" data-toggle="tab" v-localize="{i: 'common.details'}"></a>
             </li>
             <li>
+              <a href="#charts" data-toggle="tab">Charts</a>
+            </li>
+            <li>
               <a href="#feedbacks" data-toggle="tab" v-localize="{i: 'taxi.feedbacks'}"></a>
             </li>
             <li>
@@ -141,6 +144,48 @@
                 </div>
               </div>
             </div>
+            <div class="tab-pane" id="charts">
+              <div class="row">
+                <div class="col-md-6">
+                  <div>
+                    <div class="panel-heading">
+                      <h5 class="panel-title">Top {{taxi.CompanyName}} Models</h5>
+                    </div>
+                    <div class="panel-body">
+                      <pie-chart
+                        :data="modelRobotPieChartSettings.data"
+                        :title="modelRobotPieChartSettings.title"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div>
+                    <div class="panel-heading">
+                      <h5 class="panel-title">Top {{taxi.CompanyName}} Models</h5>
+                    </div>
+                    <div class="panel-body">
+                      <pie-chart
+                        :data="modelRentPieChartSettings.data"
+                        :title="modelRentPieChartSettings.title"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <div class="panel-heading">
+                      <h5 class="panel-title">Top {{taxi.CompanyName}} Models</h5>
+                    </div>
+                    <div class="panel-body">
+                      <bar-chart :data="modelBarChartSettings.data"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="tab-pane" id="feedbacks">
               <div class="panel-heading">
                 <h5 class="panel-title text-semiold">
@@ -166,7 +211,7 @@
                             href="#"
                             class="text-semibold"
                           >{{rent.Customer.FirstName}} {{rent.Customer.LastName}}</a>
-                          <!-- <span class="media-annotation dotted">Just now</span> -->
+                          <span class="media-annotation dotted">{{rent.EndDate}}</span>
                         </div>
                         <p>{{rent.CustomerFeedback}}</p>
                         <p>
@@ -198,6 +243,7 @@
 
 <script>
 import * as taxiService from "../../../air-taxi/pages/taxi/api/taxi-service";
+import * as modelService from "../../../air-taxi/pages/model/api/taxi-model-service";
 import taxiRentCalendar from "./taxi-rent-calendar";
 import taxiRentPopup from "./rent-taxi-popup";
 
@@ -213,16 +259,76 @@ export default {
   },
   data() {
     return {
-      taxi: {}
+      taxi: {},
+      modelRobotPieChartSettings: {
+        title: {
+          name: "",
+          text: "",
+          subtext: ""
+        },
+        data: []
+      },
+      modelRentPieChartSettings: {
+        title: {
+          text: "",
+          name: "",
+          subtext: ""
+        },
+        data: []
+      },
+      modelBarChartSettings: {
+        data: {
+          titles: [],
+          robotRentsCount: [],
+          robotsCount: []
+        }
+      }
     };
   },
   async beforeMount() {
     let taxi = (await taxiService.getAirTaxiById(this.id)).data.Data;
     this.taxi = taxi;
+
+    let data = {
+        companyId: taxi.CompanyId
+    }
+
+    let robotModels = (await modelService.getTopRobotModelsByRobotCount(data)).data
+      .Data;
+
+    this.fillChartData(this.modelRobotPieChartSettings, robotModels, "model");
+
+    let rentModels = (await modelService.getTopRobotModelsByRentCount(data)).data
+      .Data;
+
+    this.fillChartData(this.modelRentPieChartSettings, rentModels, "model");
+
+    
+    let barChartData = (await modelService.getTopRobotModelsByRobotAndRentsCount(data))
+      .data.Data;
+
+      this.modelBarChartSettings.data.titles = barChartData.Titles;
+      this.modelBarChartSettings.data.robotRentsCount = barChartData.RobotRentsCount;
+      this.modelBarChartSettings.data.robotsCount = barChartData.RobotsCount;
   },
   methods: {
     getNameIncon(item) {
       return item.Customer.FirstName[0] + item.Customer.LastName[0];
+    },
+    fillChartData(chartSettings, data, chartType) {
+      chartSettings.data = data;
+
+      chartSettings.title.name = this.$locale({
+        i: "chart." + chartType + ".pieChartName"
+      });
+
+      chartSettings.title.text = this.$locale({
+        i: "chart." + chartType + ".pieChartTitle"
+      });
+
+      chartSettings.title.subtext = this.$locale({
+        i: "chart." + chartType + ".rentPieChartSubText"
+      });
     }
   }
 };
