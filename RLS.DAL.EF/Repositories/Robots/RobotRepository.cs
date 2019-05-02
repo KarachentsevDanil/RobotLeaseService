@@ -73,7 +73,9 @@ namespace RLS.DAL.EF.Repositories.Robots
             if (!string.IsNullOrEmpty(filterParams.Term))
             {
                 predicate = predicate.And(
-                    t => t.Model.Name.Contains(filterParams.Term) || t.Model.Type.Name.Contains(filterParams.Term));
+                    t => t.Model.Name.Contains(filterParams.Term) || t.Model.Type.Name.Contains(filterParams.Term) ||
+                         t.Model.Description.Contains(filterParams.Term) || t.Model.Type.Description.Contains(filterParams.Term) ||
+                         t.Model.Company.Name.Contains(filterParams.Term));
             }
 
             if (filterParams.MinRating > 0 || filterParams.MaxRating < 5)
