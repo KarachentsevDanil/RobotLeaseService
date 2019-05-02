@@ -26,5 +26,9 @@ namespace RLS.Domain.FilterParams.Robots
         public double MinPrice { get; set; }
 
         public double MaxPrice { get; set; }
+
+        public double MinRating { get; set; }
+
+        public double MaxRating { get; set; }
     }
 }

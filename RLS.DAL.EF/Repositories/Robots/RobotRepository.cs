@@ -76,6 +76,13 @@ namespace RLS.DAL.EF.Repositories.Robots
                     t => t.Model.Name.Contains(filterParams.Term) || t.Model.Type.Name.Contains(filterParams.Term));
             }
 
+            if (filterParams.MinRating > 0 || filterParams.MaxRating < 5)
+            {
+                predicate = predicate.And(
+                    t => t.Rentals != null && t.Rentals.Any(r => r.RobotRating > 0) && t.Rentals.Where(r => r.RobotRating > 0).Average(r => r.RobotRating) >= filterParams.MinRating &&
+                         t.Rentals.Where(r => r.RobotRating > 0).Average(r => r.RobotRating) <= filterParams.MaxRating);
+            }
+
             if (!string.IsNullOrEmpty(filterParams.UserId))
             {
                 predicate = filterParams.IsSearchView ?

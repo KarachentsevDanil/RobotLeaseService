@@ -16,7 +16,8 @@ export const uaLocalization = {
         typeDashboard: "Панель приладів Типу",
         search: "Пошук...",
         clear: "Очистити",
-        priceRange: "Цiновий Дiаназон:"
+        priceRange: "Цiновий Дiаназон:",
+        ratingRange: "Рейтинговий Дiаназон:"
     },
     authorization: {
         email: "Електронна пошта",

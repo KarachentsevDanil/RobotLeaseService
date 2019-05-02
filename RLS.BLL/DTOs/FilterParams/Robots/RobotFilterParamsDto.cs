@@ -21,8 +21,12 @@ namespace RLS.BLL.DTOs.FilterParams.Robots
 
         public bool IsSearchView { get; set; }
 
-        public double MinPrice { get; set; } = 0;
+        public double MinPrice { get; set; }
 
         public double MaxPrice { get; set; } = 1000;
+
+        public double MinRating { get; set; }
+
+        public double MaxRating { get; set; } = 5;
     }
 }

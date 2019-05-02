@@ -16,7 +16,8 @@ export const enLocalization = {
         typeDashboard: "Type Dashboard",
         search: "Search...",
         clear: "Clear",
-        priceRange: "Price Range:"
+        priceRange: "Price Range:",
+        ratingRange: "Rating Range:"
     },
     authorization: {
         email: "E-mail",

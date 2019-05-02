@@ -75,13 +75,24 @@
                     ></select2>
                   </div>
                   <div class="form-group">
-                    <label class="price-range-lable-margin" v-localize="{i: 'common.priceRange'}"></label>
+                    <label class="range-lable-margin" v-localize="{i: 'common.priceRange'}"></label>
                     <vue-slider
                       v-model="priceRange"
                       :min="0"
                       :max="1000"
                       :interval="1"
                       :min-range="10"
+                      :enable-cross="false"
+                      :dot-options="dotOptions"
+                    ></vue-slider>
+                  </div>
+                  <div class="form-group">
+                    <label class="range-lable-margin" v-localize="{i: 'common.ratingRange'}"></label>
+                    <vue-slider
+                      v-model="ratingRange"
+                      :min="0"
+                      :max="5"
+                      :interval="1"
                       :enable-cross="false"
                       :dot-options="dotOptions"
                     ></vue-slider>
@@ -110,7 +121,9 @@
                             startDate != '' ||
                             endDate != '' ||
                             priceRange[0] > 0 ||
-                            priceRange[1] < 1000"
+                            priceRange[1] < 1000 ||
+                            ratingRange[0] > 0 ||
+                            ratingRange[1] < 5"
                   >
                     <span v-localize="{i: 'common.clear'}"></span>
                   </button>
@@ -238,6 +251,7 @@ export default {
       selectedCompanies: [],
       selectedModels: [],
       priceRange: [0, 1000],
+      ratingRange: [0, 5],
       dotOptions: [
         {
           tooltip: "focus"
@@ -316,6 +330,7 @@ export default {
       await this.getTaxies();
 
       this.priceRange = [0, 1000];
+      this.ratingRange = [0, 5];
       this.selectedTypes = [];
       this.selectedCompanies = [];
       this.selectedModels = [];
@@ -339,7 +354,9 @@ export default {
         term: this.term,
         isSearchView: true,
         minPrice: this.priceRange[0],
-        maxPrice: this.priceRange[1]
+        maxPrice: this.priceRange[1],
+        minRating: this.ratingRange[0],
+        maxRating: this.ratingRange[1]
       };
 
       let data = (await taxiService.getTaxiesByParams(params)).data.Data;
@@ -399,7 +416,7 @@ export default {
   width: 105px !important;
   height: 100px !important;
 }
-label.price-range-lable-margin {
+label.range-lable-margin {
   margin-bottom: 30px;
 }
 </style>
