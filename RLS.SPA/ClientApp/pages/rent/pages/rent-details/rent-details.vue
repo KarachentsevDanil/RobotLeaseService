@@ -109,8 +109,7 @@
                         v-localize="{i: 'rent.complete'}"
                       ></button>
                       <button
-                        type="button"
-                        @click="updateRent(2)"
+                        type="button" data-toggle="modal" data-target="#cancelRentModal"
                         class="btn btn-danger legitRipple"
                         v-localize="{i: 'rent.decline'}"
                       ></button>
@@ -162,6 +161,47 @@
         </div>
       </div>
     </div>
+    <div id="cancelRentModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Cancel Rent Dialog</h4>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Reason:</label>
+                <div class="col-sm-10">
+                  <textarea
+                    cols="5"
+                    rows="5"
+                    v-model="cancelReason"
+                    class="form-control"
+                    placeholder="Cancel Reason..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              @click="updateRent(2)"
+              type="button"
+              :disabled="!this.cancelReason"
+              class="btn btn-primary"
+            >Submit</button>
+            <button
+              type="button"
+              class="btn btn-link close-add-popup"
+              data-dismiss="modal"
+              v-localize="{i: 'common.close'}"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -196,7 +236,7 @@ export default {
         case "Completed":
           return "label label-success";
 
-        case "Declined":
+        case "Canceled":
           return "label label-warning";
 
         default:
@@ -207,6 +247,7 @@ export default {
   data() {
     return {
       rent: {},
+      cancelReason: "",
       feedback: {
         feedback: "",
         rating: 1
@@ -238,12 +279,15 @@ export default {
       let data = {
         Id: this.rent.Id,
         Status: status,
-        OwnerFeedback: this.feedback.feedback
+        CancelReason: this.cancelReason
       };
 
-      this.rent.Status = status == 1 ? "Completed" : "Declined";
+      this.rent.Status = status == 1 ? "Completed" : "Canceled";
       await rentService.updateRent(data);
 
+      this.cancelReason = '';
+      $(".close-add-popup").click();
+      
       this.$noty.success(this.$locale({ i: "rent.rentUpdatedMessage" }));
     },
     async leaveFeedback() {

@@ -103,7 +103,8 @@ export const enLocalization = {
     },
     rent: {
         complete: "Complete",
-        decline: "Decline",
+        decline: "Cancel",
+        cancelReason: "Cancel Reason:",
         rents: "Rents",
         rent: "Rent",
         rentList: "Rent List",

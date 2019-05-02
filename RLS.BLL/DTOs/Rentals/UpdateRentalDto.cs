@@ -7,5 +7,7 @@ namespace RLS.BLL.DTOs.Rentals
         public int Id { get; set; }
 
         public RentalStatus Status { get; set; }
+
+        public string CancelReason { get; set; }
     }
 }

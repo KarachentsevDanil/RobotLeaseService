@@ -35,7 +35,7 @@
         <div class="category-content no-padding">
           <ul class="navigation navigation-main navigation-accordion">
             <li class="navigation-header">
-              <span>Air Taxi Sharing Portal</span>
+              <span>Robot Sharing Portal</span>
               <i class="icon-menu" title data-original-title="Main pages"></i>
             </li>
             <li

@@ -28,6 +28,8 @@ namespace RLS.BLL.DTOs.Rentals
 
         public string CustomerFeedback { get; set; }
 
+        public string CancelReason { get; set; }
+
         public string OwnerFeedback { get; set; }
     }
 }

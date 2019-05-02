@@ -55,7 +55,7 @@ export default {
       {
         title: "Taxi",
         tdComp: "rentTaxiCell",
-        tdStyle: { width: "30%" },
+        tdStyle: { width: "20%" },
         sortable: false
       },
       {

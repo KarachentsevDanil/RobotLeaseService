@@ -12,6 +12,11 @@
       {{row.TotalPrice}}
     </span>
     <br>
+    <span v-if="row.CancelReason">
+      <span v-localize="{i: 'rent.cancelReason'}"></span>
+      {{row.CancelReason}}
+    </span>
+    <br v-if="row.CancelReason">
     <span class="label" :class="getStatusClass()">{{row.Status}}</span>
   </div>
 </template>
@@ -28,7 +33,7 @@ export default {
         case "Completed":
           return "label label-success";
 
-        case "Declined":
+        case "Canceled":
           return "label label-warning";
 
         default:

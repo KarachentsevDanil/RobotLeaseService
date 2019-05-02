@@ -30,5 +30,7 @@ namespace RLS.Domain.Rentals
         public string CustomerFeedback { get; set; }
 
         public string OwnerFeedback { get; set; }
+
+        public string CancelReason { get; set; }
     }
 }

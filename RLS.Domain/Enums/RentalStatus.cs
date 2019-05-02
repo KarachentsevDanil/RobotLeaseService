@@ -4,6 +4,6 @@
     {
         Created = 0,
         Completed = 1,
-        Declined = 2
+        Canceled = 2
     }
 }

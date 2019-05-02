@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Welcome to the Air Taxi Sharing Portal!</h1>
+        <h1>Welcome to the Robot Sharing Portal!</h1>
     </div>
 </template>
 
