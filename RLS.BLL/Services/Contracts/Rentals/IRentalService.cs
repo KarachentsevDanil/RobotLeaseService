@@ -22,6 +22,8 @@ namespace RLS.BLL.Services.Contracts.Rentals
 
         Task<GetRentalDto> OwnerUpdateRentalAsync(OwnerUpdateRentalDto item, CancellationToken ct = default);
 
+        Task<GetRentalDto> UpdateRentalAsync(UpdateRentalDto item, CancellationToken ct = default);
+
         Task<GetRentalDto> GetRentalAsync(int id, CancellationToken ct = default);
     }
 }

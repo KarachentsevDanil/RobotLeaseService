@@ -9,6 +9,8 @@ namespace RLS.Domain.FilterParams.Rents
     {
         public string UserId { get; set; }
 
+        public bool IsOwnerView { get; set; }
+
         public RentalStatus? Status { get; set; }
 
         public int? RobotId { get; set; }

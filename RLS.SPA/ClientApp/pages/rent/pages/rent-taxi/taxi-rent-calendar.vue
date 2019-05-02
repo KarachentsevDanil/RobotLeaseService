@@ -31,7 +31,7 @@ export default {
         defaultView: "month",
         editable: false,
         events: {
-          url: "https://robot-api.azurewebsites.net/api/rental/calendar",
+          url: "https://localhost:44306/api/rental/calendar",
           headers: { Authorization: `Bearer ${localStorage.token}` },
           data: {
             robotId: this.id,

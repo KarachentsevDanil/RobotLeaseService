@@ -1,4 +1,6 @@
-﻿namespace RLS.BLL.DTOs.Robots
+﻿using System.Collections.Generic;
+
+namespace RLS.BLL.DTOs.Robots
 {
     public class GetRobotDto
     {
@@ -19,5 +21,11 @@
         public string UserName { get; set; }
 
         public string UserFullName { get; set; }
+
+        public string UserPhone { get; set; }
+
+        public double AvarageRating { get; set; }
+
+        public IEnumerable<GetShortRobotRentalDto> Rentals { get; set; }
     }
 }

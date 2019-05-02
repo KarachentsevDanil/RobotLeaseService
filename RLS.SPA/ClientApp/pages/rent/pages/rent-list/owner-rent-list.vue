@@ -59,8 +59,8 @@ export default {
         sortable: false
       },
       {
-        title: "Owner",
-        tdComp: "rentOwnerCell",
+        title: "Customer",
+        tdComp: "rentCustomerCell",
         tdStyle: { width: "20%" },
         sortable: false
       },
@@ -114,7 +114,8 @@ export default {
     async getRents() {
       let params = {
         skip: this.query.offset,
-        take: this.query.limit
+        take: this.query.limit,
+        isOwnerView: true
       };
 
       if (this.getUser.Role == "User") {
@@ -128,7 +129,7 @@ export default {
     },
     localizePage() {
       this.columns[0].title = this.$locale({ i: "rentGrid.taxiTitle" });
-      this.columns[1].title = this.$locale({ i: "rentGrid.ownerTitle" });
+      this.columns[1].title = this.$locale({ i: "rentGrid.customerTitle" });
       this.columns[2].title = this.$locale({ i: "rentGrid.feedbackTitle" });
       this.columns[3].title = this.$locale({ i: "rentGrid.infoTitle" });
       this.columns[4].title = this.$locale({ i: "rentGrid.actionsTitle" });

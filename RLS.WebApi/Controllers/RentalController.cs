@@ -64,6 +64,13 @@ namespace RLS.WebApi.Controllers
             return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(result)));
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateRentalAsync([FromBody] UpdateRentalDto rental)
+        {
+            var result = await _rentalService.UpdateRentalAsync(rental);
+            return Json(JsonResultData.Success(result));
+        }
+
         [HttpPut("customer")]
         public async Task<ActionResult> CustomerUpdateRentalAsync([FromBody] CustomerUpdateRentalDto rental)
         {

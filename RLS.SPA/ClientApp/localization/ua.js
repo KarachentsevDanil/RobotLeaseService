@@ -11,7 +11,10 @@ export const uaLocalization = {
         filter: "Фільтер",
         totalItems: "Всього",
         itemsPages: "записи / сторинка",
-        dashboard: "Панель приладів"
+        dashboard: "Панель приладів",
+        search: "Пошук...",
+        clear: "Очистити",
+        priceRange: "Цiновий Дiаназон:"
     },
     authorization: {
         email: "Електронна пошта",
@@ -27,6 +30,7 @@ export const uaLocalization = {
         password: "Пароль",
         fullName: "Повне ім'я",
         firstName: "Iм'я",
+        phone: "Телефон",
         lastName: "По батьковi",
         createAccount: "Створити обліковий запис",
         fieldsRequired: "Всі поля обов'язкові для заповнення",
@@ -63,7 +67,9 @@ export const uaLocalization = {
         taxiModel: "Модель Робота:",
         pricePerDay: "Ціна в День:",
         airTaxiList: "Список Літаючих Роботiв",
-        taxiAdded: "Робота було успішно додана."
+        taxiAdded: "Робота було успішно додана.",
+        avarageRating: "Середнiй Рейтинг:",
+        feedbacks: "Вiдгуки"
     },
     type: {
         addTaxiType: "Додати Тип Робота",
@@ -78,6 +84,8 @@ export const uaLocalization = {
         modelPieChartName: "Модель Робота",
     },
     rent: {
+        complete: "Пiдтвердити",
+        decline: "Вiдклонити",
         rents: "Оренди",
         rent: "Орендувати",
         rentList: "Список Оренд",
@@ -91,12 +99,14 @@ export const uaLocalization = {
         startDate: "Дата Початку:",
         endDate: "Дата Кінця:",
         findTaxies: "Знайти Роботiв",
+        ownerPhone: "Телефон Власника:",
         owner: "Власник:",
         taxi: "Робот:",
         perDay: " за день.",
         feedback: "Залишити Вiдгук",
         feedbackLabel: "Вiдгук",
         search: "Пошук:",
+        rentUpdatedMessage: "Статус оренди успiшно оновлено",
         feedbackLeavedMessage: "Вiдгук залишено",
         ratingLabel: "Рейтинг",
         company: "Компанія:",
@@ -140,6 +150,7 @@ export const uaLocalization = {
         taxiTitle: "Таксі",
         ownerTitle: "Власник",
         customerTitle: "Кліент",
+        feedbackTitle: "Вiдгук",
         infoTitle: "Деталі",
         actionsTitle: "Команди"
     }
@@ -214,6 +225,10 @@ export const userTaxiItems = [
         {
             title: "Мої Оренди",
             url: "/rent-list"
+        },
+        {
+            title: "Оренди Моїх Роботiв",
+            url: "/owner-rent-list"
         }
         ]
     }

@@ -22,5 +22,9 @@ namespace RLS.Domain.FilterParams.Robots
         public DateTime? EndDate { get; set; }
 
         public bool IsSearchView { get; set; }
+
+        public double MinPrice { get; set; }
+
+        public double MaxPrice { get; set; }
     }
 }

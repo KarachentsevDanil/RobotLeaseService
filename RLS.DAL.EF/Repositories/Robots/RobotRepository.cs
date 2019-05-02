@@ -28,16 +28,20 @@ namespace RLS.DAL.EF.Repositories.Robots
                 .Include(x => x.Model)
                 .Include(x => x.Model.Type)
                 .Include(x => x.Model.Company)
+                .Include(x => x.Rentals)
+                .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(r => r.Id == id, ct);
         }
 
         public async Task<CollectionResult<Robot>> GetRobotByFilterParamsAsync(RobotFilterParams filterParams, CancellationToken ct = default)
         {
             IQueryable<Robot> query = DbContext.Robots
-                .Include(x=> x.User)
-                .Include(x=> x.Model)
-                .Include(x=> x.Model.Type)
-                .Include(x=> x.Model.Company)
+                .Include(x => x.User)
+                .Include(x => x.Model)
+                .Include(x => x.Model.Type)
+                .Include(x => x.Model.Company)
+                .Include(x => x.Rentals)
+                .ThenInclude(x => x.User)
                 .AsQueryable();
 
             FillFilterExpression(filterParams);
@@ -63,7 +67,8 @@ namespace RLS.DAL.EF.Repositories.Robots
 
         private void FillFilterExpression(RobotFilterParams filterParams)
         {
-            Expression<Func<Robot, bool>> predicate = PredicateBuilder.New<Robot>(true);
+            Expression<Func<Robot, bool>> predicate = PredicateBuilder.New<Robot>
+                (t => t.DailyCosts >= filterParams.MinPrice && t.DailyCosts <= filterParams.MaxPrice);
 
             if (!string.IsNullOrEmpty(filterParams.Term))
             {

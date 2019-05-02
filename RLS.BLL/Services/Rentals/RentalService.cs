@@ -91,5 +91,18 @@ namespace RLS.BLL.Services.Rentals
 
             return _mapper.Map<GetRentalDto>(result);
         }
+
+        public async Task<GetRentalDto> UpdateRentalAsync(UpdateRentalDto item, CancellationToken ct = default)
+        {
+            var itemToUpdate = await _unitOfWork.RentalRepository.GetAsync(item.Id, ct);
+
+            _mapper.Map(item, itemToUpdate);
+
+            _unitOfWork.RentalRepository.Update(itemToUpdate);
+
+            await _unitOfWork.CommitAsync(ct);
+
+            return _mapper.Map<GetRentalDto>(itemToUpdate);
+        }
     }
 }

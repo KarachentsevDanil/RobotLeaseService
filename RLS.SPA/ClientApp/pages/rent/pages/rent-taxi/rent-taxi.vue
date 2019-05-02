@@ -1,135 +1,217 @@
 <template>
-<div class="has-detached-left">
-  <div class="page-header">
-					<div class="page-header-content">
-						<div class="page-title">
-							<h4><i class="icon-home2 position-left"></i> <span class="text-semibold" v-localize="{i: 'rent.rentTaxi'}"></span></h4>
-						</div>
-					</div>
+  <div class="has-detached-left">
+    <div class="page-header">
+      <div class="page-header-content">
+        <div class="page-title">
+          <h4>
+            <i class="icon-home2 position-left"></i>
+            <span class="text-semibold" v-localize="{i: 'rent.rentTaxi'}"></span>
+          </h4>
+        </div>
+      </div>
 
-					<div class="breadcrumb-line breadcrumb-line-component">
-						<ul class="breadcrumb">
-							<li><a><i class="icon-home2 position-left"></i> <span v-localize="{i: 'rent.rents'}"></span></a></li>
-							<li class="active" v-localize="{i: 'rent.rentTaxi'}"></li>
-						</ul>
-					</div>
-				</div>
-				<div class="content">
+      <div class="breadcrumb-line breadcrumb-line-component">
+        <ul class="breadcrumb">
+          <li>
+            <a>
+              <i class="icon-home2 position-left"></i>
+              <span v-localize="{i: 'rent.rents'}"></span>
+            </a>
+          </li>
+          <li class="active" v-localize="{i: 'rent.rentTaxi'}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="content">
+      <!-- Detached sidebar -->
+      <div class="sidebar-detached">
+        <div class="sidebar sidebar-default sidebar-separate">
+          <div class="sidebar-content">
+            <!-- Sidebar search -->
+            <div class="panel panel-white">
+              <div class="panel-heading">
+                <div class="panel-title text-semibold">
+                  <i class="icon-search text-size-base position-left"></i>
+                  <span v-localize="{i: 'common.filter'}"></span>
+                </div>
+              </div>
 
-					<!-- Detached sidebar -->
-					<div class="sidebar-detached">
-						<div class="sidebar sidebar-default sidebar-separate">
-							<div class="sidebar-content">
+              <div class="panel-body">
+                <div>
+                  <div class="form-group">
+                    <label v-localize="{i: 'rent.search'}"></label>
+                    <input
+                      v-localize="{i: 'common.search', attr: 'placeholder'}"
+                      class="form-control"
+                      v-model="term"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label v-localize="{i: 'rent.companies'}"></label>
+                    <select2
+                      style="width: 100%;"
+                      :configuration="companySelectConfiguration"
+                      :options="companies"
+                      v-model="selectedCompanies"
+                    ></select2>
+                  </div>
+                  <div class="form-group">
+                    <label v-localize="{i: 'rent.types'}"></label>
+                    <select2
+                      style="width: 100%;"
+                      :configuration="typeSelectConfiguration"
+                      :options="types"
+                      v-model="selectedTypes"
+                    ></select2>
+                  </div>
+                  <div class="form-group">
+                    <label v-localize="{i: 'rent.models'}"></label>
+                    <select2
+                      style="width: 100%;"
+                      :configuration="taxiModelSelectConfiguration"
+                      :options="filterModels"
+                      :disabled="!selectedCompanies.length"
+                      v-model="selectedModels"
+                    ></select2>
+                  </div>
+                  <div class="form-group">
+                    <label class="price-range-lable-margin" v-localize="{i: 'common.priceRange'}"></label>
+                    <vue-slider
+                      v-model="priceRange"
+                      :min="0"
+                      :max="1000"
+                      :interval="1"
+                      :min-range="10"
+                      :enable-cross="false"
+                      :dot-options="dotOptions"
+                    ></vue-slider>
+                  </div>
+                  <div class="form-group">
+                    <label v-localize="{i: 'rent.startDate'}"></label>
+                    <datetime input-class="form-control" v-model="startDate"></datetime>
+                  </div>
+                  <div class="form-group">
+                    <label v-localize="{i: 'rent.endDate'}"></label>
+                    <datetime input-class="form-control" v-model="endDate"></datetime>
+                  </div>
 
-								<!-- Sidebar search -->
-								<div class="panel panel-white">
-									<div class="panel-heading">
-										<div class="panel-title text-semibold">
-											<i class="icon-search text-size-base position-left"></i>
-											<span v-localize="{i: 'common.filter'}"></span>
-										</div>
-									</div>
+                  <button class="btn bg-blue btn-block" @click="filterTaxies">
+                    <i class="icon-search text-size-base position-left"></i>
+                    <span v-localize="{i: 'rent.findTaxies'}"></span>
+                  </button>
 
-									<div class="panel-body">
-										<div>
-                      <div class="form-group">
-                      <label v-localize="{i: 'rent.search'}"> </label>
-                      <input class="form-control" v-model="term"/>
-                      </div>
-											<div class="form-group">
-                      <label v-localize="{i: 'rent.companies'}"> </label>
-                      <select2 style="width: 100%;"
-                             :configuration="companySelectConfiguration"
-                             :options="companies"
-                             v-model="selectedCompanies"></select2>
-                    </div>
-                     <div class="form-group">
-                      <label v-localize="{i: 'rent.types'}"> </label>
-                      <select2 style="width: 100%;"
-                             :configuration="typeSelectConfiguration"
-                             :options="types"
-                             v-model="selectedTypes"></select2>
-                    </div>
-                    <div class="form-group">
-                      <label v-localize="{i: 'rent.models'}"> </label>
-                      <select2 style="width: 100%;"
-                             :configuration="taxiModelSelectConfiguration"
-                             :options="filterModels"
-                             :disabled="!selectedCompanies.length"
-                             v-model="selectedModels"></select2>
-                    </div>
-										<div class="form-group">
-                      <label v-localize="{i: 'rent.startDate'}"> </label>
-                      <datetime input-class="form-control" v-model="startDate"></datetime>
-                    </div>
-										<div class="form-group">
-                      <label v-localize="{i: 'rent.endDate'}"> </label>
-                      <datetime input-class="form-control" v-model="endDate"></datetime>
-                    </div>
+                  <button
+                    @click="clearSearchForm"
+                    class="btn bg-danger btn-block"
+                    v-show="selectedTypes.length > 0 ||
+                            selectedCompanies.length > 0 ||
+                            selectedModels.length > 0 ||
+                            term != '' ||
+                            startDate != '' ||
+                            endDate != '' ||
+                            priceRange[0] > 0 ||
+                            priceRange[1] < 1000"
+                  >
+                    <span v-localize="{i: 'common.clear'}"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /detached sidebar -->
 
-											<button class="btn bg-blue btn-block" @click="filterTaxies">
-												<i class="icon-search text-size-base position-left"></i>
-												<span v-localize="{i: 'rent.findTaxies'}"></span>
-											</button>
-										</div>
-									</div>
-								</div>
+      <!-- Detached content -->
+      <div class="container-detached">
+        <div class="content-detached">
+          <!-- Cards layout -->
+          <ul class="media-list content-group">
+            <li
+              class="media panel panel-body stack-media-on-mobile"
+              v-for="taxi in taxies"
+              :key="taxi.Id"
+            >
+              <div class="media-left">
+                <a href="#">
+                  <img
+                    v-if="taxi.ModelPhoto"
+                    :src="taxi.ModelPhoto"
+                    class="img-rounded img-lg icon-taxi-image"
+                    alt
+                  >
+                  <img
+                    v-else
+                    src="../../../../assets/limitless/images/robot.png"
+                    class="img-rounded img-lg icon-taxi-image"
+                    alt
+                  >
+                </a>
+              </div>
 
-							</div>
-						</div>
-					</div>
-		            <!-- /detached sidebar -->
+              <div class="media-body">
+                <h6 class="media-heading text-semibold">
+                  <router-link
+                    :to="'/taxi-details/'+taxi.Id"
+                  >{{taxi.CompanyName}} {{taxi.ModelName}}</router-link>
+                </h6>
 
+                <ul class="list-inline list-inline-separate text-muted mb-10">
+                  <li>
+                    <router-link
+                      :to="'/taxi-details/'+taxi.Id"
+                      class="text-muted"
+                    >{{taxi.CompanyName}} {{taxi.ModelName}}</router-link>
+                  </li>
+                  <li>{{taxi.TypeName}}</li>
+                  <li>
+                    ${{taxi.DailyCosts}}
+                    <span v-localize="{i: 'rent.perDay'}"></span>
+                  </li>
+                  <p>
+                    <star-rating
+                      :inline="true"
+                      :star-size="14"
+                      :read-only="true"
+                      :show-rating="false"
+                      :rating="taxi.AvarageRating"
+                      :round-start-rating="false"
+                    ></star-rating>
+                  </p>
+                </ul>
+                {{taxi.Description}}
+              </div>
 
-					<!-- Detached content -->
-					<div class="container-detached">
-						<div class="content-detached">
-							<!-- Cards layout -->
-							<ul class="media-list content-group">
-								<li class="media panel panel-body stack-media-on-mobile" v-for="taxi in taxies" :key="taxi.Id">
-									<div class="media-left">
-										<a href="#">
-											<img v-if="taxi.ModelPhoto" :src="taxi.ModelPhoto" class="img-rounded img-lg icon-taxi-image" alt="">
-											<img v-else src="../../../../assets/limitless/images/robot.png" class="img-rounded img-lg icon-taxi-image" alt="">
-										</a>
-									</div>
+              <div class="media-right text-nowrap">
+                <router-link
+                  :to="'/taxi-details/'+taxi.Id"
+                  class="label bg-blue"
+                  v-localize="{i: 'rent.rentTaxi'}"
+                ></router-link>
+              </div>
+            </li>
+          </ul>
+          <!-- /cards layout -->
 
-									<div class="media-body">
-										<h6 class="media-heading text-semibold">
-											<router-link :to="'/taxi-details/'+taxi.Id" >{{taxi.CompanyName}} {{taxi.ModelName}} </router-link>
-										</h6>
+          <!-- Pagination -->
+          <div class="text-center content-group-lg pt-20">
+            <pagination
+              :currentPage="filters.pagination.currentPage"
+              :total="filters.pagination.total"
+              :page-size="filters.pagination.pageSize"
+              :callback="pageChanged"
+              :options="filters.pagination.paginationOptions"
+              nav-class="padding-10"
+              ul-class="bg-color-red"
+              li-class="txt-color-blue"
+            ></pagination>
+          </div>
 
-										<ul class="list-inline list-inline-separate text-muted mb-10">
-											<li>
-                        <router-link :to="'/taxi-details/'+taxi.Id" class="text-muted">{{taxi.CompanyName}} {{taxi.ModelName}}</router-link>
-                      </li>
-											<li>{{taxi.TypeName}}</li>
-                      <li>${{taxi.DailyCosts}} <span v-localize="{i: 'rent.perDay'}"></span> </li>
-										</ul>
-										{{taxi.Description}}
-									</div>
-
-									<div class="media-right text-nowrap">
-                      <router-link :to="'/taxi-details/'+taxi.Id" class="label bg-blue" v-localize="{i: 'rent.rentTaxi'}"></router-link>
-									</div>
-								</li>
-							</ul>
-							<!-- /cards layout -->
-
-
-							<!-- Pagination -->
-              <div class="text-center content-group-lg pt-20">
-								<pagination :currentPage="filters.pagination.currentPage" :total="filters.pagination.total" :page-size="filters.pagination.pageSize" :callback="pageChanged" :options="filters.pagination.paginationOptions" nav-class="padding-10" ul-class="bg-color-red" li-class="txt-color-blue">
-                </pagination>
-							</div>
-							 
-							<!-- /pagination -->
-
-						</div>
-					</div>
-
-				</div>
-</div>
+          <!-- /pagination -->
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -155,6 +237,15 @@ export default {
       selectedTypes: [],
       selectedCompanies: [],
       selectedModels: [],
+      priceRange: [0, 1000],
+      dotOptions: [
+        {
+          tooltip: "focus"
+        },
+        {
+          tooltip: "focus"
+        }
+      ],
       term: "",
       startDate: "",
       endDate: "",
@@ -221,6 +312,17 @@ export default {
       this.taxies = data.Collection;
       this.filters.pagination.total = data.TotalCount;
     },
+    async clearSearchForm() {
+      await this.getTaxies();
+
+      this.priceRange = [0, 1000];
+      this.selectedTypes = [];
+      this.selectedCompanies = [];
+      this.selectedModels = [];
+      this.term = "";
+      this.startDate = "";
+      this.endDate = "";
+    },
     async filterTaxies() {
       this.filters.pagination.currentPage = 1;
 
@@ -235,7 +337,9 @@ export default {
         startDate: this.startDate,
         endDate: this.endDate,
         term: this.term,
-        isSearchView: true
+        isSearchView: true,
+        minPrice: this.priceRange[0],
+        maxPrice: this.priceRange[1]
       };
 
       let data = (await taxiService.getTaxiesByParams(params)).data.Data;
@@ -294,5 +398,8 @@ export default {
 .icon-taxi-image {
   width: 105px !important;
   height: 100px !important;
+}
+label.price-range-lable-margin {
+  margin-bottom: 30px;
 }
 </style>

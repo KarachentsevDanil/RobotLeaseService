@@ -11,7 +11,10 @@ export const enLocalization = {
         filter: "Filter",
         totalItems: "Total",
         itemsPages: "items / page",
-        dashboard: "Dashboard"
+        dashboard: "Dashboard",
+        search: "Search...",
+        clear: "Clear",
+        priceRange: "Price Range:"
     },
     authorization: {
         email: "E-mail",
@@ -28,6 +31,7 @@ export const enLocalization = {
         fullName: "Full Name",
         firstName: "First Name",
         lastName: "Last Name",
+        phone: "Phone",
         createAccount: "Create an account",
         fieldsRequired: "All fields are required",
         doYouHaveAnAccount: "Do you have an account ?",
@@ -63,7 +67,9 @@ export const enLocalization = {
         taxiModel: "Robot Model:",
         pricePerDay: "Daily Costs:",
         airTaxiList: "Robot List",
-        taxiAdded: "Robot was successfully added."
+        taxiAdded: "Robot was successfully added.",
+        avarageRating: "Avarage Rating:",
+        feedbacks: "Feedbacks"
     },
     type: {
         addTaxiType: "Add Robot Type",
@@ -93,6 +99,8 @@ export const enLocalization = {
         }
     },
     rent: {
+        complete: "Complete",
+        decline: "Decline",
         rents: "Rents",
         rent: "Rent",
         rentList: "Rent List",
@@ -107,6 +115,7 @@ export const enLocalization = {
         endDate: "End Date:",
         findTaxies: "Find Robots",
         owner: "Owner:",
+        ownerPhone: "Owner Phone:",
         taxi: "Robot:",
         perDay: " per day.",
         company: "Company:",
@@ -116,6 +125,7 @@ export const enLocalization = {
         feedback: "Leave Feedback",
         feedbackLabel: "Feedback",
         feedbackLeavedMessage: "Feedback successfully leaved",
+        rentUpdatedMessage: "Rent status successfully updated",
         ratingLabel: "Rating",
         description: "Description:",
         capacity: "Capacity:",
@@ -156,6 +166,7 @@ export const enLocalization = {
         ownerTitle: "Owner",
         customerTitle: "Customer",
         infoTitle: "Info",
+        feedbackTitle: "Feedback",
         actionsTitle: "Actions"
     }
 }
@@ -222,14 +233,19 @@ export const userTaxiItems = [
         title: "Rents",
         icon: "icon-cog3",
         url: "",
-        children: [{
-            title: "Rent Robot",
-            url: "/rent-taxi"
-        },
-        {
-            title: "My Rents List",
-            url: "/rent-list"
-        }
+        children: [
+            {
+                title: "Rent Robot",
+                url: "/rent-taxi"
+            },
+            {
+                title: "My Rent List",
+                url: "/rent-list"
+            },
+            {
+                title: "My Robot Rent List",
+                url: "/owner-rent-list"
+            }
         ]
     }
 ]

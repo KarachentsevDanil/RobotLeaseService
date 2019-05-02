@@ -30,7 +30,7 @@ namespace RLS.WebApi
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver

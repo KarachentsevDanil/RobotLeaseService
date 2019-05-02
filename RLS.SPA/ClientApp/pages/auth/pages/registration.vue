@@ -58,6 +58,20 @@
             </div>
 
             <div class="form-group has-feedback has-feedback-left">
+                <input type="text" class="form-control" 
+                                          v-localize="{i: 'registration.phone', attr: 'placeholder'}"
+                                          v-model="user.phone"
+                                          :error-messages="phoneErrors"
+                                          @input="$v.user.phone.$touch()"
+                                          @blur="$v.user.phone.$touch()"
+                                          required>
+
+                <div class="form-control-feedback">
+                     <i class="icon-phone text-muted"></i>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
                 <input type="password" class="form-control" v-model="user.password"
                                           :error-messages="passwordErrors"
                                           v-localize="{i: 'registration.password', attr: 'placeholder'}"
@@ -99,7 +113,8 @@
                 email: { required, email },
                 password: { required, minLength: minLength(6) },
                 firstName: { required },
-                lastName: { required }
+                lastName: { required },
+                phone: { required }
             }
         },
         data: () => ({
@@ -107,7 +122,8 @@
                 email: "",
                 password: "",
                 firstName: "",
-                lastName: ""
+                lastName: "",
+                phone: ""
             },
             labels: {
                 ...authTextResources.lables
@@ -120,7 +136,8 @@
                     Email: this.user.email,
                     Password: this.user.password,
                     FirstName: this.user.firstName,
-                    LastName: this.user.lastName
+                    LastName: this.user.lastName,
+                    Phone: this.user.phone
                 };
 
                 this.$store.dispatch(mainStoreActions.START_LOADING_ACTION, "Account is creating ...");
@@ -166,6 +183,12 @@
                 const errors = [];
                 if (!this.$v.user.lastName.$dirty) return errors;
                 !this.$v.user.lastName.required && errors.push(authTextResources.lables.validationMessages.lastNameRequiredMessage);
+                return errors;
+            },
+            phoneErrors() {
+                const errors = [];
+                if (!this.$v.user.phone.$dirty) return errors;
+                !this.$v.user.phone.required && errors.push(authTextResources.lables.validationMessages.phoneRequiredMessage);
                 return errors;
             }
         }

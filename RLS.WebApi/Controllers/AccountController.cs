@@ -77,6 +77,7 @@ namespace RLS.WebApi.Controllers
                     Email = data.Email,
                     FirstName = data.FirstName,
                     LastName = data.LastName,
+                    PhoneNumber = data.Phone,
                     Role = Role.User
                 };
 

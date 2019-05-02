@@ -39,6 +39,7 @@ export const lables = {
         fullNameRequiredMessage: "Full Name is required",
         firstNameRequiredMessage: "First Name is required",
         lastNameRequiredMessage: "Last Name is required",
+        phoneRequiredMessage: "Phone is required",
     }
 };
 

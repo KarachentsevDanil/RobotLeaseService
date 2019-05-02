@@ -15,7 +15,10 @@
             <li>
               <router-link :to="'/rent-list'" v-localize="{i: 'rent.rentList'}"></router-link>
             </li>
-            <li class="active">{{rent.Robot.CompanyName}} {{rent.Robot.ModelName}}</li>
+            <li class="active">
+              <span class="label" :class="getStatusColor">{{rent.Status}}</span>
+              {{rent.Robot.CompanyName}} {{rent.Robot.ModelName}}
+            </li>
           </ul>
         </div>
       </div>
@@ -42,6 +45,16 @@
                         <label class="col-sm-2 control-label" v-localize="{i: 'rent.owner'}"></label>
                         <div class="col-sm-10">
                           <p class="form-control-static">{{rent.Robot.UserFullName}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.ownerPhone'}"></label>
+                        <div class="col-sm-10">
+                          <p class="form-control-static">
+                            <a href="#">{{rent.Robot.UserPhone}}</a>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -88,6 +101,20 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row" v-if="rent.Status == 'Created'">
+                      <button
+                        type="button"
+                        @click="updateRent(1)"
+                        class="btn btn-success legitRipple complete"
+                        v-localize="{i: 'rent.complete'}"
+                      ></button>
+                      <button
+                        type="button"
+                        @click="updateRent(2)"
+                        class="btn btn-danger legitRipple"
+                        v-localize="{i: 'rent.decline'}"
+                      ></button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -101,13 +128,7 @@
                         <label>
                           <span v-localize="{i: 'rent.ratingLabel'}"></span>:
                         </label>
-                        <input
-                          type="number"
-                          min="1"
-                          max="5"
-                          v-model="feedback.rating"
-                          class="form-control"
-                        >
+                        <star-rating :star-size="30" :show-rating="false" v-model="feedback.rating"></star-rating>
                       </div>
                       <div class="form-group">
                         <label>
@@ -166,14 +187,29 @@ export default {
         authGetters.GET_USER_GETTER
       ),
       currentLanguage: "getCurrentLanguage"
-    })
+    }),
+    getStatusColor() {
+      switch (this.rent.Status) {
+        case "Created":
+          return "label label-primary";
+
+        case "Completed":
+          return "label label-success";
+
+        case "Declined":
+          return "label label-warning";
+
+        default:
+          return "";
+      }
+    }
   },
   data() {
     return {
       rent: {},
       feedback: {
         feedback: "",
-        rating: 5
+        rating: 1
       }
     };
   },
@@ -184,19 +220,31 @@ export default {
     if (this.getUser.Id == this.rent.Owner.Id) {
       this.feedback.feedback = this.rent.OwnerFeedback;
       this.feedback.rating = !this.rent.CustomerRating
-        ? 5
+        ? 1
         : this.rent.CustomerRating;
     } else {
       this.feedback.feedback = this.rent.CustomerFeedback;
-      this.feedback.rating = !this.rent.RobotRating ? 5 : this.rent.RobotRating;
+      this.feedback.rating = !this.rent.RobotRating ? 1 : this.rent.RobotRating;
     }
   },
   methods: {
     clearForm() {
       this.feedback = {
         feedback: "",
-        rating: 5
+        rating: 1
       };
+    },
+    async updateRent(status) {
+      let data = {
+        Id: this.rent.Id,
+        Status: status,
+        OwnerFeedback: this.feedback.feedback
+      };
+
+      this.rent.Status = status == 1 ? "Completed" : "Declined";
+      await rentService.updateRent(data);
+
+      this.$noty.success(this.$locale({ i: "rent.rentUpdatedMessage" }));
     },
     async leaveFeedback() {
       if (this.getUser.Id == this.rent.Owner.Id) {
@@ -221,3 +269,9 @@ export default {
   }
 };
 </script>
+
+<style>
+button.complete {
+  margin-right: 10px;
+}
+</style>

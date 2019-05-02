@@ -80,11 +80,20 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<Robot, GetRobotDto>()
                 .ForMember(x => x.UserId, t => t.MapFrom(p => p.User.Id))
                 .ForMember(x => x.UserName, t => t.MapFrom(p => p.User.Email))
+                .ForMember(x => x.UserPhone, t => t.MapFrom(p => p.User.PhoneNumber))
                 .ForMember(x => x.UserFullName, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"))
                 .ForMember(x => x.CompanyName, t => t.MapFrom(p => p.Model.Company.Name))
                 .ForMember(x => x.TypeName, t => t.MapFrom(p => p.Model.Type.Name))
                 .ForMember(x => x.Description, t => t.MapFrom(p => p.Model.Description))
-                .ForMember(x => x.ModelName, t => t.MapFrom(p => p.Model.Name));
+                .ForMember(x => x.ModelName, t => t.MapFrom(p => p.Model.Name))
+                .ForMember(x => x.AvarageRating, t => t.MapFrom(p => 
+                    p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0) 
+                        ? p.Rentals.Where(r => r.RobotRating > 0).Average(x => x.RobotRating)
+                        : 0));
+
+            CreateMap<Rental, GetShortRobotRentalDto>()
+                .ForMember(x => x.Customer, t => t.MapFrom(p => p.User))
+                .ForMember(x => x.Status, t => t.MapFrom(p => p.Status.ToString()));
 
             CreateMap<Rental, GetRentalDto>()
                 .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToShortDateString()))
@@ -101,6 +110,8 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<CustomerUpdateRentalDto, Rental>();
 
             CreateMap<OwnerUpdateRentalDto, Rental>();
+
+            CreateMap<UpdateRentalDto, Rental>();
 
             CreateMap<Rental, GetRentalForCalendarDto>()
                 .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName} - {p.User.Email}"))

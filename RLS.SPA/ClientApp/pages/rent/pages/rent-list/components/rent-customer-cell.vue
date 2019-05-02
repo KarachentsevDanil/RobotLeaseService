@@ -11,6 +11,9 @@
                 <div class="text-muted text-size-small">
                     <div><i class="icon-envelop2"></i> <a href="mailto:jdoe@engagesnf.com">{{row.Customer.Email}}</a></div>
                 </div>
+                <div class="text-muted text-size-small">
+                    <div><i class="icon-mobile2"></i> <a href="#">{{row.Customer.PhoneNumber}}</a></div>
+                </div>
             </div>
         </td>
     </div>

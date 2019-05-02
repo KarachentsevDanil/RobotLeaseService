@@ -20,5 +20,9 @@ namespace RLS.BLL.DTOs.FilterParams.Robots
         public DateTime? EndDate { get; set; }
 
         public bool IsSearchView { get; set; }
+
+        public double MinPrice { get; set; } = 0;
+
+        public double MaxPrice { get; set; } = 1000;
     }
 }

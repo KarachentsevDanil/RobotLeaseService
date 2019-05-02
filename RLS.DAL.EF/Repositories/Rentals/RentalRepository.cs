@@ -69,7 +69,9 @@ namespace RLS.DAL.EF.Repositories.Rentals
 
             if (!string.IsNullOrEmpty(filterParams.UserId) && !filterParams.IsCalendarView)
             {
-                predicate = predicate.And(t => t.UserId == filterParams.UserId || t.Robot.UserId == filterParams.UserId);
+                predicate = filterParams.IsOwnerView 
+                    ? predicate.And(t => t.Robot.UserId == filterParams.UserId)
+                    : predicate.And(t => t.UserId == filterParams.UserId);
             }
 
             if (!string.IsNullOrEmpty(filterParams.Term))

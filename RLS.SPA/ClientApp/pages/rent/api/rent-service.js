@@ -45,3 +45,12 @@ export const ownerUpdateRent = data => {
 
     return httpService.putData(params);
 }
+
+export const updateRent = data => {
+    let params = {
+        url: apiRent,
+        data: data
+    }
+
+    return httpService.putData(params);
+}
