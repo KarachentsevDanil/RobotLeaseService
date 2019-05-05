@@ -7,6 +7,66 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Sql\StoredProcedures\GetRobotCompany.sql" />
+    <None Remove="Sql\StoredProcedures\GetRobotModel.sql" />
+    <None Remove="Sql\StoredProcedures\GetRobotType.sql" />
+    <None Remove="Sql\Views\Indexes\ModelViewIndex.sql" />
+    <None Remove="Sql\Views\Indexes\RentalShortViewIndex.sql" />
+    <None Remove="Sql\Views\Indexes\RobotShortViewIndex.sql" />
+    <None Remove="Sql\Views\Indexes\RobotViewIndex.sql" />
+    <None Remove="Sql\Views\Indexes\ShortModelViewIndex.sql" />
+    <None Remove="Sql\Views\ModelView.sql" />
+    <None Remove="Sql\Views\RentalShortView.sql" />
+    <None Remove="Sql\Views\RentalView.sql" />
+    <None Remove="Sql\Views\RobotShortView.sql" />
+    <None Remove="Sql\Views\RobotView.sql" />
+    <None Remove="Sql\Views\ShortModelView.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Sql\StoredProcedures\GetRobotType.sql" />
+    <EmbeddedResource Include="Sql\StoredProcedures\GetRobotModel.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\StoredProcedures\GetRobotCompany.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\Indexes\ModelViewIndex.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\Indexes\RentalShortViewIndex.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\Indexes\RobotShortViewIndex.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\Indexes\RobotViewIndex.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\Indexes\ShortModelViewIndex.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\ShortModelView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\RobotView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\RobotShortView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\ModelView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\RentalShortView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\Views\RentalView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Dawn.Guard" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -29,6 +89,12 @@
     <ProjectReference Include="..\RLS.DAL.EF\RLS.DAL.EF.csproj" />
     <ProjectReference Include="..\RLS.DAL\RLS.DAL.csproj" />
     <ProjectReference Include="..\RLS.Domain\RLS.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Sql\StoredProcedures\GetRobotType.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

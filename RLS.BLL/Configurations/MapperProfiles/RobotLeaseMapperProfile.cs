@@ -14,6 +14,7 @@ using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
 using System.Linq;
+using RLS.Domain.Models.Robots;
 
 namespace RLS.BLL.Configurations.MapperProfiles
 {
@@ -59,18 +60,18 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.CompanyName, t => t.MapFrom(p => p.Company.Name))
                 .ForMember(x => x.TypeName, t => t.MapFrom(p => p.Type.Name));
 
-            CreateMap<RobotModel, GetRobotModelPopularityDto>()
-                .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.Company.Name} {p.Name}"))
-                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.Robots.Count))
-                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.Robots.Sum(r => r.Rentals.Count)));
+            CreateMap<RobotModelChartModel, GetRobotModelPopularityDto>()
+                .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.CompanyName} {p.Name}"))
+                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.RobotCount))
+                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.RentalCount));
 
-            CreateMap<RobotCompany, GetRobotCompanyPopularityDto>()
-                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Count)))
-                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Sum(m => m.Rentals.Count))));
+            CreateMap<RobotCompanyChartModel, GetRobotCompanyPopularityDto>()
+                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.RobotCount))
+                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.RentalCount));
 
-            CreateMap<RobotType, GetRobotTypePopularityDto>()
-                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Count)))
-                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.Models.Sum(r => r.Robots.Sum(m => m.Rentals.Count))));
+            CreateMap<RobotTypeChartModel, GetRobotTypePopularityDto>()
+                .ForMember(x => x.CountOfRobots, t => t.MapFrom(p => p.RobotCount))
+                .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.RentalCount));
 
             CreateMap<CreateRobotDto, Robot>()
                 .ForMember(x => x.Id, t => t.Ignore());

@@ -109,7 +109,7 @@ namespace RLS.WebApi.Controllers
 
             var companies = await _robotCompanyService.GetTopNPopularCompaniesAsync(filterParams);
 
-            var response = new BarChartModel()
+            var response = new BarChartModel
             {
                 Titles = companies.Select(t => t.Name),
                 RobotRentsCount = companies.Select(t => t.CountOfRents),

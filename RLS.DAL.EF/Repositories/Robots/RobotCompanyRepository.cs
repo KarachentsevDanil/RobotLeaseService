@@ -5,14 +5,17 @@ using RLS.DAL.Repositories.Contracts.Robots;
 using RLS.Domain.Robots;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using RLS.DAL.EF.Extensions;
 using RLS.Domain.Enums;
 using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Models;
+using RLS.Domain.Models.Robots;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {
@@ -55,30 +58,24 @@ namespace RLS.DAL.EF.Repositories.Robots
             return items;
         }
 
-        public async Task<IEnumerable<RobotCompany>> GetTopNPopularCompaniesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default)
+        public async Task<IEnumerable<RobotCompanyChartModel>> GetTopNPopularCompaniesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default)
         {
-            IQueryable<RobotCompany> query = DbContext.RobotCompanies
-                .AsNoTracking()
-                .Include(t => t.Models)
-                .ThenInclude(t => t.Robots)
-                .ThenInclude(t => t.Rentals);
+            var parameters = new DynamicParameters();
+            
+            parameters.Add("orderBy", dbType: DbType.Int32, value: (int)filterParams.Type, direction: ParameterDirection.Input);
+            parameters.Add("take", dbType: DbType.Int32, value: filterParams.CountToTake, direction: ParameterDirection.Input);
 
-            switch (filterParams.Type)
+            IEnumerable<RobotCompanyChartModel> result;
+
+            var reader = await DbContext.Database.GetDbConnection().QueryMultipleAsync("[robot].[GetRobotCompany]", parameters,
+                commandType: CommandType.StoredProcedure);
+
+            using (reader)
             {
-                case RobotPopularity.ByRentCount:
-                    query = query.OrderByDescending(t => t.Models.Sum(m => m.Robots.Sum(r => r.Rentals.Count)));
-                    break;
-                case RobotPopularity.ByRobotCount:
-                    query = query.OrderByDescending(t => t.Models.Sum(m => m.Robots.Count));
-                    break;
-                case RobotPopularity.ByRobotAndRentCount:
-                    query = query.OrderByDescending(t => t.Models.Sum(m => m.Robots.Count) + t.Models.Sum(m => m.Robots.Sum(r => r.Rentals.Count)));
-                    break;
+                result = reader.Read<RobotCompanyChartModel>();
             }
 
-            return await query
-                .Take(filterParams.CountToTake)
-                .ToListAsync(ct);
+            return result;
         }
 
         private void FillFilterExpression(RobotCompanyFilterParams filterParams)

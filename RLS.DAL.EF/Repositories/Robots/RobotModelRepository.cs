@@ -8,11 +8,14 @@ using RLS.Domain.Models;
 using RLS.Domain.Robots;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 using RLS.Domain.Enums;
+using RLS.Domain.Models.Robots;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {
@@ -61,41 +64,26 @@ namespace RLS.DAL.EF.Repositories.Robots
             return items;
         }
 
-        public async Task<IEnumerable<RobotModel>> GetTopNPopularModelsAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default)
+        public async Task<IEnumerable<RobotModelChartModel>> GetTopNPopularModelsAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default)
         {
-            IQueryable<RobotModel> query = DbContext.RobotModels
-                .AsNoTracking()
-                .Include(t => t.Type)
-                .Include(t => t.Company)
-                .Include(t => t.Robots)
-                .ThenInclude(t => t.Rentals);
+            var parameters = new DynamicParameters();
 
-            if (filterParams.CompanyId.HasValue)
+            parameters.Add("companyId", dbType: DbType.Int32, value: filterParams.CompanyId, direction: ParameterDirection.Input);
+            parameters.Add("typeId", dbType: DbType.Int32, value: filterParams.TypeId, direction: ParameterDirection.Input);
+            parameters.Add("orderBy", dbType: DbType.Int32, value: (int)filterParams.Type, direction: ParameterDirection.Input);
+            parameters.Add("take", dbType: DbType.Int32, value: filterParams.CountToTake, direction: ParameterDirection.Input);
+
+            IEnumerable<RobotModelChartModel> result;
+
+            var reader = await DbContext.Database.GetDbConnection().QueryMultipleAsync("[robot].[GetRobotModel]", parameters,
+                commandType: CommandType.StoredProcedure);
+
+            using (reader)
             {
-                query = query.Where(t => t.CompanyId == filterParams.CompanyId);
+                result = reader.Read<RobotModelChartModel>();
             }
 
-            if (filterParams.TypeId.HasValue)
-            {
-                query = query.Where(t => t.TypeId == filterParams.TypeId);
-            }
-
-            switch (filterParams.Type)
-            {
-                case RobotPopularity.ByRentCount:
-                    query = query.OrderByDescending(t => t.Robots.Sum(r => r.Rentals.Count));
-                    break;
-                case RobotPopularity.ByRobotCount:
-                    query = query.OrderByDescending(t => t.Robots.Count);
-                    break;
-                case RobotPopularity.ByRobotAndRentCount:
-                    query = query.OrderByDescending(t => t.Robots.Count + t.Robots.Sum(r => r.Rentals.Count));
-                    break;
-            }
-
-            return await query
-                .Take(filterParams.CountToTake)
-                .ToListAsync(ct);
+            return result;
         }
 
         private void FillFilterExpression(RobotModelFilterParams filterParams)

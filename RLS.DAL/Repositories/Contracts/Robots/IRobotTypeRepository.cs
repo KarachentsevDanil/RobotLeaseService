@@ -1,5 +1,6 @@
 ﻿using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Models;
+using RLS.Domain.Models.Robots;
 using RLS.Domain.Robots;
 using System.Collections.Generic;
 using System.Threading;
@@ -13,6 +14,6 @@ namespace RLS.DAL.Repositories.Contracts.Robots
 
         Task<IEnumerable<RobotType>> GetRobotTypesByTermAsync(string term, CancellationToken ct = default);
 
-        Task<IEnumerable<RobotType>> GetTopNPopularTypesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default);
+        Task<IEnumerable<RobotTypeChartModel>> GetTopNPopularTypesAsync(RobotPopularityFilterParams filterParams, CancellationToken ct = default);
     }
 }
