@@ -1,6 +1,7 @@
 import * as httpService from '../../../api/http-service'
 
 const apiRent = "/api/rental/";
+const apiRentalMessage = "/api/rentalmessage/";
 
 export const getRentsByParams = data => {
     let params = {
@@ -49,6 +50,24 @@ export const ownerUpdateRent = data => {
 export const updateRent = data => {
     let params = {
         url: apiRent,
+        data: data
+    }
+
+    return httpService.putData(params);
+}
+
+export const createMessage = data => {
+    let params = {
+        url: apiRentalMessage,
+        data: data
+    }
+
+    return httpService.putData(params);
+}
+
+export const updateMessages = data => {
+    let params = {
+        url: apiRentalMessage,
         data: data
     }
 

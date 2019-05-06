@@ -31,6 +31,9 @@
               <a href="#taxi-details-tab" data-toggle="tab" v-localize="{i: 'common.details'}"></a>
             </li>
             <li>
+              <a href="#chat" data-toggle="tab" v-localize="{i: 'rent.chat'}"></a>
+            </li>
+            <li>
               <a href="#feedback" data-toggle="tab" v-localize="{i: 'rent.feedback'}"></a>
             </li>
           </ul>
@@ -109,12 +112,63 @@
                         v-localize="{i: 'rent.complete'}"
                       ></button>
                       <button
-                        type="button" data-toggle="modal" data-target="#cancelRentModal"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#cancelRentModal"
                         class="btn btn-danger legitRipple"
                         v-localize="{i: 'rent.decline'}"
                       ></button>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane has-padding" id="chat">
+              <ul class="media-list chat-list content-group">
+                <li
+                  :class="getStyleForCurrentUser(message.User.Id)"
+                  v-for="message in rent.Messages"
+                  :key="message.Id"
+                >
+                  <div class="media-left" v-if="message.User.Id != getUser.Id">
+                    <span class="btn bg-pink-400 btn-rounded btn-icon btn-xs legitRipple">
+                      <span class="letter-icon">{{getNameIncon(message.User)}}</span>
+                    </span>
+                  </div>
+                  <div class="media-body">
+                    <div class="media-content">{{message.Message}}</div>
+                    <span class="media-annotation display-block mt-10">
+                      {{message.CreatedAt}}
+                      <a href="#">
+                        <i class="icon-pin-alt position-right text-muted"></i>
+                      </a>
+                    </span>
+                  </div>
+                  <div class="media-right" v-if="message.User.Id == getUser.Id">
+                    <span class="btn bg-pink-400 btn-rounded btn-icon btn-xs legitRipple">
+                      <span class="letter-icon">{{getNameIncon(message.User)}}</span>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+              <textarea
+                v-model="text"
+                class="form-control content-group"
+                rows="3"
+                cols="1"
+                placeholder="Enter your message..."
+              ></textarea>
+              <div class="row">
+                <div class="col-xs-12 text-right">
+                  <button
+                    type="button"
+                    @click="sendMessage"
+                    class="btn bg-teal-400 btn-labeled btn-labeled-right legitRipple"
+                  >
+                    <b>
+                      <i class="icon-circle-right2"></i>
+                    </b> Send
+                  </button>
                 </div>
               </div>
             </div>
@@ -248,6 +302,7 @@ export default {
     return {
       rent: {},
       cancelReason: "",
+      text: "",
       feedback: {
         feedback: "",
         rating: 1
@@ -269,6 +324,12 @@ export default {
     }
   },
   methods: {
+    getStyleForCurrentUser(userId) {
+      return this.getUser.Id == userId ? "media reversed" : "media";
+    },
+    getNameIncon(user) {
+      return user.FirstName[0] + user.LastName[0];
+    },
     clearForm() {
       this.feedback = {
         feedback: "",
@@ -285,10 +346,38 @@ export default {
       this.rent.Status = status == 1 ? "Completed" : "Canceled";
       await rentService.updateRent(data);
 
-      this.cancelReason = '';
+      this.cancelReason = "";
       $(".close-add-popup").click();
-      
+
       this.$noty.success(this.$locale({ i: "rent.rentUpdatedMessage" }));
+    },
+    async sendMessage() {
+      let data = {
+        RentalId: this.rent.Id,
+        Message: this.text
+      };
+
+      await rentService.createMessage(data);
+
+      this.text = "";
+      await this.loadMessage();
+      this.$noty.success("Message successfully added.");
+    },
+    async loadMessage() {
+      let rent = (await rentService.getRentById(this.id)).data.Data;
+      this.rent = rent;
+
+      if (this.getUser.Id == this.rent.Owner.Id) {
+        this.feedback.feedback = this.rent.OwnerFeedback;
+        this.feedback.rating = !this.rent.CustomerRating
+          ? 1
+          : this.rent.CustomerRating;
+      } else {
+        this.feedback.feedback = this.rent.CustomerFeedback;
+        this.feedback.rating = !this.rent.RobotRating
+          ? 1
+          : this.rent.RobotRating;
+      }
     },
     async leaveFeedback() {
       if (this.getUser.Id == this.rent.Owner.Id) {
@@ -317,5 +406,9 @@ export default {
 <style>
 button.complete {
   margin-right: 10px;
+}
+.chat-list,
+.chat-stacked {
+  max-height: 320px !important;
 }
 </style>

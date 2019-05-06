@@ -92,6 +92,7 @@ export const uaLocalization = {
         rents: "Оренди",
         rent: "Орендувати",
         rentList: "Список Оренд",
+        chat: "Чат",
         from: "З:",
         to: "До:",
         totalCosts: "Загальна Вартість:",

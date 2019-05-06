@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using RLS.BLL.DTOs.Rentals;
 using RLS.BLL.Services.Contracts.Rentals;
 using RLS.DAL.UnitOfWork.Contracts;
@@ -25,6 +26,8 @@ namespace RLS.BLL.Services.Rentals
         public async Task<GetRentalMessageDto> CreateRentalMessageAsync(CreateRentalMessageDto item, CancellationToken ct = default)
         {
             var newItem = _mapper.Map<RentalMessage>(item);
+
+            newItem.CreatedAt = DateTime.UtcNow;
 
             _unitOfWork.RentalMessageRepository.Create(newItem);
 

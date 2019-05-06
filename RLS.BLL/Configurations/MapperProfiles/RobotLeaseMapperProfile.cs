@@ -90,8 +90,8 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.Description, t => t.MapFrom(p => p.Model.Description))
                 .ForMember(x => x.ModelId, t => t.MapFrom(p => p.ModelId))
                 .ForMember(x => x.ModelName, t => t.MapFrom(p => p.Model.Name))
-                .ForMember(x => x.AvarageRating, t => t.MapFrom(p => 
-                    p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0) 
+                .ForMember(x => x.AvarageRating, t => t.MapFrom(p =>
+                    p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0)
                         ? p.Rentals.Where(r => r.RobotRating > 0).Average(x => x.RobotRating)
                         : 0));
 
@@ -106,6 +106,7 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToShortDateString()))
                 .ForMember(x => x.TotalPrice, t => t.MapFrom(p => (p.EndDate - p.StartDate).TotalDays * p.Robot.DailyCosts))
                 .ForMember(x => x.Status, t => t.MapFrom(p => p.Status.ToString()))
+                .ForMember(x => x.Messages, t => t.MapFrom(p => p.Messages.OrderByDescending(m => m.CreatedAt).ToList()))
                 .ForMember(x => x.Owner, t => t.MapFrom(p => p.Robot.User))
                 .ForMember(x => x.Customer, t => t.MapFrom(p => p.User));
 
@@ -121,7 +122,8 @@ namespace RLS.BLL.Configurations.MapperProfiles
 
             CreateMap<UpdateRentalDto, Rental>();
 
-            CreateMap<RentalMessage, GetRentalMessageDto>();
+            CreateMap<RentalMessage, GetRentalMessageDto>()
+                .ForMember(x => x.CreatedAt, t => t.MapFrom(p => p.CreatedAt.ToString("D")));
 
             CreateMap<Rental, GetRentalForCalendarDto>()
                 .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName} - {p.User.Email}"))

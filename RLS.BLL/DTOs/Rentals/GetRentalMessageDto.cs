@@ -1,5 +1,4 @@
 ﻿using RLS.BLL.DTOs.Users;
-using System;
 
 namespace RLS.BLL.DTOs.Rentals
 {
@@ -9,7 +8,7 @@ namespace RLS.BLL.DTOs.Rentals
 
         public string Message { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
 
         public bool IsRead { get; set; }
 

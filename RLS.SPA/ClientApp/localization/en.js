@@ -105,6 +105,7 @@ export const enLocalization = {
         complete: "Complete",
         decline: "Cancel",
         cancelReason: "Cancel Reason:",
+        chat: "Chat",
         rents: "Rents",
         rent: "Rent",
         rentList: "Rent List",
