@@ -69,7 +69,7 @@
 
 
 <script>
-import * as modelService from "../../air-taxi/pages/model/api/taxi-model-service";
+import * as modelService from "../../air-robot/pages/model/api/robot-model-service";
 
 export default {
   data() {

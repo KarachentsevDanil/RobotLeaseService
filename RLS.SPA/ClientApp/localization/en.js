@@ -1,7 +1,7 @@
 export const enLocalization = {
     common: {
         language: "Language",
-        airTaxies: "Robots",
+        airRobots: "Robots",
         name: "Name",
         country: "Country",
         description: "Description",
@@ -53,33 +53,33 @@ export const enLocalization = {
         addModel: "Add Model",
         modelName: "Model Name...",
         company: "Company:",
-        taxiType: "Robot Type:",
+        robotType: "Robot Type:",
         modelDescription: "Description...",
         modelReleaseYear: "Release Year...",
         releaseYear: "Release Year:",
         flightRange: "Maximum Range Flight(KM):",
         modelFlightRange: "Maximum Range...",
         uploadPhoto: "Upload photo:",
-        taxiModelAdded: "Robot model was successfully added.",
-        taxiModelList: "Robot Model List"
+        robotModelAdded: "Robot model was successfully added.",
+        robotModelList: "Robot Model List"
     },
-    taxi: {
-        addAirTaxi: "Add Robot",
+    robot: {
+        addRobot: "Add Robot",
         company: "Company:",
-        taxiType: "Robot Type:",
-        taxiModel: "Robot Model:",
+        robotType: "Robot Type:",
+        robotModel: "Robot Model:",
         pricePerDay: "Daily Costs:",
-        airTaxiList: "Robot List",
-        taxiAdded: "Robot was successfully added.",
+        airrobotList: "Robot List",
+        robotAdded: "Robot was successfully added.",
         avarageRating: "Avarage Rating:",
         feedbacks: "Feedbacks"
     },
     type: {
-        addTaxiType: "Add Robot Type",
-        taxiTypeList: "Robot Type List",
+        addrobotType: "Add Robot Type",
+        robotTypeList: "Robot Type List",
         typeName: "Type Name...",
         typeDescription: "Description...",
-        taxiTypeAdded: "Robot type was successfully added."
+        robotTypeAdded: "Robot type was successfully added."
     },
     chart: {
         model: {
@@ -112,16 +112,16 @@ export const enLocalization = {
         from: "From:",
         to: "To:",
         totalCosts: "Total Costs:",
-        rentTaxi: "Rent Robot",
+        rentrobot: "Rent Robot",
         companies: "Companies:",
         models: "Robot Models:",
         types: "Robot Types:",
         startDate: "Start Date:",
         endDate: "End Date:",
-        findTaxies: "Find Robots",
+        findRobots: "Find Robots",
         owner: "Owner:",
         ownerPhone: "Owner Phone:",
-        taxi: "Robot:",
+        robot: "Robot:",
         perDay: " per day.",
         company: "Company:",
         model: "Model:",
@@ -135,7 +135,7 @@ export const enLocalization = {
         description: "Description:",
         capacity: "Capacity:",
         dailyCapacity: "Daily Costs:",
-        taxiDetails: "Robot Details",
+        robotDetails: "Robot Details",
         rentDetails: "Rent Details",
         rentAdded: "Rent has successfully added.",
         rentError: "Try to find another date range for rent, you can check calendar to find free date range."
@@ -153,7 +153,7 @@ export const enLocalization = {
         descriptionTitle: "Description",
         actionsTitle: "Actions"
     },
-    taxiGrid: {
+    robotGrid: {
         ownerTitle: "Owner",
         modelNameTitle: "Model Name",
         companyTitle: "Company",
@@ -167,7 +167,7 @@ export const enLocalization = {
         actionsTitle: "Actions"
     },
     rentGrid: {
-        taxiTitle: "Robot",
+        robotTitle: "Robot",
         ownerTitle: "Owner",
         customerTitle: "Customer",
         infoTitle: "Info",
@@ -176,7 +176,7 @@ export const enLocalization = {
     }
 }
 
-export const adminTaxiItems = [
+export const adminrobotItems = [
     {
         title: "Dashboards",
         icon: "icon-home4",
@@ -205,15 +205,15 @@ export const adminTaxiItems = [
         },
         {
             title: "Type List",
-            url: "/taxi-types"
+            url: "/robot-types"
         },
         {
             title: "Model List",
-            url: "/taxi-models"
+            url: "/robot-models"
         },
         {
             title: "Robot List",
-            url: "/taxies"
+            url: "/robots"
         }
         ]
     },
@@ -227,7 +227,7 @@ export const adminTaxiItems = [
         }]
     }
 ];
-export const userTaxiItems = [
+export const userrobotItems = [
     {
         title: "Dashboards",
         icon: "icon-home4",
@@ -252,11 +252,11 @@ export const userTaxiItems = [
         url: "",
         children: [{
             title: "Model List",
-            url: "/taxi-models"
+            url: "/robot-models"
         },
         {
             title: "My Robot List",
-            url: "/taxies"
+            url: "/robots"
         }
         ]
     },
@@ -267,7 +267,7 @@ export const userTaxiItems = [
         children: [
             {
                 title: "Rent Robot",
-                url: "/rent-taxi"
+                url: "/rent-robot"
             },
             {
                 title: "My Rent List",

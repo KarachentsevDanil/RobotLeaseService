@@ -3,14 +3,14 @@ import VueRouter from "vue-router";
 import LoginPage from "./pages/auth/pages/login";
 
 import authorizationRoutes from "./routes/authorization-routes";
-import airTaxiRoutes from "./routes/air-taxi-routes";
+import airrobotRoutes from "./routes/air-robot-routes";
 import rentRoutes from "./routes/rent-routes";
 
 Vue.use(VueRouter);
 
 const routes = [
     ...authorizationRoutes,
-    ...airTaxiRoutes,
+    ...airrobotRoutes,
     ...rentRoutes,
     {
         path: "*",

@@ -28,7 +28,7 @@
         <div class="tabbable">
           <ul class="nav nav-tabs nav-tabs-bottom bottom-divided">
             <li class="active">
-              <a href="#taxi-details-tab" data-toggle="tab" v-localize="{i: 'common.details'}"></a>
+              <a href="#robot-details-tab" data-toggle="tab" v-localize="{i: 'common.details'}"></a>
             </li>
             <li>
               <a href="#chat" data-toggle="tab" v-localize="{i: 'rent.chat'}"></a>
@@ -39,7 +39,7 @@
           </ul>
 
           <div class="tab-content">
-            <div class="tab-pane active" id="taxi-details-tab">
+            <div class="tab-pane active" id="robot-details-tab">
               <div class="panel-body">
                 <div class="col-xs-12">
                   <div class="form-horizontal">

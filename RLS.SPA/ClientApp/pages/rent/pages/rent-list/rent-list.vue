@@ -29,7 +29,7 @@ import rentActionCell from "./components/rent-action-cell";
 import rentCustomerCell from "./components/rent-customer-cell";
 import rentDetailsCell from "./components/rent-details-cell";
 import rentOwnerCell from "./components/rent-owner-cell";
-import rentTaxiCell from "./components/rent-taxi-cell";
+import rentrobotCell from "./components/rent-robot-cell";
 import rentFeedbackCell from "./components/rent-feedback-cell";
 
 import * as authGetters from "../../../auth/store/types/getter-types";
@@ -45,7 +45,7 @@ export default {
     rentCustomerCell: rentCustomerCell,
     rentDetailsCell: rentDetailsCell,
     rentOwnerCell: rentOwnerCell,
-    rentTaxiCell: rentTaxiCell,
+    rentrobotCell: rentrobotCell,
     rentFeedbackCell: rentFeedbackCell
   },
   data: () => ({
@@ -53,8 +53,8 @@ export default {
     pageSizeOptions: [10, 25, 50, 100],
     columns: [
       {
-        title: "Taxi",
-        tdComp: "rentTaxiCell",
+        title: "robot",
+        tdComp: "rentrobotCell",
         tdStyle: { width: "20%" },
         sortable: false
       },
@@ -127,7 +127,7 @@ export default {
       this.total = data.TotalCount;
     },
     localizePage() {
-      this.columns[0].title = this.$locale({ i: "rentGrid.taxiTitle" });
+      this.columns[0].title = this.$locale({ i: "rentGrid.robotTitle" });
       this.columns[1].title = this.$locale({ i: "rentGrid.ownerTitle" });
       this.columns[2].title = this.$locale({ i: "rentGrid.feedbackTitle" });
       this.columns[3].title = this.$locale({ i: "rentGrid.infoTitle" });

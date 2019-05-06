@@ -68,7 +68,7 @@
 
 
 <script>
-import * as typeService from "../../air-taxi/pages/type/api/taxi-type-service";
+import * as typeService from "../../air-robot/pages/type/api/robot-type-service";
 
 export default {
   data() {

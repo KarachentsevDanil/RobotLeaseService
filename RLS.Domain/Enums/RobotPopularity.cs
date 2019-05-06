@@ -2,9 +2,9 @@
 {
     public enum RobotPopularity
     {
-        ByRentCount = 1,
+        ByRobotCount = 1,
 
-        ByRobotCount = 2,
+        ByRentCount = 2,
 
         ByRobotAndRentCount = 3
     }

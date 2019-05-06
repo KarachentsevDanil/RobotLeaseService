@@ -1,7 +1,7 @@
 import RentListPage from "../pages/rent/pages/rent-list/rent-list";
 import OwnerRentListPage from "../pages/rent/pages/rent-list/owner-rent-list";
-import RentTaxiPage from "../pages/rent/pages/rent-taxi/rent-taxi";
-import TaxiDetailsPage from '../pages/rent/pages/rent-taxi/taxi-rent-details';
+import RentrobotPage from "../pages/rent/pages/rent-robot/rent-robot";
+import robotDetailsPage from '../pages/rent/pages/rent-robot/robot-rent-details';
 import RentDetailsPage from '../pages/rent/pages/rent-details/rent-details';
 
 import * as routeGuards from "./route-guards";
@@ -22,16 +22,16 @@ export default [
         }
     },
     {
-        path: "/rent-taxi",
-        component: RentTaxiPage,
+        path: "/rent-robot",
+        component: RentrobotPage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);
         }
     },
     {
-        path: "/taxi-details/:id",
+        path: "/robot-details/:id",
         props: true,
-        component: TaxiDetailsPage,
+        component: robotDetailsPage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);
         }

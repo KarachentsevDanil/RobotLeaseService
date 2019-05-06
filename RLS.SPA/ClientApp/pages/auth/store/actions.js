@@ -14,7 +14,7 @@ export default {
 
             context.commit(mutations.SET_TOKEN_MUTATOR, token);
             context.commit(mutations.SET_USER_MUTATOR, userDate.User);
-            data.router.push("/taxies");
+            data.router.push("/robots");
         } else {
             data.notification.error(
                 authResources.popupMessages.loginFailedMessage

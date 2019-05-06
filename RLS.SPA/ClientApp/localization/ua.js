@@ -1,7 +1,7 @@
 export const uaLocalization = {
     common: {
         language: "Мова",
-        airTaxies: "Роботи",
+        airRobots: "Роботи",
         name: "Им'я",
         country: "Країна",
         description: "Опис",
@@ -53,33 +53,33 @@ export const uaLocalization = {
         addModel: "Додати Модель",
         modelName: "Ім'я...",
         company: "Компанія:",
-        taxiType: "Тип Робота:",
+        robotType: "Тип Робота:",
         modelDescription: "Опис...",
         modelReleaseYear: "Рiк Випуску...",
         releaseYear: "Рiк Випуску:",
         flightRange: "Максимальна відстань польоту:",
         modelFlightRange: "Максимальна відстань польоту...",
         uploadPhoto: "Загрузити фото:",
-        taxiModelAdded: "Модель робота була успішно додана.",
-        taxiModelList: "Список Моделей Роботів"
+        robotModelAdded: "Модель робота була успішно додана.",
+        robotModelList: "Список Моделей Роботів"
     },
-    taxi: {
-        addAirTaxi: "Додати Робота",
+    robot: {
+        addRobot: "Додати Робота",
         company: "Компанія:",
-        taxiType: "Тип Робота:",
-        taxiModel: "Модель Робота:",
+        robotType: "Тип Робота:",
+        robotModel: "Модель Робота:",
         pricePerDay: "Ціна в День:",
-        airTaxiList: "Список Літаючих Роботiв",
-        taxiAdded: "Робота було успішно додана.",
+        airrobotList: "Список Літаючих Роботiв",
+        robotAdded: "Робота було успішно додана.",
         avarageRating: "Середнiй Рейтинг:",
         feedbacks: "Вiдгуки"
     },
     type: {
-        addTaxiType: "Додати Тип Робота",
-        taxiTypeList: "Список Типів Роботів",
+        addrobotType: "Додати Тип Робота",
+        robotTypeList: "Список Типів Роботів",
         typeName: "Ім'я...",
         typeDescription: "Опис...",
-        taxiTypeAdded: "Тип робота було успішно додана."
+        robotTypeAdded: "Тип робота було успішно додана."
     },
     chart: {
         modelPieChartTitle: "Моделi Роботiв",
@@ -96,16 +96,16 @@ export const uaLocalization = {
         from: "З:",
         to: "До:",
         totalCosts: "Загальна Вартість:",
-        rentTaxi: "Орендувати Робота",
+        rentrobot: "Орендувати Робота",
         companies: "Компанії:",
         models: "Моделі Роботiв:",
         types: "Типи Роботiв:",
         startDate: "Дата Початку:",
         endDate: "Дата Кінця:",
-        findTaxies: "Знайти Роботiв",
+        findRobots: "Знайти Роботiв",
         ownerPhone: "Телефон Власника:",
         owner: "Власник:",
-        taxi: "Робот:",
+        robot: "Робот:",
         perDay: " за день.",
         feedback: "Залишити Вiдгук",
         feedbackLabel: "Вiдгук",
@@ -120,7 +120,7 @@ export const uaLocalization = {
         capacity: "Ємкість:",
         dailyCapacity: "Ціна в День:",
         rentDetails: "Деталі Оренди",
-        taxiDetails: "Деталі Таксі",
+        robotDetails: "Деталі Таксі",
         rentAdded: "Оренда була успішно додана.",
         rentError: "Спробуйте знайти іншу дату для оренди."
     },
@@ -137,7 +137,7 @@ export const uaLocalization = {
         descriptionTitle: "Опис",
         actionsTitle: "Команди"
     },
-    taxiGrid: {
+    robotGrid: {
         ownerTitle: "Власник",
         modelNameTitle: "Назва Моделі",
         companyTitle: "Компанія",
@@ -151,7 +151,7 @@ export const uaLocalization = {
         actionsTitle: "Команди"
     },
     rentGrid: {
-        taxiTitle: "Таксі",
+        robotTitle: "Таксі",
         ownerTitle: "Власник",
         customerTitle: "Кліент",
         feedbackTitle: "Вiдгук",
@@ -160,7 +160,7 @@ export const uaLocalization = {
     }
 }
 
-export const adminTaxiItems = [
+export const adminrobotItems = [
     {
         title: "Панель приладів",
         icon: "icon-home4",
@@ -189,15 +189,15 @@ export const adminTaxiItems = [
         },
         {
             title: "Типи Роботиів",
-            url: "/taxi-types"
+            url: "/robot-types"
         },
         {
             title: "Моделі Роботиів",
-            url: "/taxi-models"
+            url: "/robot-models"
         },
         {
             title: "Роботи",
-            url: "/taxies"
+            url: "/robots"
         }
         ]
     },
@@ -211,7 +211,7 @@ export const adminTaxiItems = [
         }]
     }
 ];
-export const userTaxiItems = [
+export const userrobotItems = [
     {
         title: "Панель приладів",
         icon: "icon-home4",
@@ -236,11 +236,11 @@ export const userTaxiItems = [
         url: "",
         children: [{
             title: "Моделі Роботиів",
-            url: "/taxi-models"
+            url: "/robot-models"
         },
         {
             title: "Мої Роботи",
-            url: "/taxies"
+            url: "/robots"
         }
         ]
     },
@@ -250,7 +250,7 @@ export const userTaxiItems = [
         url: "",
         children: [{
             title: "Орендувати Робота",
-            url: "/rent-taxi"
+            url: "/rent-robot"
         },
         {
             title: "Мої Оренди",

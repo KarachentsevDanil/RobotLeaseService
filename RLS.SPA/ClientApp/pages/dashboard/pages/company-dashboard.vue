@@ -68,7 +68,7 @@
 
 
 <script>
-import * as companyService from "../../air-taxi/pages/company/api/company-service";
+import * as companyService from "../../air-robot/pages/company/api/company-service";
 
 export default {
   data() {

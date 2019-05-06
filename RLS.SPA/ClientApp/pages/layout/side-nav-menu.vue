@@ -99,17 +99,17 @@ export default {
     getNavbarItems() {
       let role = this.getUsername.Role;
 
-      return role == "User" ? this.userTaxiItems : this.adminTaxiItems;
+      return role == "User" ? this.userrobotItems : this.adminrobotItems;
     },
-    adminTaxiItems() {
+    adminrobotItems() {
       return this.language.selectedLanguage == "US"
-        ? enLocalization.adminTaxiItems
-        : uaLocalization.adminTaxiItems;
+        ? enLocalization.adminrobotItems
+        : uaLocalization.adminrobotItems;
     },
-    userTaxiItems() {
+    userrobotItems() {
       return this.language.selectedLanguage == "US"
-        ? enLocalization.userTaxiItems
-        : uaLocalization.userTaxiItems;
+        ? enLocalization.userrobotItems
+        : uaLocalization.userrobotItems;
     }
   },
   methods: {
