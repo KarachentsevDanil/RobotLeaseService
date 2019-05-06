@@ -97,13 +97,13 @@ namespace RLS.BLL.Configurations.MapperProfiles
 
             CreateMap<Rental, GetShortRobotRentalDto>()
                 .ForMember(x => x.Customer, t => t.MapFrom(p => p.User))
-                .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToShortDateString()))
-                .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToShortDateString()))
+                .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToString("F")))
+                .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToString("F")))
                 .ForMember(x => x.Status, t => t.MapFrom(p => p.Status.ToString()));
 
             CreateMap<Rental, GetRentalDto>()
-                .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToShortDateString()))
-                .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToShortDateString()))
+                .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToString("F")))
+                .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToString("F")))
                 .ForMember(x => x.TotalPrice, t => t.MapFrom(p => (p.EndDate - p.StartDate).TotalDays * p.Robot.DailyCosts))
                 .ForMember(x => x.Status, t => t.MapFrom(p => p.Status.ToString()))
                 .ForMember(x => x.Messages, t => t.MapFrom(p => p.Messages.OrderByDescending(m => m.CreatedAt).ToList()))
@@ -123,7 +123,7 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<UpdateRentalDto, Rental>();
 
             CreateMap<RentalMessage, GetRentalMessageDto>()
-                .ForMember(x => x.CreatedAt, t => t.MapFrom(p => p.CreatedAt.ToString("D")));
+                .ForMember(x => x.CreatedAt, t => t.MapFrom(p => p.CreatedAt.ToString("F")));
 
             CreateMap<Rental, GetRentalForCalendarDto>()
                 .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName} - {p.User.Email}"))
