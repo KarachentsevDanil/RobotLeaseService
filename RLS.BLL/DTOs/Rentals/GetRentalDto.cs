@@ -1,6 +1,6 @@
 ﻿using RLS.BLL.DTOs.Robots;
 using RLS.BLL.DTOs.Users;
-using System;
+using System.Collections.Generic;
 
 namespace RLS.BLL.DTOs.Rentals
 {
@@ -13,6 +13,8 @@ namespace RLS.BLL.DTOs.Rentals
         public GetUserDto Customer { get; set; }
 
         public GetRobotDto Robot { get; set; }
+
+        public ICollection<GetRentalMessageDto> Messages { get; set; }
 
         public string StartDate { get; set; }
 

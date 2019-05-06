@@ -16,6 +16,8 @@ namespace RLS.DAL.EF.Context
 
         public DbSet<Rental> Rentals { get; set; }
 
+        public DbSet<RentalMessage> Messages { get; set; }
+
         public DbSet<Robot> Robots { get; set; }
 
         public DbSet<RobotType> RobotTypes { get; set; }
@@ -30,6 +32,7 @@ namespace RLS.DAL.EF.Context
             base.OnModelCreating(builder);
 
             new RentalMapping().MapEntity(builder.Entity<Rental>());
+            new RentalMessageMapping().MapEntity(builder.Entity<RentalMessage>());
 
             new RobotCompanyMapping().MapEntity(builder.Entity<RobotCompany>());
             new RobotModelMapping().MapEntity(builder.Entity<RobotModel>());

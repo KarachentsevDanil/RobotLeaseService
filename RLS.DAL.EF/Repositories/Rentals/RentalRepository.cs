@@ -60,6 +60,8 @@ namespace RLS.DAL.EF.Repositories.Rentals
                 .Include(x => x.Robot).ThenInclude(x => x.User)
                 .Include(x => x.Robot).ThenInclude(x => x.Model).ThenInclude(x => x.Company)
                 .Include(x => x.Robot).ThenInclude(x => x.Model).ThenInclude(x => x.Type)
+                .Include(x => x.Messages)
+                .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(r => r.Id == id, ct);
         }
 
@@ -69,7 +71,7 @@ namespace RLS.DAL.EF.Repositories.Rentals
 
             if (!string.IsNullOrEmpty(filterParams.UserId) && !filterParams.IsCalendarView)
             {
-                predicate = filterParams.IsOwnerView 
+                predicate = filterParams.IsOwnerView
                     ? predicate.And(t => t.Robot.UserId == filterParams.UserId)
                     : predicate.And(t => t.UserId == filterParams.UserId);
             }

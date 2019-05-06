@@ -29,6 +29,7 @@ namespace RLS.WebApi.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IRentalRepository, RentalRepository>();
+            services.AddScoped<IRentalMessageRepository, RentalMessageRepository>();
 
             services.AddScoped<IRobotRepository, RobotRepository>();
             services.AddScoped<IRobotCompanyRepository, RobotCompanyRepository>();
@@ -43,6 +44,7 @@ namespace RLS.WebApi.Extensions
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IRentalService, RentalService>();
+            services.AddScoped<IRentalMessageService, RentalMessageService>();
 
             services.AddScoped<IRobotService, RobotService>();
             services.AddScoped<IRobotCompanyService, RobotCompanyService>();

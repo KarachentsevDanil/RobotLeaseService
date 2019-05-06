@@ -8,6 +8,8 @@ namespace RLS.DAL.UnitOfWork.Contracts
     {
         IRentalRepository RentalRepository { get; }
 
+        IRentalMessageRepository RentalMessageRepository { get; }
+
         IRobotRepository RobotRepository { get; }
 
         IRobotModelRepository RobotModelRepository { get; }

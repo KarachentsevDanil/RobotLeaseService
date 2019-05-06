@@ -2,6 +2,7 @@
 using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
+using System.Collections.Generic;
 
 namespace RLS.Domain.Rentals
 {
@@ -32,5 +33,7 @@ namespace RLS.Domain.Rentals
         public string OwnerFeedback { get; set; }
 
         public string CancelReason { get; set; }
+
+        public ICollection<RentalMessage> Messages { get; set; }
     }
 }

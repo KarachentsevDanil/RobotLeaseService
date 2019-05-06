@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using RLS.Domain.Enums;
 using RLS.Domain.Rentals;
 using RLS.Domain.Robots;
+using System.Collections.Generic;
 
 namespace RLS.Domain.Users
 {
@@ -18,10 +18,13 @@ namespace RLS.Domain.Users
 
         public ICollection<Rental> Rentals { get; set; }
 
+        public ICollection<RentalMessage> Messages { get; set; }
+
         public User()
         {
             Robots = new List<Robot>();
             Rentals = new List<Rental>();
+            Messages = new List<RentalMessage>();
         }
     }
 }
