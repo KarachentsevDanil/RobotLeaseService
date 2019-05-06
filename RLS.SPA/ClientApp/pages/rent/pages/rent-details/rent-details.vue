@@ -163,6 +163,7 @@
                   <button
                     type="button"
                     @click="sendMessage"
+                    :disabled="!this.text"
                     class="btn bg-teal-400 btn-labeled btn-labeled-right legitRipple"
                   >
                     <b>
@@ -264,6 +265,7 @@ import * as rentService from "../../api/rent-service";
 
 import * as authGetters from "../../../auth/store/types/getter-types";
 import * as authResources from "../../../auth/store/resources";
+import * as storeActionTypes from "../../../../store/types/action-types";
 
 import { mapGetters } from "vuex";
 
@@ -357,11 +359,15 @@ export default {
         Message: this.text
       };
 
+      this.$store.dispatch(storeActionTypes.START_LOADING_ACTION, "Please wait...");
+
       await rentService.createMessage(data);
 
       this.text = "";
       await this.loadMessage();
+      
       this.$noty.success("Message successfully added.");
+      this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
     },
     async loadMessage() {
       let rent = (await rentService.getRentById(this.id)).data.Data;

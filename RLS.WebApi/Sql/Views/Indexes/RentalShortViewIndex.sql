@@ -1,5 +1,4 @@
-﻿DROP INDEX [ClusteredIndex] ON [rental].[RentalShortView] WITH ( ONLINE = OFF ) 
-CREATE UNIQUE CLUSTERED INDEX [ClusteredIndex] ON [rental].[RentalShortView]
+﻿CREATE UNIQUE CLUSTERED INDEX [ClusteredIndex] ON [rental].[RentalShortView]
 (
 	[Id] ASC,
 	[RobotId] ASC,

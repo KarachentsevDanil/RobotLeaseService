@@ -232,6 +232,7 @@ import * as taxiService from "../../../air-taxi/pages/taxi/api/taxi-service";
 
 import * as authGetters from "../../../auth/store/types/getter-types";
 import * as authResources from "../../../auth/store/resources";
+import * as storeActionTypes from "../../../../store/types/action-types";
 
 import { mapGetters } from "vuex";
 
@@ -309,8 +310,15 @@ export default {
   },
   methods: {
     async pageChanged(page) {
+      this.$store.dispatch(
+        storeActionTypes.START_LOADING_ACTION,
+        "Please wait..."
+      );
+
       this.filters.pagination.currentPage = page;
       await this.getTaxies();
+
+      this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
     },
     async getTaxies() {
       let params = {
@@ -320,11 +328,17 @@ export default {
         take: this.filters.pagination.pageSize,
         isSearchView: true
       };
+      this.$store.dispatch(
+        storeActionTypes.START_LOADING_ACTION,
+        "Please wait..."
+      );
 
       let data = (await taxiService.getTaxiesByParams(params)).data.Data;
 
       this.taxies = data.Collection;
       this.filters.pagination.total = data.TotalCount;
+
+      this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
     },
     async clearSearchForm() {
       await this.getTaxies();
@@ -358,11 +372,16 @@ export default {
         minRating: this.ratingRange[0],
         maxRating: this.ratingRange[1]
       };
-
+      this.$store.dispatch(
+        storeActionTypes.START_LOADING_ACTION,
+        "Please wait..."
+      );
       let data = (await taxiService.getTaxiesByParams(params)).data.Data;
 
       this.taxies = data.Collection;
       this.filters.pagination.total = data.TotalCount;
+
+      this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
     }
   },
   computed: {
@@ -392,6 +411,10 @@ export default {
     }
   },
   async beforeMount() {
+    this.$store.dispatch(
+      storeActionTypes.START_LOADING_ACTION,
+      "Please wait..."
+    );
     let companies = (await taxiService.getAirTaxiCompanies()).data.Data;
     let types = (await taxiService.getAirTaxiTypes()).data.Data;
     this.loadedModels = (await taxiService.getAirTaxiModels()).data.Data;
@@ -407,6 +430,8 @@ export default {
     }));
 
     await this.getTaxies();
+    
+    this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
   }
 };
 </script>

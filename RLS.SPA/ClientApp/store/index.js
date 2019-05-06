@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import authenticationStore from "../pages/auth/store/index";
-// import ordersStore from "../pages/orders/store/index";
 
 import actions from "./actions";
 import getters from "./getters";
@@ -26,8 +25,7 @@ const store = new Vuex.Store({
     getters,
     mutations,
     modules: {
-        authStore: authenticationStore,
-        // ordersStore: ordersStore
+        authStore: authenticationStore
     }
 });
 

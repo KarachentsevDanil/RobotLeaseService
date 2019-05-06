@@ -1,5 +1,4 @@
-﻿DROP INDEX [ClusteredIndex] ON [robot].[RobotShortView] WITH ( ONLINE = OFF ) 
-CREATE UNIQUE CLUSTERED INDEX [ClusteredIndex] ON [robot].[RobotShortView]
+﻿CREATE UNIQUE CLUSTERED INDEX [ClusteredIndex] ON [robot].[RobotShortView]
 (
 	[Id] ASC,
 	[ModelId] ASC

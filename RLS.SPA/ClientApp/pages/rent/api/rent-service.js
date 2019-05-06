@@ -62,7 +62,7 @@ export const createMessage = data => {
         data: data
     }
 
-    return httpService.putData(params);
+    return httpService.postData(params);
 }
 
 export const updateMessages = data => {
