@@ -139,8 +139,11 @@
                     <div class="media-content">{{message.Message}}</div>
                     <span class="media-annotation display-block mt-10">
                       {{message.CreatedAt}}
-                      <a href="#">
-                        <i class="icon-pin-alt position-right text-muted"></i>
+                      <a href="#" v-if="message.User.Id != getUser.Id">
+                        <i class="icon-bubbles2 position-right text-muted"></i>
+                      </a>
+                      <a href="#" v-if="message.User.Id == getUser.Id">
+                        <i class="icon-bubbles4 position-right text-muted"></i>
                       </a>
                     </span>
                   </div>

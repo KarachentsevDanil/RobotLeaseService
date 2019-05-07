@@ -57,89 +57,57 @@
           <div class="tab-content">
             <div class="tab-pane active" id="robot-details-tab">
               <div class="panel-body">
-                <div class="col-xs-12">
-                  <div class="form-horizontal">
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.owner'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{robot.UserFullName}}</p>
-                        </div>
-                      </div>
+                <div class="row">
+                  <div class="col-xs-5 robot-image">
+                    <div class="panel panel-body panel-body-accent">
+                      <img
+                        class="full-weigth-img"
+                        src="https://madrobots.ru/upload/resize_cache_imm/iblock/451/600_480_0/451d3e7d95f9d6d5cda141a501afa401.jpg"
+                        alt
+                      >
                     </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.ownerPhone'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">
-                            <a href="#">{{robot.UserPhone}}</a>
-                          </p>
-                        </div>
-                      </div>
+                  </div>
+                  <div class="col-md-7">
+                    <h5 class="text-semibold title">{{robot.CompanyName}} {{robot.ModelName}}</h5>
+                    <hr class="hr-details">
+                    <p class="form-control-static">
+                      <star-rating
+                        :inline="true"
+                        :star-size="24"
+                        :read-only="true"
+                        :show-rating="false"
+                        :rating="robot.AvarageRating"
+                        :round-start-rating="false"
+                      ></star-rating>
+                    </p>
+
+                    <h6 class="text-semibold">{{robot.TypeName}}</h6>
+                    <p>{{robot.Description}}</p>
+                    <h5 class="text-semibold robot-cost">$ {{robot.DailyCosts}}</h5>
+                    <div class="content-group-lg">
+                      <h6 class="text-semibold">{{robot.UserFullName}}</h6>
+                      <ul class="list">
+                        <li>
+                          <strong class="display-block">Phone:</strong>
+                          <a href="#">{{robot.UserPhone}}</a>
+                        </li>
+                        <li>
+                          <strong class="display-block">Email</strong>
+                          <a href="#">{{robot.UserName}}</a>
+                        </li>
+                      </ul>
                     </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.company'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{robot.CompanyName}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.model'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{robot.ModelName}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.type'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{robot.TypeName}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.description'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{robot.Description}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label
-                          class="col-sm-2 control-label"
-                          v-localize="{i: 'rent.dailyCapacity'}"
-                        ></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{robot.DailyCosts}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label
-                          class="col-sm-2 control-label"
-                          v-localize="{i: 'robot.avarageRating'}"
-                        ></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">
-                            <star-rating
-                              :inline="true"
-                              :star-size="16"
-                              :read-only="true"
-                              :show-rating="false"
-                              :rating="robot.AvarageRating"
-                              :round-start-rating="false"
-                            ></star-rating>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    <a
+                      href="#"
+                      data-toggle="modal"
+                      data-target="#rentrobot"
+                      class="btn bg-blue btn-labeled btn-xlg heading-btn legitRipple"
+                    >
+                      <b>
+                        <i class="icon-plus2"></i>
+                      </b>
+                      <span v-localize="{i: 'rent.rentrobot'}"></span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -290,26 +258,27 @@ export default {
     this.robot = robot;
 
     let data = {
-        companyId: robot.CompanyId
-    }
+      companyId: robot.CompanyId
+    };
 
-    let robotModels = (await modelService.getTopRobotModelsByRobotCount(data)).data
-      .Data;
+    let robotModels = (await modelService.getTopRobotModelsByRobotCount(data))
+      .data.Data;
 
     this.fillChartData(this.modelRobotPieChartSettings, robotModels, "model");
 
-    let rentModels = (await modelService.getTopRobotModelsByRentCount(data)).data
-      .Data;
+    let rentModels = (await modelService.getTopRobotModelsByRentCount(data))
+      .data.Data;
 
     this.fillChartData(this.modelRentPieChartSettings, rentModels, "model");
 
-    
-    let barChartData = (await modelService.getTopRobotModelsByRobotAndRentsCount(data))
-      .data.Data;
+    let barChartData = (await modelService.getTopRobotModelsByRobotAndRentsCount(
+      data
+    )).data.Data;
 
-      this.modelBarChartSettings.data.titles = barChartData.Titles;
-      this.modelBarChartSettings.data.robotRentsCount = barChartData.RobotRentsCount;
-      this.modelBarChartSettings.data.robotsCount = barChartData.RobotsCount;
+    this.modelBarChartSettings.data.titles = barChartData.Titles;
+    this.modelBarChartSettings.data.robotRentsCount =
+      barChartData.RobotRentsCount;
+    this.modelBarChartSettings.data.robotsCount = barChartData.RobotsCount;
   },
   methods: {
     getNameIncon(item) {
@@ -346,5 +315,27 @@ export default {
 
 #feedbacks p {
   margin-bottom: 5px;
+}
+
+.full-weigth-img {
+  width: 100%;
+}
+
+h5.title {
+  font-size: 28px;
+}
+hr.hr-details {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+h5.robot-cost {
+  font-size: 30px;
+}
+div.robot-image {
+  padding-top: 15px;
+}
+div.robot-image > div.panel {
+  padding: 10px;
+  background-color: white;
 }
 </style>
