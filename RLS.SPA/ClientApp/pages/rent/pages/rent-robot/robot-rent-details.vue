@@ -60,7 +60,12 @@
                 <div class="row">
                   <div class="col-xs-5 robot-image">
                     <div class="panel panel-body panel-body-accent">
-                      <img
+                      <img v-if="robot.Photo"
+                        class="full-weigth-img"
+                        :src="robot.Photo"
+                        alt
+                      >
+                      <img v-else
                         class="full-weigth-img"
                         src="https://madrobots.ru/upload/resize_cache_imm/iblock/451/600_480_0/451d3e7d95f9d6d5cda141a501afa401.jpg"
                         alt

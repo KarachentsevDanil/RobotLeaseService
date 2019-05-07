@@ -74,13 +74,16 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.CountOfRents, t => t.MapFrom(p => p.RentalCount));
 
             CreateMap<CreateRobotDto, Robot>()
-                .ForMember(x => x.Id, t => t.Ignore());
+                .ForMember(x => x.Icon, p => p.MapFrom(t => Convert.FromBase64String(t.Icon)))
+                .ForMember(x => x.Photo, p => p.MapFrom(t => Convert.FromBase64String(t.Photo)));
 
             CreateMap<UpdateRobotDto, Robot>();
 
             CreateMap<Robot, GetRobotDto>()
                 .ForMember(x => x.UserId, t => t.MapFrom(p => p.User.Id))
                 .ForMember(x => x.UserName, t => t.MapFrom(p => p.User.Email))
+                .ForMember(x => x.Photo, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Photo)}"))
+                .ForMember(x => x.Icon, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Icon)}"))
                 .ForMember(x => x.UserPhone, t => t.MapFrom(p => p.User.PhoneNumber))
                 .ForMember(x => x.UserFullName, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"))
                 .ForMember(x => x.CompanyId, t => t.MapFrom(p => p.Model.CompanyId))

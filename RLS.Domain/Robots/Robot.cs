@@ -18,6 +18,10 @@ namespace RLS.Domain.Robots
 
         public RobotModel Model { get; set; }
 
+        public byte[] Icon { get; set; }
+
+        public byte[] Photo { get; set; }
+
         public ICollection<Rental> Rentals { get; set; }
 
         public Robot()

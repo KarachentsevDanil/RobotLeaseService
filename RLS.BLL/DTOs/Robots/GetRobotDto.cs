@@ -14,6 +14,10 @@ namespace RLS.BLL.DTOs.Robots
 
         public string ModelName { get; set; }
 
+        public string Icon { get; set; }
+
+        public string Photo { get; set; }
+
         public string TypeId { get; set; }
 
         public string TypeName { get; set; }

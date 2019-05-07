@@ -35,10 +35,20 @@
                         <label v-localize="{i: 'robot.pricePerDay'}"></label>
                         <input v-model="dailyCosts" type="number" class="form-control" v-localize="{i: 'robot.pricePerDay', attr: 'placeholder'}"/>
                     </div>
+                    <div class="form-group">
+                        <p v-localize="{i: 'models.uploadPhoto'}"></p>
+                        <vue-dropzone @vdropzone-success="photoSuccessfullyAdded" id="photoDropzone" :options="photoDropzoneOptions">
+                        </vue-dropzone>
+                    </div>
+                    <div class="form-group">
+                        <p>Upload Icon:</p>
+                        <vue-dropzone @vdropzone-success="iconSuccessfullyAdded" id="iconDropzone" :options="iconDropzoneOptions">
+                        </vue-dropzone>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button @click="addrobotModel" type="button" :disabled="!robotModelId || dailyCosts == 0.0" class="btn btn-primary" v-localize="{i: 'common.add'}"></button>
+                    <button @click="addrobotModel" type="button" :disabled="!robotModelId || dailyCosts == 0.0 || !photo || !icon" class="btn btn-primary" v-localize="{i: 'common.add'}"></button>
                     <button type="button" class="btn btn-link close-add-popup" data-dismiss="modal" v-localize="{i: 'common.close'}"></button>
                 </div>
             </div>
@@ -62,6 +72,20 @@ const iconFormat = el => {
 export default {
   data() {
     return {
+      photoDropzoneOptions: {
+        url: "https://httpbin.org/post",
+        thumbnailWidth: 200,
+        addRemoveLinks: true,
+        dictDefaultMessage:
+          "<span class='upload-text'><i class='fal fa-cloud-upload'></i> Upload photo</span>"
+      },
+      iconDropzoneOptions: {
+        url: "https://httpbin.org/post",
+        thumbnailWidth: 200,
+        addRemoveLinks: true,
+        dictDefaultMessage:
+          "<span class='upload-text'><i class='fal fa-cloud-upload'></i> Upload icon</span>"
+      },
       companySelectConfiguration: {
         placeholder: "Select a company...",
         templateResult: iconFormat,
@@ -93,7 +117,9 @@ export default {
       companies: [],
       types: [],
       models: [],
-      loadedModels: []
+      loadedModels: [],
+      photo: "",
+      icon:""
     };
   },
   async beforeMount() {
@@ -127,8 +153,20 @@ export default {
     }
   },
   methods: {
+    photoSuccessfullyAdded(file, response) {
+      this.photo = this.getFileData(file);
+    },
+    iconSuccessfullyAdded(file, response) {
+      this.icon = this.getFileData(file);
+    },
+    getFileData(file) {
+      let fileData = file.dataURL.split("base64,")[1];
+      return fileData;
+    },
     clearForm() {
       this.dailyCosts = 0;
+      this.photo = "";
+      this.icon = "";
     },
     loadModels() {
       if (this.robotCompanyId && this.robotTypeId) {
@@ -151,7 +189,9 @@ export default {
     async addrobotModel() {
       let data = {
         modelId: this.robotModelId,
-        dailyCosts: this.dailyCosts
+        dailyCosts: this.dailyCosts,
+        photo: this.photo,
+        icon: this.icon,
       };
 
       await robotService.addRobot(data);

@@ -38,11 +38,6 @@
                         <label v-localize="{i: 'models.releaseYear'}"></label>
                         <input v-model="releaseYear" type="number" min="2000" max="2100" class="form-control" v-localize="{i: 'models.modelReleaseYear', attr: 'placeholder'}"/>
                     </div>
-                    <div class="form-group">
-                        <p v-localize="{i: 'models.uploadPhoto'}"></p>
-                        <vue-dropzone @vdropzone-success="photoSuccessfullyAdded" id="iconDropzone" :options="dropzoneOptions">
-                        </vue-dropzone>
-                    </div>
                 </div>
 
                 <div class="modal-footer">

@@ -148,8 +148,8 @@
               <div class="media-left">
                 <a href="#">
                   <img
-                    v-if="robot.ModelPhoto"
-                    :src="robot.ModelPhoto"
+                    v-if="robot.Icon"
+                    :src="robot.Icon"
                     class="img-rounded img-lg icon-robot-image"
                     alt
                   >
