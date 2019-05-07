@@ -338,4 +338,11 @@ div.robot-image > div.panel {
   padding: 10px;
   background-color: white;
 }
+
+ul.nav.nav-tabs {
+  margin-bottom: 5px;
+}
+.tab-content > .tab-pane > .panel-body {
+  padding-top: 5px;
+}
 </style>

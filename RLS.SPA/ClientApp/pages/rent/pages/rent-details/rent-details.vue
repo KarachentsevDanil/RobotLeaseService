@@ -42,83 +42,96 @@
             <div class="tab-pane active" id="robot-details-tab">
               <div class="panel-body">
                 <div class="col-xs-12">
-                  <div class="form-horizontal">
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.owner'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{rent.Robot.UserFullName}}</p>
-                        </div>
+                  <div class="row">
+                    <div class="col-xs-9">
+                      <h5
+                        class="text-semibold title"
+                      >{{rent.Robot.CompanyName}} {{rent.Robot.ModelName}}</h5>
+                      <hr class="hr-details">
+                      <p class="form-control-static">
+                        <star-rating
+                          :inline="true"
+                          :star-size="24"
+                          :read-only="true"
+                          :show-rating="false"
+                          :rating="rent.Robot.AvarageRating"
+                          :round-start-rating="false"
+                        ></star-rating>
+                      </p>
+
+                      <h6 class="text-semibold">{{rent.Robot.TypeName}}</h6>
+                      <p>{{rent.Robot.Description}}</p>
+                      <h5 class="text-semibold robot-cost">$ {{rent.Robot.DailyCosts}}</h5>
+                      <div class="content-group-lg">
+                        <h6 class="text-semibold rental-details">Rent Details</h6>
+                        <ul class="list rental-details">
+                          <li>
+                            <strong>Total Price:</strong>
+                            <span>${{rent.TotalPrice}}</span>
+                          </li>
+                          <li>
+                            <strong>Start Date:</strong>
+                            <span>{{rent.StartDate}}</span>
+                          </li>
+                          <li>
+                            <strong>End Date:</strong>
+                            <span>{{rent.EndDate}}</span>
+                          </li>
+                          <li v-if="rent.CustomerFeedback">
+                            <strong>Feedback:</strong>
+                            <span>{{rent.CustomerFeedback}}</span>
+                          </li>
+                          <li v-if="rent.RobotRating > 0">
+                            <strong>Rating:</strong>
+                            <star-rating
+                              :inline="true"
+                              :star-size="14"
+                              :read-only="true"
+                              :show-rating="false"
+                              :rating="rent.RobotRating"
+                              :round-start-rating="false"
+                            ></star-rating>
+                          </li>
+                        </ul>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.ownerPhone'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">
+                      <div class="content-group-lg">
+                        <h6 class="text-semibold rental-details">{{rent.Robot.UserFullName}}</h6>
+                        <ul class="list rental-details">
+                          <li>
+                            <strong class="display-block">Phone:</strong>
                             <a href="#">{{rent.Robot.UserPhone}}</a>
-                          </p>
-                        </div>
+                          </li>
+                          <li>
+                            <strong class="display-block">Email</strong>
+                            <a href="#">{{rent.Robot.UserName}}</a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.company'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{rent.Robot.CompanyName}}</p>
-                        </div>
+                    <div class="col-xs-3 robot-image">
+                      <div class="panel panel-body panel-body-accent">
+                        <img
+                          class="full-weigth-img"
+                          src="https://madrobots.ru/upload/resize_cache_imm/iblock/451/600_480_0/451d3e7d95f9d6d5cda141a501afa401.jpg"
+                          alt
+                        >
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.model'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{rent.Robot.ModelName}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.type'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{rent.Robot.TypeName}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" v-localize="{i: 'rent.description'}"></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{rent.Robot.Description}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <label
-                          class="col-sm-2 control-label"
-                          v-localize="{i: 'rent.dailyCapacity'}"
-                        ></label>
-                        <div class="col-sm-10">
-                          <p class="form-control-static">{{rent.Robot.DailyCosts}}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row" v-if="rent.Status == 'Created'">
-                      <button
-                        type="button"
-                        @click="updateRent(1)"
-                        class="btn btn-success legitRipple complete"
-                        v-localize="{i: 'rent.complete'}"
-                      ></button>
-                      <button
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#cancelRentModal"
-                        class="btn btn-danger legitRipple"
-                        v-localize="{i: 'rent.decline'}"
-                      ></button>
-                    </div>
+                  </div>
+                  <div class="row" v-if="rent.Status == 'Created'">
+                    <button
+                      type="button"
+                      @click="updateRent(1)"
+                      class="btn btn-success legitRipple complete"
+                      v-localize="{i: 'rent.complete'}"
+                    ></button>
+                    <button
+                      type="button"
+                      data-toggle="modal"
+                      data-target="#cancelRentModal"
+                      class="btn btn-danger legitRipple"
+                      v-localize="{i: 'rent.decline'}"
+                    ></button>
                   </div>
                 </div>
               </div>
@@ -362,13 +375,16 @@ export default {
         Message: this.text
       };
 
-      this.$store.dispatch(storeActionTypes.START_LOADING_ACTION, "Please wait...");
+      this.$store.dispatch(
+        storeActionTypes.START_LOADING_ACTION,
+        "Please wait..."
+      );
 
       await rentService.createMessage(data);
 
       this.text = "";
       await this.loadMessage();
-      
+
       this.$noty.success("Message successfully added.");
       this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
     },
@@ -419,5 +435,41 @@ button.complete {
 .chat-list,
 .chat-stacked {
   max-height: 320px !important;
+}
+
+.full-weigth-img {
+  width: 100%;
+}
+
+h5.title {
+  font-size: 28px;
+}
+hr.hr-details {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+h5.robot-cost {
+  font-size: 30px;
+}
+div.robot-image {
+  padding-top: 15px;
+}
+div.robot-image > div.panel {
+  padding: 10px;
+  background-color: white;
+}
+h6.rental-details {
+  font-size: 16px;
+}
+
+ul.rental-details {
+  font-size: 14px;
+}
+
+ul.nav.nav-tabs {
+  margin-bottom: 5px;
+}
+.tab-content > .tab-pane > .panel-body {
+  padding-top: 5px;
 }
 </style>

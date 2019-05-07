@@ -57,6 +57,7 @@ namespace RLS.DAL.EF.Repositories.Rentals
         {
             return await DbContext.Rentals
                 .Include(x => x.User)
+                .Include(x => x.Robot).ThenInclude(x => x.Rentals)
                 .Include(x => x.Robot).ThenInclude(x => x.User)
                 .Include(x => x.Robot).ThenInclude(x => x.Model).ThenInclude(x => x.Company)
                 .Include(x => x.Robot).ThenInclude(x => x.Model).ThenInclude(x => x.Type)

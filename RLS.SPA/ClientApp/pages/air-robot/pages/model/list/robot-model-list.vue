@@ -64,11 +64,6 @@ export default {
         sortable: false
       },
       {
-        title: "Description",
-        field: "Description",
-        sortable: false
-      },
-      {
         title: "Actions",
         tdComp: "modelActionCell",
         thStyle: { textAlign: "center" }
