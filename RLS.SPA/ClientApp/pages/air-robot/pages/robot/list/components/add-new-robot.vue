@@ -37,12 +37,12 @@
                     </div>
                     <div class="form-group">
                         <p v-localize="{i: 'models.uploadPhoto'}"></p>
-                        <vue-dropzone @vdropzone-success="photoSuccessfullyAdded" id="photoDropzone" :options="photoDropzoneOptions">
+                        <vue-dropzone @vdropzone-success="photoSuccessfullyAdded" ref="photoDropzone" id="photoDropzone" :options="photoDropzoneOptions">
                         </vue-dropzone>
                     </div>
                     <div class="form-group">
                         <p>Upload Icon:</p>
-                        <vue-dropzone @vdropzone-success="iconSuccessfullyAdded" id="iconDropzone" :options="iconDropzoneOptions">
+                        <vue-dropzone @vdropzone-success="iconSuccessfullyAdded" ref="iconDropzone" id="iconDropzone" :options="iconDropzoneOptions">
                         </vue-dropzone>
                     </div>
                 </div>
@@ -167,6 +167,9 @@ export default {
       this.dailyCosts = 0;
       this.photo = "";
       this.icon = "";
+      
+      this.$refs.photoDropzone.removeAllFiles();
+      this.$refs.iconDropzone.removeAllFiles();
     },
     loadModels() {
       if (this.robotCompanyId && this.robotTypeId) {
