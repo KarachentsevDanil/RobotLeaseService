@@ -3,7 +3,7 @@
         <td>
             <div class="media-left media-top">
                 <a class="legitRipple">
-                    <img v-if="row.Robot.ModelPhoto" :src="row.Robot.ModelPhoto" class="img-rounded icon-photo">
+                    <img v-if="row.Robot.Icon" :src="row.Robot.Icon" class="img-rounded icon-photo">
                     <img v-else src="../../../../../assets/limitless/images/robot.png" class="img-rounded icon-photo">
                 </a>
             </div>
