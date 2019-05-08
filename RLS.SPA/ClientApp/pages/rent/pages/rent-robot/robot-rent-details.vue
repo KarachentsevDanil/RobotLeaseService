@@ -445,7 +445,7 @@ div.valualble-robot {
   padding: 5px;
 }
 div.valualble-robot img {
-  width: 70px !important;
+  width: 80px !important;
   height: 80px !important;
   vertical-align: unset !important;
   padding-right: 5px;
