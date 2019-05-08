@@ -1,4 +1,5 @@
-﻿using RLS.BLL.DTOs.FilterParams.Robots;
+﻿using RLS.BLL.DTOs.Dashboards;
+using RLS.BLL.DTOs.FilterParams.Robots;
 using RLS.BLL.DTOs.Robots;
 using RLS.Domain.Models;
 using System.Collections.Generic;
@@ -21,5 +22,7 @@ namespace RLS.BLL.Services.Contracts.Robots
 
         Task<IEnumerable<GetValuableRobotModelDto>> GetMostValuableRobotByFilterParamsAsync(
             RobotMostValuableFilterParamsDto filterParams, CancellationToken ct = default);
+
+        Task<DashboardStatisticDto> GetDashboardStatisticModelAsync(CancellationToken ct = default);
     }
 }

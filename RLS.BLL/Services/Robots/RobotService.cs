@@ -9,6 +9,7 @@ using RLS.Domain.Robots;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.BLL.DTOs.Dashboards;
 
 namespace RLS.BLL.Services.Robots
 {
@@ -75,6 +76,14 @@ namespace RLS.BLL.Services.Robots
                 await _unitOfWork.RobotRepository.GetMostValuableRobotByFilterParamsAsync(filterParams, ct);
 
             return _mapper.Map<IEnumerable<GetValuableRobotModelDto>>(robotModels);
+        }
+
+        public async Task<DashboardStatisticDto> GetDashboardStatisticModelAsync(CancellationToken ct = default)
+        {
+            var result =
+                await _unitOfWork.RobotRepository.GetDashboardStatisticModelAsync(ct);
+
+            return _mapper.Map<DashboardStatisticDto>(result);
         }
     }
 }

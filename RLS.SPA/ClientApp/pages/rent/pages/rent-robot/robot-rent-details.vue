@@ -482,4 +482,8 @@ div.valualble-robot .label.label-striped {
 p.info-divider {
   margin: 0 0 4px;
 }
+
+#robot-details-tab .row .panel-heading {
+  background-color: whitesmoke;
+}
 </style>

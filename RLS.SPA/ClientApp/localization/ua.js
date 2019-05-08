@@ -166,6 +166,10 @@ export const adminrobotItems = [
         icon: "icon-home4",
         url: "",
         children: [{
+            title: "Панель приладів додатку",
+            url: "/dashboard"
+        },
+        {
             title: "Панель приладів Компанії",
             url: "/company-dashboard"
         },
@@ -217,6 +221,10 @@ export const userrobotItems = [
         icon: "icon-home4",
         url: "",
         children: [{
+            title: "Панель приладів додатку",
+            url: "/dashboard"
+        },
+        {
             title: "Панель приладів Компанії",
             url: "/company-dashboard"
         },

@@ -14,5 +14,7 @@ namespace RLS.DAL.Repositories.Contracts.Robots
 
         Task<IEnumerable<ValuableRobotModel>> GetMostValuableRobotByFilterParamsAsync(
             RobotMostValuableFilterParams filterParams, CancellationToken ct = default);
+
+        Task<DashboardStatisticModel> GetDashboardStatisticModelAsync(CancellationToken ct = default);
     }
 }

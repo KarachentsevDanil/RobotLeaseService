@@ -90,6 +90,38 @@ namespace RLS.DAL.EF.Repositories.Robots
             return result;
         }
 
+        public async Task<DashboardStatisticModel> GetDashboardStatisticModelAsync(CancellationToken ct = default)
+        {
+            DashboardStatisticModel result = new DashboardStatisticModel();
+
+            var reader = await DbContext.Database.GetDbConnection().QueryMultipleAsync("[robot].[GetDashboardStatistics]",
+                commandType: CommandType.StoredProcedure);
+
+            using (reader)
+            {
+                result.UserCount = reader.ReadSingle<int>();
+                result.UserWithRobotsCount = reader.ReadSingle<int>();
+                result.UserWithRentsCount = reader.ReadSingle<int>();
+                result.UserWithRobotsAndRentsCount = reader.ReadSingle<int>();
+
+                result.RobotCount = reader.ReadSingle<int>();
+                result.AvailableTodayRobotCount = reader.ReadSingle<int>();
+
+                result.RentCount = reader.ReadSingle<int>();
+                result.CompletedRentCount = reader.ReadSingle<int>();
+                result.ActiveRentCount = reader.ReadSingle<int>();
+                result.CanceledRentCount = reader.ReadSingle<int>();
+
+                result.CustomerFeedbackCount = reader.ReadSingle<int>();
+                result.OwnerFeedbackCount = reader.ReadSingle<int>();
+                result.CompanyCount = reader.ReadSingle<int>();
+                result.TypeCount = reader.ReadSingle<int>();
+                result.ModelCount = reader.ReadSingle<int>();
+            }
+
+            return result;
+        }
+
         private void FillFilterExpression(RobotFilterParams filterParams)
         {
             Expression<Func<Robot, bool>> predicate = PredicateBuilder.New<Robot>

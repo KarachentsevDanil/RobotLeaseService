@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RLS.BLL.DTOs.Dashboards;
 using RLS.BLL.DTOs.FilterParams.Rents;
 using RLS.BLL.DTOs.FilterParams.Robots;
 using RLS.BLL.DTOs.Rentals;
@@ -9,12 +10,13 @@ using RLS.BLL.DTOs.Robots.Types;
 using RLS.BLL.DTOs.Users;
 using RLS.Domain.FilterParams.Rents;
 using RLS.Domain.FilterParams.Robots;
+using RLS.Domain.Models;
+using RLS.Domain.Models.Robots;
 using RLS.Domain.Rentals;
 using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
 using System.Linq;
-using RLS.Domain.Models.Robots;
 
 namespace RLS.BLL.Configurations.MapperProfiles
 {
@@ -80,6 +82,8 @@ namespace RLS.BLL.Configurations.MapperProfiles
             CreateMap<UpdateRobotDto, Robot>();
 
             CreateMap<RobotMostValuableFilterParams, RobotMostValuableFilterParamsDto>();
+
+            CreateMap<DashboardStatisticModel, DashboardStatisticDto>();
 
             CreateMap<ValuableRobotModel, GetValuableRobotModelDto>()
                 .ForMember(x => x.Photo, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Photo)}"))

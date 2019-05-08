@@ -13,6 +13,14 @@ export const getAirrobotById = id => {
     return httpService.getData(params);
 }
 
+export const getStatistics = () => {
+    let params = {
+        url: apirobot + "statistic"
+    }
+
+    return httpService.getData(params);
+}
+
 export const getAirrobotModels = () => {
     let params = {
         url: apirobotModel + "models"

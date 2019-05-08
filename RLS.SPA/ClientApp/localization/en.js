@@ -182,6 +182,10 @@ export const adminrobotItems = [
         icon: "icon-home4",
         url: "",
         children: [{
+            title: "Application Dashboard",
+            url: "/dashboard"
+        },
+        {
             title: "Company Dashboard",
             url: "/company-dashboard"
         },
@@ -233,6 +237,10 @@ export const userrobotItems = [
         icon: "icon-home4",
         url: "",
         children: [{
+            title: "Application Dashboard",
+            url: "/dashboard"
+        },
+        {
             title: "Company Dashboard",
             url: "/company-dashboard"
         },

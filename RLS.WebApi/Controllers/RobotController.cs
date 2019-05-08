@@ -51,6 +51,13 @@ namespace RLS.WebApi.Controllers
             return Json(JsonResultData.Success(robots.Where(t => t.Id != filterParams.CurrentRobotId)));
         }
 
+        [HttpGet("statistic")]
+        public async Task<ActionResult> GetMostValuableRobotsAsync()
+        {
+            var result = await _robotService.GetDashboardStatisticModelAsync();
+            return Json(JsonResultData.Success(result));
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetRobotByIdAsync(int id)
         {

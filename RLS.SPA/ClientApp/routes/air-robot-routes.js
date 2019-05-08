@@ -5,6 +5,7 @@ import robotTypeListPage from "../pages/air-robot/pages/type/list/robot-type-lis
 import CompanyDashboardPage from "../pages/dashboard/pages/company-dashboard";
 import ModelDashboardPage from "../pages/dashboard/pages/model-dashboard";
 import TypeDashboardPage from "../pages/dashboard/pages/type-dashboard";
+import CommonDashboardPage from "../pages/dashboard/pages/common-dashboard";
 
 import * as routeGuards from "./route-guards";
 
@@ -54,6 +55,13 @@ export default [
     {
         path: "/type-dashboard",
         component: TypeDashboardPage,
+        beforeEnter: (to, from, next) => {
+            routeGuards.validateRoute(to, from, next);
+        }
+    },
+    {
+        path: "/dashboard",
+        component: CommonDashboardPage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);
         }
