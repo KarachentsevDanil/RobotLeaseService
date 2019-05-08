@@ -6,6 +6,7 @@ using RLS.DAL.UnitOfWork.Contracts;
 using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Models;
 using RLS.Domain.Robots;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,6 +64,17 @@ namespace RLS.BLL.Services.Robots
                 await _unitOfWork.RobotRepository.GetRobotByFilterParamsAsync(filterParams, ct);
 
             return _mapper.Map<CollectionResult<GetRobotDto>>(robotModels);
+        }
+
+        public async Task<IEnumerable<GetValuableRobotModelDto>> GetMostValuableRobotByFilterParamsAsync(RobotMostValuableFilterParamsDto filterParamsDto,
+            CancellationToken ct = default)
+        {
+            var filterParams = _mapper.Map<RobotMostValuableFilterParams>(filterParamsDto);
+
+            var robotModels =
+                await _unitOfWork.RobotRepository.GetMostValuableRobotByFilterParamsAsync(filterParams, ct);
+
+            return _mapper.Map<IEnumerable<GetValuableRobotModelDto>>(robotModels);
         }
     }
 }

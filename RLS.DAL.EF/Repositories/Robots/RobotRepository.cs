@@ -1,17 +1,20 @@
-﻿using LinqKit;
+﻿using Dapper;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using RLS.DAL.EF.Context;
+using RLS.DAL.EF.Extensions;
 using RLS.DAL.Repositories.Contracts.Robots;
+using RLS.Domain.FilterParams.Robots;
+using RLS.Domain.Models;
+using RLS.Domain.Models.Robots;
 using RLS.Domain.Robots;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.DAL.EF.Extensions;
-using RLS.Domain.FilterParams.Robots;
-using RLS.Domain.Models;
 
 namespace RLS.DAL.EF.Repositories.Robots
 {
@@ -61,6 +64,28 @@ namespace RLS.DAL.EF.Repositories.Robots
                 Collection = items,
                 TotalCount = totalCount
             };
+
+            return result;
+        }
+
+        public async Task<IEnumerable<ValuableRobotModel>> GetMostValuableRobotByFilterParamsAsync(RobotMostValuableFilterParams filterParams,
+            CancellationToken ct = default)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("userId", dbType: DbType.String, value: filterParams.UserId, direction: ParameterDirection.Input);
+            parameters.Add("typeId", dbType: DbType.Int32, value: filterParams.TypeId, direction: ParameterDirection.Input);
+            parameters.Add("take", dbType: DbType.Int32, value: filterParams.Take, direction: ParameterDirection.Input);
+
+            IEnumerable<ValuableRobotModel> result;
+
+            var reader = await DbContext.Database.GetDbConnection().QueryMultipleAsync("[robot].[GetMostValuableRobots]", parameters,
+                commandType: CommandType.StoredProcedure);
+
+            using (reader)
+            {
+                result = reader.Read<ValuableRobotModel>();
+            }
 
             return result;
         }

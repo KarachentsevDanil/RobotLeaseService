@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Sql\StoredProcedures\GetMostValuableRobots.sql" />
     <None Remove="Sql\StoredProcedures\GetRobotCompany.sql" />
     <None Remove="Sql\StoredProcedures\GetRobotModel.sql" />
     <None Remove="Sql\StoredProcedures\GetRobotType.sql" />
@@ -24,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Sql\StoredProcedures\GetMostValuableRobots.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Sql\StoredProcedures\GetRobotType.sql" />
     <EmbeddedResource Include="Sql\StoredProcedures\GetRobotModel.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

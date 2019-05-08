@@ -48,6 +48,15 @@ export const getRobotsByParams = data => {
     return httpService.postData(params);
 }
 
+export const getValuableRobotsByParams = data => {
+    let params = {
+        url: apirobot + "valuable",
+        data: data
+    }
+
+    return httpService.postData(params);
+}
+
 export const addRobot = data => {
     let params = {
         url: apirobot,

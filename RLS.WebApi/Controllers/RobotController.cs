@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,18 @@ namespace RLS.WebApi.Controllers
             return Json(JsonResultData.Success(robots));
         }
 
+        [HttpPost("valuable")]
+        public async Task<ActionResult> GetMostValuableRobotsAsync([FromBody] RobotMostValuableFilterParamsDto filterParams)
+        {
+            BuildUserPrincipal();
+
+            filterParams.UserId = ApiUser.Id;
+
+            var robots = await _robotService.GetMostValuableRobotByFilterParamsAsync(filterParams);
+
+            return Json(JsonResultData.Success(robots.Where(t => t.Id != filterParams.CurrentRobotId)));
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetRobotByIdAsync(int id)
         {
@@ -52,7 +65,7 @@ namespace RLS.WebApi.Controllers
             robot.UserId = ApiUser.Id;
 
             var result = await _robotService.CreateRobotAsync(robot);
-            return StatusCode((int) HttpStatusCode.Created, Json(JsonResultData.Success(result)));
+            return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(result)));
         }
 
         [HttpPut("{id}")]

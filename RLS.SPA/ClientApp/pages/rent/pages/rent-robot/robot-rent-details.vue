@@ -58,21 +58,18 @@
             <div class="tab-pane active" id="robot-details-tab">
               <div class="panel-body">
                 <div class="row">
-                  <div class="col-xs-5 robot-image">
+                  <div class="col-xs-3 robot-image">
                     <div class="panel panel-body panel-body-accent">
-                      <img v-if="robot.Photo"
-                        class="full-weigth-img"
-                        :src="robot.Photo"
-                        alt
-                      >
-                      <img v-else
+                      <img v-if="robot.Photo" class="full-weigth-img" :src="robot.Photo" alt>
+                      <img
+                        v-else
                         class="full-weigth-img"
                         src="https://madrobots.ru/upload/resize_cache_imm/iblock/451/600_480_0/451d3e7d95f9d6d5cda141a501afa401.jpg"
                         alt
                       >
                     </div>
                   </div>
-                  <div class="col-md-7">
+                  <div class="col-xs-6">
                     <h5 class="text-semibold title">{{robot.CompanyName}} {{robot.ModelName}}</h5>
                     <hr class="hr-details">
                     <p class="form-control-static">
@@ -113,6 +110,72 @@
                       </b>
                       <span v-localize="{i: 'rent.rentrobot'}"></span>
                     </a>
+                  </div>
+                  <div class="col-xs-3">
+                    <div class="panel panel-white">
+                      <div class="panel-heading">
+                        <h6 class="panel-title">
+                          <i class="icon-android position-left"></i>Recomended Robots
+                          <a class="heading-elements-toggle">
+                            <i class="icon-more"></i>
+                          </a>
+                        </h6>
+                      </div>
+
+                      <div class="panel-body no-padding robot-list">
+                        <div
+                          class="valualble-robot"
+                          v-for="valuableRobot in valuableRobots"
+                          :key="valuableRobot.Id"
+                        >
+                          <div class="col-xs-12 robot-photo">
+                            <img
+                              v-if="valuableRobot.Icon"
+                              :src="valuableRobot.Icon"
+                              class="robot-image"
+                              alt
+                            >
+                            <img
+                              v-else
+                              src="../../../../assets/limitless/images/robot.png"
+                              class="robot-image"
+                              alt
+                            >
+                            <div class="info">
+                              <h6 class="media-heading text-semibold">
+                                <router-link
+                                  :to="'/robot-details/'+valuableRobot.Id"
+                                >{{valuableRobot.CompanyName}} {{valuableRobot.Name}}</router-link>
+                              </h6>
+                              <ul class="list-inline list-inline-separate text-muted mb-10">
+                                <li>
+                                  <span
+                                    class="label border-left-primary label-striped"
+                                  >{{valuableRobot.RobotTypeName}}</span>
+                                </li>
+                                <p class="info-divider"></p>
+                                <li>
+                                  <span
+                                    class="label border-left-primary label-striped"
+                                  >${{valuableRobot.DailyCosts}} per day.</span>
+                                </li>
+                                <p class="info-divider"></p>
+                                <star-rating
+                                  :inline="true"
+                                  :star-size="14"
+                                  :read-only="true"
+                                  :show-rating="false"
+                                  :rating="valuableRobot.AverageRating"
+                                  :round-start-rating="false"
+                                ></star-rating>
+                              </ul>
+                            </div>
+
+                            <hr class="details-hr">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -219,6 +282,7 @@ import * as robotService from "../../../air-robot/pages/robot/api/robot-service"
 import * as modelService from "../../../air-robot/pages/model/api/robot-model-service";
 import robotRentCalendar from "./robot-rent-calendar";
 import robotRentPopup from "./rent-robot-popup";
+import * as storeActionTypes from "../../../../store/types/action-types";
 
 export default {
   props: {
@@ -233,6 +297,7 @@ export default {
   data() {
     return {
       robot: {},
+      valuableRobots: [],
       modelRobotPieChartSettings: {
         title: {
           name: "",
@@ -258,36 +323,61 @@ export default {
       }
     };
   },
-  async beforeMount() {
-    let robot = (await robotService.getAirrobotById(this.id)).data.Data;
-    this.robot = robot;
-
-    let data = {
-      companyId: robot.CompanyId
-    };
-
-    let robotModels = (await modelService.getTopRobotModelsByRobotCount(data))
-      .data.Data;
-
-    this.fillChartData(this.modelRobotPieChartSettings, robotModels, "model");
-
-    let rentModels = (await modelService.getTopRobotModelsByRentCount(data))
-      .data.Data;
-
-    this.fillChartData(this.modelRentPieChartSettings, rentModels, "model");
-
-    let barChartData = (await modelService.getTopRobotModelsByRobotAndRentsCount(
-      data
-    )).data.Data;
-
-    this.modelBarChartSettings.data.titles = barChartData.Titles;
-    this.modelBarChartSettings.data.robotRentsCount =
-      barChartData.RobotRentsCount;
-    this.modelBarChartSettings.data.robotsCount = barChartData.RobotsCount;
+  watch: {
+    id: {
+      handler() {
+        this.loadData();
+      },
+      immediate: true
+    }
   },
   methods: {
     getNameIncon(item) {
       return item.Customer.FirstName[0] + item.Customer.LastName[0];
+    },
+    async loadData() {
+      this.$store.dispatch(
+        storeActionTypes.START_LOADING_ACTION,
+        "Please wait..."
+      );
+
+      let robot = (await robotService.getAirrobotById(this.id)).data.Data;
+      this.robot = robot;
+
+      let filterParams = {
+        typeId: robot.TypeId,
+        take: 5,
+        currentRobotId: this.id
+      };
+
+      this.valuableRobots = (await robotService.getValuableRobotsByParams(
+        filterParams
+      )).data.Data;
+
+      this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
+
+      let data = {
+        companyId: robot.CompanyId
+      };
+
+      let robotModels = (await modelService.getTopRobotModelsByRobotCount(data))
+        .data.Data;
+
+      this.fillChartData(this.modelRobotPieChartSettings, robotModels, "model");
+
+      let rentModels = (await modelService.getTopRobotModelsByRentCount(data))
+        .data.Data;
+
+      this.fillChartData(this.modelRentPieChartSettings, rentModels, "model");
+
+      let barChartData = (await modelService.getTopRobotModelsByRobotAndRentsCount(
+        data
+      )).data.Data;
+
+      this.modelBarChartSettings.data.titles = barChartData.Titles;
+      this.modelBarChartSettings.data.robotRentsCount =
+        barChartData.RobotRentsCount;
+      this.modelBarChartSettings.data.robotsCount = barChartData.RobotsCount;
     },
     fillChartData(chartSettings, data, chartType) {
       chartSettings.data = data;
@@ -349,5 +439,47 @@ ul.nav.nav-tabs {
 }
 .tab-content > .tab-pane > .panel-body {
   padding-top: 5px;
+}
+
+div.valualble-robot {
+  padding: 5px;
+}
+div.valualble-robot img {
+  width: 70px !important;
+  height: 80px !important;
+  vertical-align: unset !important;
+  padding-right: 5px;
+  margin-bottom: 5px;
+}
+div.valualble-robot .info {
+  display: inline-block;
+}
+div.robot-list {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+div.robot-photo,
+div.robot-details {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+div.valualble-robot:hover div.robot-photo,
+div.valualble-robot:hover div.robot-details:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+hr.details-hr {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+div.valualble-robot .label.label-striped {
+  padding: 2px 8px !important;
+}
+
+p.info-divider {
+  margin: 0 0 4px;
 }
 </style>

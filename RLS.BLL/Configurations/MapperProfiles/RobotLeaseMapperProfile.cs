@@ -79,6 +79,12 @@ namespace RLS.BLL.Configurations.MapperProfiles
 
             CreateMap<UpdateRobotDto, Robot>();
 
+            CreateMap<RobotMostValuableFilterParams, RobotMostValuableFilterParamsDto>();
+
+            CreateMap<ValuableRobotModel, GetValuableRobotModelDto>()
+                .ForMember(x => x.Photo, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Photo)}"))
+                .ForMember(x => x.Icon, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Icon)}"));
+
             CreateMap<Robot, GetRobotDto>()
                 .ForMember(x => x.UserId, t => t.MapFrom(p => p.User.Id))
                 .ForMember(x => x.UserName, t => t.MapFrom(p => p.User.Email))

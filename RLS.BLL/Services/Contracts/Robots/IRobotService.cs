@@ -1,6 +1,7 @@
 ﻿using RLS.BLL.DTOs.FilterParams.Robots;
 using RLS.BLL.DTOs.Robots;
 using RLS.Domain.Models;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,5 +18,8 @@ namespace RLS.BLL.Services.Contracts.Robots
         Task<CollectionResult<GetRobotDto>> GetRobotsByFilterParamsAsync(
             RobotFilterParamsDto filterParams,
             CancellationToken ct = default);
+
+        Task<IEnumerable<GetValuableRobotModelDto>> GetMostValuableRobotByFilterParamsAsync(
+            RobotMostValuableFilterParamsDto filterParams, CancellationToken ct = default);
     }
 }

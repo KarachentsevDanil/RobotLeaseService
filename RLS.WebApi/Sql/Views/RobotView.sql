@@ -4,6 +4,8 @@ WITH SCHEMABINDING AS SELECT
   Robot.DailyCosts,
   Robot.ModelId,
   Robot.UserId,
+  Robot.Icon,
+  Robot.Photo,
   RobotOwner.FirstName,
   RobotOwner.LastName,
   RobotOwner.Email,
