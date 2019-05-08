@@ -27,7 +27,7 @@ export default {
 
 <style>
 .icon-photo{
-    width: 70px !important;
-    height: 70px !important;
+    width: 80px !important;
+    height: 75px !important;
 }
 </style>

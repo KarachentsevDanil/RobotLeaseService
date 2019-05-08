@@ -438,8 +438,8 @@ export default {
 
 <style>
 .icon-robot-image {
-  width: 105px !important;
-  height: 100px !important;
+  width: 120px !important;
+  height: 110px !important;
 }
 label.range-lable-margin {
   margin-bottom: 30px;
