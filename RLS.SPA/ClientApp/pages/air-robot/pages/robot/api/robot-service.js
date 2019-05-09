@@ -56,6 +56,15 @@ export const getRobotsByParams = data => {
     return httpService.postData(params);
 }
 
+export const getDashboardRobotsByParams = data => {
+    let params = {
+        url: apirobot + "dashboard",
+        data: data
+    }
+
+    return httpService.postData(params);
+}
+
 export const getValuableRobotsByParams = data => {
     let params = {
         url: apirobot + "valuable",

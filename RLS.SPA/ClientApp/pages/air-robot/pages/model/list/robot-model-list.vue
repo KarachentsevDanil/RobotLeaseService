@@ -114,13 +114,6 @@ export default {
       this.columns[2].title = this.$locale({ i: "modelGrid.typeTitle" });
       this.columns[3].title = this.$locale({ i: "modelGrid.descriptionTitle" });
       this.columns[4].title = this.$locale({ i: "modelGrid.actionsTitle" });
-
-      // $("div[name='Datatable'] div.col-sm-6 strong").text(
-      //   `${this.$locale({ i: "common.totalItems" })} ${this.total} , `
-      // );
-      // $("label[name='PageSizeSelect']").text(
-      //   this.$locale({ i: "common.itemsPages" })
-      // );
     }
   }
 };

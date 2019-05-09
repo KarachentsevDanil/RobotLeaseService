@@ -39,7 +39,8 @@ namespace RLS.DAL.EF.Repositories.Rentals
             int totalCount = query.Count();
 
             List<Rental> items = await query
-                .OrderByDescending(x => x.StartDate)
+                .OrderByDescending(x => x.UpdatedAt)
+                .ThenByDescending(x => x.Id)
                 .WithPagination(filterParams.Skip, filterParams.Take)
                 .AsNoTracking()
                 .ToListAsync(ct);

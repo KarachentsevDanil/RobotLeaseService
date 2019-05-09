@@ -201,13 +201,15 @@
                     <div class="row">
                       <div class="form-group">
                         <label>
-                          <span v-localize="{i: 'rent.ratingLabel'}"></span>:
+                          <span v-if="getUser.Id == rent.Owner.Id">Customer Rating:</span>
+                          <span v-else>Robot Rating:</span>
                         </label>
                         <star-rating :star-size="30" :show-rating="false" v-model="feedback.rating"></star-rating>
                       </div>
                       <div class="form-group">
                         <label>
-                          <span v-localize="{i: 'rent.feedbackLabel'}"></span>:
+                          <span v-if="getUser.Id == rent.Owner.Id">Customer Feedback:</span>
+                          <span v-else>Robot Feedback:</span>
                         </label>
                         <textarea
                           cols="5"

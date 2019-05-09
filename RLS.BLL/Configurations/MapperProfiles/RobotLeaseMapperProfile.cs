@@ -17,6 +17,7 @@ using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
 using System.Linq;
+using RLS.Domain.Enums;
 
 namespace RLS.BLL.Configurations.MapperProfiles
 {
@@ -85,6 +86,12 @@ namespace RLS.BLL.Configurations.MapperProfiles
 
             CreateMap<DashboardStatisticModel, DashboardStatisticDto>();
 
+            CreateMap<DashboardRobotModel, GetDashboardRobotDto>()
+                .ForMember(x => x.Photo, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Photo)}"))
+                .ForMember(x => x.Icon, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Icon)}"));
+
+            CreateMap<RobotFeedbackModel, GetRobotFeedbackDto>();
+
             CreateMap<ValuableRobotModel, GetValuableRobotModelDto>()
                 .ForMember(x => x.Photo, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Photo)}"))
                 .ForMember(x => x.Icon, p => p.MapFrom(t => $"data:image/png;base64,{Convert.ToBase64String(t.Icon)}"));
@@ -142,7 +149,7 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.Title, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName} - {p.User.Email}"))
                 .ForMember(x => x.Start, t => t.MapFrom(p => p.StartDate.ToString("O")))
                 .ForMember(x => x.End, t => t.MapFrom(p => p.EndDate.ToString("O")))
-                .ForMember(x => x.Color, t => t.MapFrom(p => DateTime.UtcNow > p.EndDate ? "#607D8B" : "#2196F3"));
+                .ForMember(x => x.Color, t => t.MapFrom(p => p.Status == RentalStatus.Canceled ? "#FF8C00" : DateTime.UtcNow > p.EndDate ? "#607D8B" : "#2196F3"));
         }
     }
 }

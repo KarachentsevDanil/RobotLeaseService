@@ -25,7 +25,7 @@
         <div class="col-md-6">
           <div class="panel panel-flat">
             <div class="panel-heading">
-              <h5 class="panel-title">Top Robot Models</h5>
+              <h5 class="panel-title">Top Robot Models By Robot Count</h5>
             </div>
             <div class="panel-body">
               <pie-chart
@@ -38,7 +38,7 @@
         <div class="col-md-6">
           <div class="panel panel-flat">
             <div class="panel-heading">
-              <h5 class="panel-title">Top Robot Models</h5>
+              <h5 class="panel-title">Top Robot Models By Rent Count</h5>
             </div>
             <div class="panel-body">
               <pie-chart
@@ -53,7 +53,7 @@
         <div class="col-md-12">
           <div class="panel panel-flat">
             <div class="panel-heading">
-              <h5 class="panel-title">Top Robot Models</h5>
+              <h5 class="panel-title">Top Robot Models By Robot And Rent Count</h5>
             </div>
             <div class="panel-body">
               <bar-chart

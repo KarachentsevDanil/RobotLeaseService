@@ -34,6 +34,8 @@ namespace RLS.Domain.Rentals
 
         public string CancelReason { get; set; }
 
+        public DateTime? UpdatedAt { get; set; }
+
         public ICollection<RentalMessage> Messages { get; set; }
     }
 }

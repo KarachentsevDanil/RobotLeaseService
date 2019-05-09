@@ -185,7 +185,7 @@
                 <div class="col-md-6">
                   <div>
                     <div class="panel-heading">
-                      <h5 class="panel-title">Top {{robot.CompanyName}} Models</h5>
+                      <h5 class="panel-title">Top {{robot.CompanyName}} Models By Robot Count</h5>
                     </div>
                     <div class="panel-body">
                       <pie-chart
@@ -198,7 +198,7 @@
                 <div class="col-md-6">
                   <div>
                     <div class="panel-heading">
-                      <h5 class="panel-title">Top {{robot.CompanyName}} Models</h5>
+                      <h5 class="panel-title">Top {{robot.CompanyName}} Models By Rent Count</h5>
                     </div>
                     <div class="panel-body">
                       <pie-chart
@@ -213,7 +213,7 @@
                 <div class="col-md-12">
                   <div>
                     <div class="panel-heading">
-                      <h5 class="panel-title">Top {{robot.CompanyName}} Models</h5>
+                      <h5 class="panel-title">Top {{robot.CompanyName}} Models By Robot And Rent Count</h5>
                     </div>
                     <div class="panel-body">
                       <bar-chart :data="modelBarChartSettings.data"/>

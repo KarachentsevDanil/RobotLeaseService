@@ -24,5 +24,8 @@ namespace RLS.BLL.Services.Contracts.Robots
             RobotMostValuableFilterParamsDto filterParams, CancellationToken ct = default);
 
         Task<DashboardStatisticDto> GetDashboardStatisticModelAsync(CancellationToken ct = default);
+
+        Task<CollectionResult<GetDashboardRobotDto>> GetDashboardRobotByFilterParamsAsync(
+            RobotFilterParamsDto filterParams, CancellationToken ct = default);
     }
 }

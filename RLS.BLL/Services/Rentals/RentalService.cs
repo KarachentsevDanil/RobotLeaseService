@@ -6,6 +6,7 @@ using RLS.DAL.UnitOfWork.Contracts;
 using RLS.Domain.FilterParams.Rents;
 using RLS.Domain.Models;
 using RLS.Domain.Rentals;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -65,6 +66,8 @@ namespace RLS.BLL.Services.Rentals
 
             _mapper.Map(item, itemToUpdate);
 
+            itemToUpdate.UpdatedAt = DateTime.UtcNow;
+
             _unitOfWork.RentalRepository.Update(itemToUpdate);
 
             await _unitOfWork.CommitAsync(ct);
@@ -77,6 +80,8 @@ namespace RLS.BLL.Services.Rentals
             var itemToUpdate = await _unitOfWork.RentalRepository.GetAsync(item.RentalId, ct);
 
             _mapper.Map(item, itemToUpdate);
+
+            itemToUpdate.UpdatedAt = DateTime.UtcNow;
 
             _unitOfWork.RentalRepository.Update(itemToUpdate);
 
@@ -97,6 +102,8 @@ namespace RLS.BLL.Services.Rentals
             var itemToUpdate = await _unitOfWork.RentalRepository.GetAsync(item.Id, ct);
 
             _mapper.Map(item, itemToUpdate);
+
+            itemToUpdate.UpdatedAt = DateTime.UtcNow;
 
             _unitOfWork.RentalRepository.Update(itemToUpdate);
 

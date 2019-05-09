@@ -241,6 +241,11 @@ const iconFormat = el => {
 };
 
 export default {
+  props: {
+    searchTerm: {
+      required: false
+    }
+  },
   data() {
     return {
       robots: [],
@@ -325,6 +330,7 @@ export default {
         skip:
           this.filters.pagination.pageSize *
           (this.filters.pagination.currentPage - 1),
+        term: this.term,
         take: this.filters.pagination.pageSize,
         isSearchView: true
       };
@@ -428,6 +434,10 @@ export default {
       id: el.Id,
       text: el.Name
     }));
+
+    if (this.$route.query.q) {
+      this.term = this.$route.query.q;
+    }
 
     await this.getRobots();
 

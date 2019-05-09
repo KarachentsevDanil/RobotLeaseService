@@ -23,6 +23,7 @@ export default [
     },
     {
         path: "/rent-robot",
+        props: (route) => ({ searchTerm: route.query.q }),
         component: RentrobotPage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);

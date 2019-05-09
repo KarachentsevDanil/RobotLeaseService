@@ -68,6 +68,41 @@ namespace RLS.DAL.EF.Repositories.Robots
             return result;
         }
 
+        public async Task<CollectionResult<DashboardRobotModel>> GetDashboardRobotByFilterParamsAsync(
+            RobotFilterParams filterParams, CancellationToken ct = default)
+        {
+            var parameters = new DynamicParameters();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Term))
+            {
+                parameters.Add("term", dbType: DbType.String, value: filterParams.Term, direction: ParameterDirection.Input);
+            }
+
+            parameters.Add("userId", dbType: DbType.String, value: filterParams.UserId, direction: ParameterDirection.Input);
+            parameters.Add("take", dbType: DbType.Int32, value: filterParams.Take, direction: ParameterDirection.Input);
+            parameters.Add("skip", dbType: DbType.Int32, value: filterParams.Skip, direction: ParameterDirection.Input);
+
+            CollectionResult<DashboardRobotModel> result = new CollectionResult<DashboardRobotModel>();
+
+            var reader = await DbContext.Database.GetDbConnection().QueryMultipleAsync("[robot].[GetRobots]", parameters,
+                commandType: CommandType.StoredProcedure);
+
+            using (reader)
+            {
+                result.TotalCount = reader.ReadSingle<int>();
+                result.Collection = reader.Read<DashboardRobotModel>();
+
+                var feedback = reader.Read<RobotFeedbackModel>();
+
+                foreach (var dashboardRobotModel in result.Collection)
+                {
+                    dashboardRobotModel.Feedback = feedback.Where(t => t.RobotId == dashboardRobotModel.Id).ToList();
+                }
+            }
+
+            return result;
+        }
+
         public async Task<IEnumerable<ValuableRobotModel>> GetMostValuableRobotByFilterParamsAsync(RobotMostValuableFilterParams filterParams,
             CancellationToken ct = default)
         {

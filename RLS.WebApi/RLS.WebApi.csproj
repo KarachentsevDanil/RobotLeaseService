@@ -11,6 +11,7 @@
     <None Remove="Sql\StoredProcedures\GetMostValuableRobots.sql" />
     <None Remove="Sql\StoredProcedures\GetRobotCompany.sql" />
     <None Remove="Sql\StoredProcedures\GetRobotModel.sql" />
+    <None Remove="Sql\StoredProcedures\GetRobots.sql" />
     <None Remove="Sql\StoredProcedures\GetRobotType.sql" />
     <None Remove="Sql\Views\Indexes\ModelViewIndex.sql" />
     <None Remove="Sql\Views\Indexes\RentalShortViewIndex.sql" />
@@ -27,6 +28,9 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Sql\StoredProcedures\GetDashboardStatistics.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sql\StoredProcedures\GetRobots.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Sql\StoredProcedures\GetMostValuableRobots.sql">

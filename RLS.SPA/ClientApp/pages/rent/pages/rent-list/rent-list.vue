@@ -1,25 +1,43 @@
 <template>
-    <div>
-        <div class="page-header">
-            <div class="page-header-content">
-                <div class="page-title">
-                    <h4><i class="icon-users2 position-left"></i> <span class="text-semibold" v-localize="{i: 'rent.rentList'}"></span></h4>
+  <div>
+    <div class="page-header">
+      <div class="page-header-content">
+        <div class="page-title">
+          <h4>
+            <i class="icon-users2 position-left"></i>
+            <span class="text-semibold" v-localize="{i: 'rent.rentList'}"></span>
+          </h4>
 
-                    <ul class="breadcrumb position-right">
-                        <li><a v-localize="{i: 'rent.rents'}"></a></li>
-                        <li class="active" v-localize="{i: 'rent.rentList'}"></li>
-                    </ul>
-                    <a class="heading-elements-toggle"><i class="icon-more"></i></a><a class="heading-elements-toggle"><i class="icon-more"></i></a>
-                </div>
-            </div>
+          <ul class="breadcrumb position-right">
+            <li>
+              <a v-localize="{i: 'rent.rents'}"></a>
+            </li>
+            <li class="active" v-localize="{i: 'rent.rentList'}"></li>
+          </ul>
+          <a class="heading-elements-toggle">
+            <i class="icon-more"></i>
+          </a>
+          <a class="heading-elements-toggle">
+            <i class="icon-more"></i>
+          </a>
         </div>
-
-        <div class="content">
-            <div class="panel panel-flat without-header">
-                <datatable v-bind="$data" :HeaderSettings="false" />
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div class="content">
+      <div class="panel panel-flat">
+        <div class="panel-heading">
+          <h5 class="panel-title">
+            Popular Robots
+            <a class="heading-elements-toggle">
+              <i class="icon-more"></i>
+            </a>
+          </h5>
+        </div>
+          <datatable v-bind="$data" :HeaderSettings="false"/>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

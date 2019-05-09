@@ -85,5 +85,16 @@ namespace RLS.BLL.Services.Robots
 
             return _mapper.Map<DashboardStatisticDto>(result);
         }
+
+        public async Task<CollectionResult<GetDashboardRobotDto>> GetDashboardRobotByFilterParamsAsync(
+            RobotFilterParamsDto filterParamsDto, CancellationToken ct = default)
+        {
+            var filterParams = _mapper.Map<RobotFilterParams>(filterParamsDto);
+
+            var robotModels =
+                await _unitOfWork.RobotRepository.GetDashboardRobotByFilterParamsAsync(filterParams, ct);
+
+            return _mapper.Map<CollectionResult<GetDashboardRobotDto>>(robotModels);
+        }
     }
 }

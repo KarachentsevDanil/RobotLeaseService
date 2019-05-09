@@ -39,6 +39,17 @@ namespace RLS.WebApi.Controllers
             return Json(JsonResultData.Success(robots));
         }
 
+        [HttpPost("dashboard")]
+        public async Task<ActionResult> GetDashboardRobotsAsync([FromBody] RobotFilterParamsDto filterParams)
+        {
+            BuildUserPrincipal();
+
+            filterParams.UserId = ApiUser.Id;
+
+            var robots = await _robotService.GetDashboardRobotByFilterParamsAsync(filterParams);
+            return Json(JsonResultData.Success(robots));
+        }
+
         [HttpPost("valuable")]
         public async Task<ActionResult> GetMostValuableRobotsAsync([FromBody] RobotMostValuableFilterParamsDto filterParams)
         {
