@@ -112,8 +112,7 @@ export default {
       this.columns[0].title = this.$locale({ i: "modelGrid.modelNameTitle" });
       this.columns[1].title = this.$locale({ i: "modelGrid.companyTitle" });
       this.columns[2].title = this.$locale({ i: "modelGrid.typeTitle" });
-      this.columns[3].title = this.$locale({ i: "modelGrid.descriptionTitle" });
-      this.columns[4].title = this.$locale({ i: "modelGrid.actionsTitle" });
+      this.columns[3].title = this.$locale({ i: "modelGrid.actionsTitle" });
     }
   }
 };
