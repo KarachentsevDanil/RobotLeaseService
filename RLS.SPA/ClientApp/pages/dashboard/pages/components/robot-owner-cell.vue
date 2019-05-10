@@ -11,7 +11,7 @@
                 <div class="text-muted text-size-small mb-5">
                     <div><i class="icon-envelop2"></i> <a href="#">{{row.Email}}</a></div>
                 </div>
-                <div class="text-muted text-size-small mb-10">
+                <div class="text-muted text-size-small mb-20">
                     <div><i class="icon-mobile2"></i> <a href="#">{{row.PhoneNumber}}</a></div>
                 </div>
             </div>

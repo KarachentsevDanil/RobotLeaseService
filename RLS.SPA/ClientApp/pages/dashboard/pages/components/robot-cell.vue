@@ -18,6 +18,14 @@
         <span class="label border-left-primary label-striped robot-lable">{{row.RobotTypeName}}</span>
         <br>
         <span class="label border-left-primary label-striped robot-lable">${{row.DailyCosts}}</span>
+        <br>
+        <star-rating
+          :inline="true"
+          :star-size="14"
+          :read-only="true"
+          :show-rating="false"
+          :rating="row.AverageRating"
+        ></star-rating>
       </div>
     </td>
   </div>
@@ -34,8 +42,8 @@ export default {
   width: 80px !important;
   height: 75px !important;
 }
-.robot-lable{
-    padding: 2px 6px !important;
-    margin-bottom: 5px;
+.robot-lable {
+  padding: 2px 6px !important;
+  margin-bottom: 5px;
 }
 </style>

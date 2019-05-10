@@ -113,6 +113,10 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.AvarageRating, t => t.MapFrom(p =>
                     p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0)
                         ? p.Rentals.Where(r => r.RobotRating > 0).Average(x => x.RobotRating)
+                        : 0))
+                .ForMember(x => x.CountOfReviews, t => t.MapFrom(p =>
+                    p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0)
+                        ? p.Rentals.Count(r => r.RobotRating > 0)
                         : 0));
 
             CreateMap<Rental, GetShortRobotRentalDto>()

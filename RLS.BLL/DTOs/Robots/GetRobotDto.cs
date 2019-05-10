@@ -36,6 +36,8 @@ namespace RLS.BLL.DTOs.Robots
 
         public double AvarageRating { get; set; }
 
+        public int CountOfReviews { get; set; }
+
         public IEnumerable<GetShortRobotRentalDto> Rentals { get; set; }
     }
 }

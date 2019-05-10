@@ -177,30 +177,32 @@
                     >{{robot.CompanyName}} {{robot.ModelName}}</router-link>
                   </li>
                   <li>{{robot.TypeName}}</li>
-                  <li>
-                    ${{robot.DailyCosts}}
-                    <span v-localize="{i: 'rent.perDay'}"></span>
-                  </li>
-                  <p>
-                    <star-rating
-                      :inline="true"
-                      :star-size="14"
-                      :read-only="true"
-                      :show-rating="false"
-                      :rating="robot.AvarageRating"
-                      :round-start-rating="false"
-                    ></star-rating>
-                  </p>
                 </ul>
                 {{robot.Description}}
               </div>
 
-              <div class="media-right text-nowrap">
+              <div class="media-right text-center">
+                <h3 class="no-margin text-semibold">${{robot.DailyCosts}}</h3>
+
+                <div class="text-nowrap">
+                  <star-rating
+                    :inline="true"
+                    :star-size="14"
+                    :read-only="true"
+                    :show-rating="false"
+                    :rating="robot.AvarageRating"
+                    :round-start-rating="false"
+                  ></star-rating>
+                </div>
+
+                <div class="text-muted">{{robot.CountOfReviews}} review(s)</div>
+
                 <router-link
                   :to="'/robot-details/'+robot.Id"
-                  class="label bg-blue"
-                  v-localize="{i: 'rent.rentrobot'}"
-                ></router-link>
+                  class="btn bg-teal-400 mt-15 legitRipple"
+                >
+                  <i class="icon-cart-add position-left"></i> Rent a Robot
+                </router-link>
               </div>
             </li>
           </ul>
