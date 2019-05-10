@@ -4,7 +4,7 @@
       <div class="page-header-content">
         <div class="page-title">
           <h4>
-            <i class="icon-home2 position-left"></i>
+            <i class="icon-android position-left"></i>
             <span class="text-semibold" v-localize="{i: 'rent.rentrobot'}"></span>
           </h4>
         </div>
@@ -14,7 +14,7 @@
         <ul class="breadcrumb">
           <li>
             <a>
-              <i class="icon-home2 position-left"></i>
+              <i class="icon-cart2 position-left"></i>
               <span v-localize="{i: 'rent.rents'}"></span>
             </a>
           </li>

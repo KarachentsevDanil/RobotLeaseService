@@ -3,7 +3,7 @@
         <div class="page-header">
             <div class="page-header-content">
                 <div class="page-title">
-                    <h4><i class="icon-users2 position-left"></i> <span class="text-semibold" v-localize="{i: 'robot.airrobotList'}"></span></h4>
+                    <h4><i class="icon-android position-left"></i> <span class="text-semibold" v-localize="{i: 'robot.airrobotList'}"></span></h4>
 
                     <ul class="breadcrumb position-right">
                         <li><a v-localize="{i: 'common.airRobots'}"></a></li>

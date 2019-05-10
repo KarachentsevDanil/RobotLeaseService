@@ -4,7 +4,7 @@
       <div class="page-header-content">
         <div class="page-title">
           <h4>
-            <i class="icon-users2 position-left"></i>
+            <i class="icon-chart position-left"></i>
             <span class="text-semibold" v-localize="{i: 'common.modelDashboard'}"></span>
           </h4>
 

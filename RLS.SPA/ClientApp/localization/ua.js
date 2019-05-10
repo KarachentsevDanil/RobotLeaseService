@@ -185,7 +185,7 @@ export const adminrobotItems = [
     },
     {
         title: "Роботи",
-        icon: "icon-users2",
+        icon: "icon-android",
         url: "",
         children: [{
             title: "Компанії",
@@ -207,7 +207,7 @@ export const adminrobotItems = [
     },
     {
         title: "Оренди",
-        icon: "icon-cog3",
+        icon: "icon-cart2",
         url: "",
         children: [{
             title: "Оренди",
@@ -240,7 +240,7 @@ export const userrobotItems = [
     },
     {
         title: "Роботи",
-        icon: "icon-users2",
+        icon: "icon-android",
         url: "",
         children: [{
             title: "Моделі Роботиів",
@@ -254,7 +254,7 @@ export const userrobotItems = [
     },
     {
         title: "Оренди",
-        icon: "icon-cog3",
+        icon: "icon-cart2",
         url: "",
         children: [{
             title: "Орендувати Робота",

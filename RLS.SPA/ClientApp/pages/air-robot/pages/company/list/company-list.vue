@@ -3,7 +3,7 @@
         <div class="page-header">
             <div class="page-header-content">
                 <div class="page-title">
-                    <h4><i class="icon-users2 position-left"></i>
+                    <h4><i class="icon-android position-left"></i>
                       <span class="text-semibold" v-localize="{i: 'companies.companyList'}"></span>
                     </h4>
 

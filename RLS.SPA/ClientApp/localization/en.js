@@ -201,7 +201,7 @@ export const adminrobotItems = [
     },
     {
         title: "Robot",
-        icon: "icon-users2",
+        icon: "icon-android",
         url: "",
         children: [{
             title: "Company List",
@@ -223,7 +223,7 @@ export const adminrobotItems = [
     },
     {
         title: "Rents",
-        icon: "icon-cog3",
+        icon: "icon-cart2",
         url: "",
         children: [{
             title: "Rents List",
@@ -256,7 +256,7 @@ export const userrobotItems = [
     },
     {
         title: "Robot",
-        icon: "icon-users2",
+        icon: "icon-android",
         url: "",
         children: [{
             title: "Model List",
@@ -270,7 +270,7 @@ export const userrobotItems = [
     },
     {
         title: "Rents",
-        icon: "icon-cog3",
+        icon: "icon-cart2",
         url: "",
         children: [
             {

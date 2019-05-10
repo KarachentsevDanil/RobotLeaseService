@@ -3,7 +3,7 @@
         <div class="page-header">
             <div class="page-header-content">
                 <div class="page-title">
-                    <h4><i class="icon-users2 position-left"></i> <span class="text-semibold" v-localize="{i: 'rent.rentList'}"></span></h4>
+                    <h4><i class="icon-cart2 position-left"></i> <span class="text-semibold" v-localize="{i: 'rent.rentList'}"></span></h4>
 
                     <ul class="breadcrumb position-right">
                         <li><a v-localize="{i: 'rent.rents'}"></a></li>
