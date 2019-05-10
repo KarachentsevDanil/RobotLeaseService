@@ -20,7 +20,7 @@ module.exports = (env) => {
         },
         entry: {
             vendor: ['event-source-polyfill', 'vue', 'vuex', 'axios', 'vue2-datatable-component', 'select2',
-                'vue-echarts', 'vue-router', 'jquery', './ClientApp/assets/font-awesome/css/fontawesome-all.css']
+                'vue-echarts', 'vue-router', 'jquery', './ClientApp/assets/font-awesome/css/fontawesome-all.css', 'vue-radial-progress']
         },
         output: {
             path: path.join(__dirname, 'wwwroot', 'dist'),

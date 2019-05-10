@@ -11,6 +11,7 @@ import vue2Dropzone from 'vue2-dropzone'
 import VueNoty from 'vuejs-noty'
 import Datetime from 'vue-datetime'
 import ECharts from 'vue-echarts'
+import RadialProgressBar from 'vue-radial-progress'
 
 import Datatable from 'vue2-datatable-component';
 import grid from './pages/plugins/datatable/datatable';
@@ -77,6 +78,7 @@ Vue.component('grid', grid);
 Vue.component('select2', select2);
 Vue.component('pie-chart', pieChart);
 Vue.component('bar-chart', barChart);
+Vue.component('radial-progress-bar', RadialProgressBar);
 
 const app = new Vue({
     store,
