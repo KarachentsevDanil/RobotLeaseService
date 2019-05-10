@@ -34,6 +34,14 @@ namespace RLS.Domain.Rentals
 
         public string CancelReason { get; set; }
 
+        public string CreditCardNumber { get; set; }
+
+        public string CreditCardOwnerName { get; set; }
+
+        public string CreditCardCvvCode { get; set; }
+
+        public string CreditCardExpireDate { get; set; }
+
         public DateTime? UpdatedAt { get; set; }
 
         public ICollection<RentalMessage> Messages { get; set; }

@@ -41,6 +41,7 @@ import 'echarts/lib/component/title'
 import 'echarts/lib/component/visualMap'
 import 'echarts/lib/component/dataset'
 import 'echarts/map/js/world'
+import 'card/dist/jquery.card.js'
 
 import * as enLocalization from './localization/en.js';
 import * as uaLocalization from './localization/ua.js'
