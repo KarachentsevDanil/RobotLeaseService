@@ -60,8 +60,8 @@ export const enLocalization = {
         flightRange: "Maximum Range Flight(KM):",
         modelFlightRange: "Maximum Range...",
         uploadPhoto: "Upload photo:",
-        robotModelAdded: "Robot model was successfully added.",
-        robotModelList: "Robot Model List"
+        robotModelAdded: "Model was successfully added.",
+        robotModelList: "Model List"
     },
     robot: {
         addRobot: "Add Robot",

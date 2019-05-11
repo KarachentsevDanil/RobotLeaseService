@@ -38,6 +38,7 @@
             </div>
             <div class="form-group">
               <div class="row">
+                <h5 class="mb-10 text-center">Payment Info:</h5>
                 <div class="col-xs-12 mb-10">
                   <div class="card-wrapper"></div>
                 </div>
@@ -76,7 +77,12 @@
                     </div>
                     <div class="col-xs-6">
                       <label>CVV2:</label>
-                      <input v-model="cardData.cvv" name="cvc" class="form-control" placeholder="CVV">
+                      <input
+                        v-model="cardData.cvv"
+                        name="cvc"
+                        class="form-control"
+                        placeholder="CVV"
+                      >
                     </div>
                   </form>
                 </div>
@@ -163,12 +169,14 @@ export default {
       )
     }),
     isCardDataValid() {
-      return this.cardData.fullName &&
+      return (
+        this.cardData.fullName &&
         this.cardData.expireDate &&
         this.cardData.cardNumber &&
         this.cardData.cardNumber.length == 19 &&
         this.cardData.cvv &&
-        (this.cardData.cvv.length >= 3 && this.cardData.cvv.length <= 4);
+        (this.cardData.cvv.length >= 3 && this.cardData.cvv.length <= 4)
+      );
     }
   },
   props: {

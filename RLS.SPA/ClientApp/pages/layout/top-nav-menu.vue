@@ -1,8 +1,8 @@
 <template>
   <div class="navbar navbar-default header-highlight">
     <div class="navbar-header">
-      <router-link class="navbar-brand" to="residents">
-        <img src="../../assets/limitless/images/logo_icon_dark.png" alt>
+      <router-link class="navbar-brand" to="/dashboard">
+        <img src="https://cdn2.iconfinder.com/data/icons/funtime-objects-part-1/60/005_008_robot_baby_friend_gift_present_samodelkin-512.png" alt>
       </router-link>
 
       <ul class="nav navbar-nav visible-xs-block">

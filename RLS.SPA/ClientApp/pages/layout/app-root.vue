@@ -21,7 +21,7 @@
 
                     <div class="navbar navbar-inverse" style="background: #37474f; border-radius: 0;">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#"><img src="../../assets/limitless/images/logo_icon_dark.png" alt="Engage"></a>
+                            <a class="navbar-brand" href="#"><img src="https://cdn2.iconfinder.com/data/icons/funtime-objects-part-1/60/005_008_robot_baby_friend_gift_present_samodelkin-512.png" alt="Engage"></a>
                         </div>
                         <div class="navbar-collapse collapse" id="navbar-mobile">
                             <ul class="nav navbar-nav navbar-right">
