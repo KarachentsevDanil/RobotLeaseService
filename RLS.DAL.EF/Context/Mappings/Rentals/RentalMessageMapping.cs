@@ -11,6 +11,8 @@ namespace RLS.DAL.EF.Context.Mappings.Rentals
         {
             builder.HasKey(p => p.Id);
 
+            builder.Property(p => p.UserId).IsRequired().HasMaxLength(50);
+
             builder.Property(p => p.Message)
                 .IsRequired()
                 .HasMaxLength(500);

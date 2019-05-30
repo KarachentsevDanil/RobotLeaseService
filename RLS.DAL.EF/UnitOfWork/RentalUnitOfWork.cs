@@ -30,6 +30,10 @@ namespace RLS.DAL.EF.UnitOfWork
 
         public IUserRepository UserRepository { get; }
 
+        public IUserInterestsSearchRepository UserInterestsSearchRepository { get; }
+
+        public IFavoriteUserRobotRepository FavoriteUserRobotRepository { get; }
+
         public RentalUnitOfWork(RentalDbContext context)
         {
             _context = context;
@@ -41,6 +45,8 @@ namespace RLS.DAL.EF.UnitOfWork
             RobotTypeRepository = new RobotTypeRepository(context);
             RobotCompanyRepository = new RobotCompanyRepository(context);
             UserRepository = new UserRepository(context);
+            UserInterestsSearchRepository = new UserInterestsSearchRepository(context);
+            FavoriteUserRobotRepository = new FavoriteUserRobotRepository(context);
         }
 
         public async Task CommitAsync(CancellationToken token = default)

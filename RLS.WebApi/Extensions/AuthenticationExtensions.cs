@@ -24,7 +24,8 @@ namespace RLS.WebApi.Extensions
             return config;
         }
 
-        public static IServiceCollection AddIdentityAuthorization(this IServiceCollection services, AuthenticationConfiguration configuration)
+        public static IServiceCollection AddIdentityAuthorization(
+            this IServiceCollection services, AuthenticationConfiguration configuration)
         {
             services.AddIdentity<User, IdentityRole>(o =>
                 {
@@ -42,7 +43,8 @@ namespace RLS.WebApi.Extensions
             return services;
         }
 
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, AuthenticationConfiguration configuration)
+        public static IServiceCollection AddJwtAuthentication(
+            this IServiceCollection services, AuthenticationConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>

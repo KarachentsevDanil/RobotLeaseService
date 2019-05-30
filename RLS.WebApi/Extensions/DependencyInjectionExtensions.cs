@@ -2,21 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RLS.BLL.Configurations;
+using RLS.BLL.DTOs.Internal.Messages;
+using RLS.BLL.Services.Contracts.Internal;
 using RLS.BLL.Services.Contracts.Rentals;
 using RLS.BLL.Services.Contracts.Robots;
 using RLS.BLL.Services.Contracts.Users;
+using RLS.BLL.Services.Internal.Messages;
 using RLS.BLL.Services.Rentals;
 using RLS.BLL.Services.Robots;
 using RLS.BLL.Services.Users;
-using RLS.DAL.EF.Repositories.Rentals;
-using RLS.DAL.EF.Repositories.Robots;
-using RLS.DAL.EF.Repositories.Users;
 using RLS.DAL.EF.UnitOfWork;
-using RLS.DAL.Repositories.Contracts.Rentals;
-using RLS.DAL.Repositories.Contracts.Robots;
-using RLS.DAL.Repositories.Contracts.Users;
 using RLS.DAL.UnitOfWork.Contracts;
 using RLS.WebApi.Configurations;
+using SendGrid;
 
 namespace RLS.WebApi.Extensions
 {
@@ -25,17 +24,6 @@ namespace RLS.WebApi.Extensions
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRentalUnitOfWork, RentalUnitOfWork>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            services.AddScoped<IRentalRepository, RentalRepository>();
-            services.AddScoped<IRentalMessageRepository, RentalMessageRepository>();
-
-            services.AddScoped<IRobotRepository, RobotRepository>();
-            services.AddScoped<IRobotCompanyRepository, RobotCompanyRepository>();
-            services.AddScoped<IRobotTypeRepository, RobotTypeRepository>();
-            services.AddScoped<IRobotModelRepository, RobotModelRepository>();
-
             return services;
         }
 
@@ -50,7 +38,8 @@ namespace RLS.WebApi.Extensions
             services.AddScoped<IRobotCompanyService, RobotCompanyService>();
             services.AddScoped<IRobotTypeService, RobotTypeService>();
             services.AddScoped<IRobotModelService, RobotModelService>();
-
+            services.AddScoped<IMessageSendService<EmailMessage>, EmailSendService>();
+            
             return services;
         }
 
@@ -58,14 +47,36 @@ namespace RLS.WebApi.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var dbConfig = new DatabaseConfiguration();
-            configuration.Bind("DatabaseConfiguration", dbConfig);
-            services.AddSingleton(dbConfig);
+            var config = new DatabaseConfiguration();
 
-            return dbConfig;
+            configuration.Bind("DatabaseConfiguration", config);
+            services.AddSingleton(config);
+
+            return config;
         }
 
-        public static IServiceCollection ConfigureDatabase<TContext>(this IServiceCollection services, DatabaseConfiguration csConfig)
+        public static EmailSenderConfiguration AddEmailSenderConfiguration(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var config = new EmailSenderConfiguration();
+
+            configuration.Bind("EmailSenderSettings", config);
+            services.AddSingleton(config);
+
+            return config;
+        }
+
+        public static void AddEmailSenderService(
+            this IServiceCollection services,
+            EmailSenderConfiguration configuration)
+        {
+            SendGridClient client = new SendGridClient(configuration.ApiKey);
+            services.AddScoped<ISendGridClient, SendGridClient>(x => client);
+        }
+
+        public static IServiceCollection ConfigureDatabase<TContext>(
+            this IServiceCollection services, DatabaseConfiguration csConfig)
             where TContext : DbContext
         {
             services.AddDbContext<TContext>(options => options.UseSqlServer(csConfig.ConnectionString));

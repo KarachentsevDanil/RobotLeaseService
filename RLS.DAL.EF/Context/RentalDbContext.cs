@@ -26,6 +26,9 @@ namespace RLS.DAL.EF.Context
 
         public DbSet<RobotCompany> RobotCompanies { get; set; }
 
+        public DbSet<UserInterestsSearch> UserInterestsSearches { get; set; }
+
+        public DbSet<FavoriteUserRobot> FavoriteUserRobots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +43,8 @@ namespace RLS.DAL.EF.Context
             new RobotMapping().MapEntity(builder.Entity<Robot>());
 
             new UserMapping().MapEntity(builder.Entity<User>());
+            new UserInterestsSearchMapping().MapEntity(builder.Entity<UserInterestsSearch>());
+            new FavoriteUserRobotMapping().MapEntity(builder.Entity<FavoriteUserRobot>());
         }
     }
 }

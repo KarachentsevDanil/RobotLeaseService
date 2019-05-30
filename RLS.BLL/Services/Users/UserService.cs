@@ -2,6 +2,8 @@
 using RLS.BLL.DTOs.Users;
 using RLS.BLL.Services.Contracts.Users;
 using RLS.DAL.UnitOfWork.Contracts;
+using RLS.Domain.Users;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,6 +32,21 @@ namespace RLS.BLL.Services.Users
         {
             var item = await _unitOfWork.UserRepository.GetAsync(id, ct);
             return _mapper.Map<GetUserDto>(item);
+        }
+
+        public async Task AddUserSearchResultAsync(string userId, CancellationToken ct = default)
+        {
+            var item = await _unitOfWork.UserRepository.GetAsync(userId, ct);
+
+            UserInterestsSearch newItem = new UserInterestsSearch
+            {
+                CreatedAt = DateTime.Now,
+                Interests = item.Interests
+            };
+
+            _unitOfWork.UserInterestsSearchRepository.Create(newItem);
+
+            await _unitOfWork.CommitAsync(ct);
         }
     }
 }

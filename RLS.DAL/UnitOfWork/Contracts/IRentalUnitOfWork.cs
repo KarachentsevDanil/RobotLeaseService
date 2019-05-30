@@ -19,5 +19,9 @@ namespace RLS.DAL.UnitOfWork.Contracts
         IRobotCompanyRepository RobotCompanyRepository { get; }
 
         IUserRepository UserRepository { get; }
+
+        IUserInterestsSearchRepository UserInterestsSearchRepository { get; }
+
+        IFavoriteUserRobotRepository FavoriteUserRobotRepository { get; }
     }
 }

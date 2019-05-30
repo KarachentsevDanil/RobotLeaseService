@@ -6,7 +6,10 @@ using RLS.BLL.DTOs.Rentals;
 using RLS.BLL.Services.Contracts.Rentals;
 using RLS.WebApi.Models;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using Hangfire;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace RLS.WebApi.Controllers
 {
@@ -17,18 +20,32 @@ namespace RLS.WebApi.Controllers
     {
         private readonly IRentalMessageService _rentalMessageService;
 
-        public RentalMessageController(IRentalMessageService rentalMessageService, IMapper mapper) : base(mapper)
+        private readonly IEmailSender _emailSender;
+
+        private readonly IBackgroundJobClient _backgroundJobClient;
+
+        public RentalMessageController(
+            IRentalMessageService rentalMessageService,
+            IEmailSender emailSender,
+            IBackgroundJobClient backgroundJobClient,
+            IMapper mapper) : base(mapper)
         {
+            _emailSender = emailSender;
             _rentalMessageService = rentalMessageService;
+            _backgroundJobClient = backgroundJobClient;
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateRentalMessageAsync([FromBody] CreateRentalMessageDto message)
         {
             BuildUserPrincipal();
+
             message.UserId = ApiUser.Id;
 
             var result = await _rentalMessageService.CreateRentalMessageAsync(message);
+
+            _backgroundJobClient.Enqueue(() => _rentalMessageService.SendEmailAsync(message, CancellationToken.None));
+
             return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(result)));
         }
 

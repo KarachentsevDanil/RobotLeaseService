@@ -14,11 +14,17 @@ namespace RLS.Domain.Users
 
         public Role Role { get; set; }
 
+        public string Interests { get; set; }
+
         public ICollection<Robot> Robots { get; set; }
 
         public ICollection<Rental> Rentals { get; set; }
 
         public ICollection<RentalMessage> Messages { get; set; }
+
+        public ICollection<UserInterestsSearch> Searches { get; set; }
+
+        public ICollection<FavoriteUserRobot> FavoriteRobots { get; set; }
 
         public User()
         {

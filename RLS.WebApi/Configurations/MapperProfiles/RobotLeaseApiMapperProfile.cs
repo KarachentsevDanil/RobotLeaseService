@@ -4,8 +4,6 @@ using RLS.WebApi.Helpers.AutoMapper;
 using RLS.WebApi.Models.Users;
 using System.Collections.Generic;
 using System.Security.Claims;
-using RLS.BLL.DTOs.Robots.Models;
-using RLS.WebApi.Models.Charts;
 
 namespace RLS.WebApi.Configurations.MapperProfiles
 {
@@ -23,6 +21,10 @@ namespace RLS.WebApi.Configurations.MapperProfiles
                 .ForMember(
                     p => p.Email,
                     p => p.MapFrom(s => s.GetValueOrDefault(nameof(Domain.Users.User.Email))))
+
+                .ForMember(
+                    p => p.Interests,
+                    p => p.MapFrom(s => s.GetValueOrDefault(nameof(Domain.Users.User.Interests))))
 
                 .ForMember(
                     p => p.Role,

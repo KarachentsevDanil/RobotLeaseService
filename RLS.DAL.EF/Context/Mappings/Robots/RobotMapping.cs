@@ -11,9 +11,9 @@ namespace RLS.DAL.EF.Context.Mappings.Robots
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Id).ValueGeneratedOnAdd();
-
             builder.Property(p => p.DailyCosts).IsRequired();
+
+            builder.Property(p => p.UserId).HasMaxLength(50).IsRequired();
 
             builder.HasOne(p => p.User)
                 .WithMany(p => p.Robots)

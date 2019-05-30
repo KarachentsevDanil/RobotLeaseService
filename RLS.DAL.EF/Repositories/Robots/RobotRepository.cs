@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RLS.DAL.EF.Context;
 using RLS.DAL.EF.Extensions;
 using RLS.DAL.Repositories.Contracts.Robots;
+using RLS.Domain.Enums;
 using RLS.Domain.FilterParams.Robots;
 using RLS.Domain.Models;
 using RLS.Domain.Models.Robots;
@@ -53,8 +54,9 @@ namespace RLS.DAL.EF.Repositories.Robots
 
             int totalCount = query.Count();
 
+            query = OrderRobotsQuery(query, filterParams.SortBy);
+
             List<Robot> items = await query
-                .OrderBy(x => x.Model.Name)
                 .WithPagination(filterParams.Skip, filterParams.Take)
                 .AsNoTracking()
                 .ToListAsync(ct);
@@ -157,6 +159,48 @@ namespace RLS.DAL.EF.Repositories.Robots
             return result;
         }
 
+        public async Task<Robot> GetRobotByUserInterestsAsync(string interests, CancellationToken ct = default)
+        {
+            IQueryable<Robot> query = DbContext.Robots
+                .Include(x => x.Model)
+                .Include(x => x.Model.Type)
+                .Include(x => x.Model.Company)
+                .AsQueryable();
+
+            return await query.FirstOrDefaultAsync(
+                t => t.Model.Name.Contains(interests) ||
+                     t.Model.Type.Name.Contains(interests) ||
+                     t.Model.Description.Contains(interests) ||
+                     t.Model.Type.Description.Contains(interests) ||
+                     t.Model.Company.Name.Contains(interests) ||
+                     interests.Contains(t.Model.Name) ||
+                     interests.Contains(t.Model.Type.Name) ||
+                     interests.Contains(t.Model.Description) ||
+                     interests.Contains(t.Model.Type.Description) ||
+                     interests.Contains(t.Model.Company.Name), ct);
+        }
+
+        private IOrderedQueryable<Robot> OrderRobotsQuery(IQueryable<Robot> query, RobotSortType sortType)
+        {
+            switch (sortType)
+            {
+                case RobotSortType.NameAscending:
+                    return query.OrderBy(t => t.Model.Name);
+
+                case RobotSortType.NameDescending:
+                    return query.OrderByDescending(t => t.Model.Name);
+
+                case RobotSortType.PriceAscending:
+                    return query.OrderBy(t => t.DailyCosts);
+
+                case RobotSortType.PriceDescending:
+                    return query.OrderByDescending(t => t.DailyCosts);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(sortType), sortType, null);
+            }
+        }
+
         private void FillFilterExpression(RobotFilterParams filterParams)
         {
             Expression<Func<Robot, bool>> predicate = PredicateBuilder.New<Robot>
@@ -165,9 +209,26 @@ namespace RLS.DAL.EF.Repositories.Robots
             if (!string.IsNullOrEmpty(filterParams.Term))
             {
                 predicate = predicate.And(
-                    t => t.Model.Name.Contains(filterParams.Term) || t.Model.Type.Name.Contains(filterParams.Term) ||
-                         t.Model.Description.Contains(filterParams.Term) || t.Model.Type.Description.Contains(filterParams.Term) ||
+                    t => t.Model.Name.Contains(filterParams.Term) ||
+                         t.Model.Type.Name.Contains(filterParams.Term) ||
+                         t.Model.Description.Contains(filterParams.Term) ||
+                         t.Model.Type.Description.Contains(filterParams.Term) ||
                          t.Model.Company.Name.Contains(filterParams.Term));
+            }
+
+            if (!string.IsNullOrEmpty(filterParams.UserInterests))
+            {
+                predicate = predicate.And(
+                    t => t.Model.Name.Contains(filterParams.UserInterests) ||
+                         t.Model.Type.Name.Contains(filterParams.UserInterests) ||
+                         t.Model.Description.Contains(filterParams.UserInterests) ||
+                         t.Model.Type.Description.Contains(filterParams.UserInterests) ||
+                         t.Model.Company.Name.Contains(filterParams.UserInterests) ||
+                         filterParams.UserInterests.Contains(t.Model.Name) ||
+                         filterParams.UserInterests.Contains(t.Model.Type.Name) ||
+                         filterParams.UserInterests.Contains(t.Model.Description) ||
+                         filterParams.UserInterests.Contains(t.Model.Type.Description) ||
+                         filterParams.UserInterests.Contains(t.Model.Company.Name));
             }
 
             if (filterParams.MinRating > 0 || filterParams.MaxRating < 5)
@@ -203,6 +264,11 @@ namespace RLS.DAL.EF.Repositories.Robots
             {
                 predicate = predicate.And(t =>
                     !t.Rentals.Any(r => filterParams.StartDate.Value <= r.EndDate && filterParams.EndDate.Value >= r.StartDate));
+            }
+
+            if (filterParams.OnlyFavorite)
+            {
+                predicate = predicate.And(t => t.UserFavorites.Any(f => f.UserId == filterParams.UserId));
             }
 
             filterParams.Expression = predicate;

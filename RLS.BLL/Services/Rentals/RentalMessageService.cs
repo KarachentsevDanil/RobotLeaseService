@@ -6,6 +6,9 @@ using RLS.DAL.UnitOfWork.Contracts;
 using RLS.Domain.Rentals;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.BLL.Configurations;
+using RLS.BLL.DTOs.Internal.Messages;
+using RLS.BLL.Services.Contracts.Internal;
 
 namespace RLS.BLL.Services.Rentals
 {
@@ -13,14 +16,22 @@ namespace RLS.BLL.Services.Rentals
     {
         private readonly IRentalUnitOfWork _unitOfWork;
 
+        private readonly IMessageSendService<EmailMessage> _emailSendService;
+
+        private readonly EmailSenderConfiguration _emailSenderConfiguration;
+
         private readonly IMapper _mapper;
 
         public RentalMessageService(
             IRentalUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            IMessageSendService<EmailMessage> emailSendService,
+            EmailSenderConfiguration emailSenderConfiguration)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _emailSendService = emailSendService;
+            _emailSenderConfiguration = emailSenderConfiguration;
         }
 
         public async Task<GetRentalMessageDto> CreateRentalMessageAsync(CreateRentalMessageDto item, CancellationToken ct = default)
@@ -34,6 +45,31 @@ namespace RLS.BLL.Services.Rentals
             await _unitOfWork.CommitAsync(ct);
 
             return _mapper.Map<GetRentalMessageDto>(newItem);
+        }
+
+        public async Task SendEmailAsync(CreateRentalMessageDto item, CancellationToken ct = default)
+        {
+            var rental = await _unitOfWork.RentalRepository.GetAsync(item.RentalId, ct);
+
+            string sendTo = rental.UserId == item.UserId ? rental.User.Email : rental.Robot.User.Email;
+
+            string sendFrom = rental.UserId != item.UserId ? rental.User.Email : rental.Robot.User.Email;
+
+            string messageToSend = string.Format(
+                _emailSenderConfiguration.NewMessageNotificationTemplate,
+                sendFrom,
+                $"{rental.Id} - {rental.Robot.Model.Company.Name} {rental.Robot.Model.Name}",
+                rental.Id,
+                item.Message);
+
+            EmailMessage message = new EmailMessage
+            {
+                Message = messageToSend,
+                Subject = _emailSenderConfiguration.NewMessageNotificationSubject,
+                SendToEmail = sendTo
+            };
+
+            await _emailSendService.SendMessageAsync(message, ct);
         }
 
         public async Task UpdateRentalMessagesAsync(UpdateRentalMessagesDto items, CancellationToken ct = default)

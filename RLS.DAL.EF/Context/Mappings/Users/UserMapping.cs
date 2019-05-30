@@ -9,11 +9,15 @@ namespace RLS.DAL.EF.Context.Mappings.Users
     {
         public void MapEntity(EntityTypeBuilder<User> builder)
         {
+            builder.Property(p => p.Id).HasMaxLength(50);
+
             builder.Property(p => p.Role).IsRequired();
 
-            builder.Property(p => p.FirstName).IsRequired();
+            builder.Property(p => p.FirstName).HasMaxLength(250).IsRequired();
 
-            builder.Property(p => p.LastName).IsRequired();
+            builder.Property(p => p.LastName).HasMaxLength(250).IsRequired();
+
+            builder.Property(p => p.Interests).HasMaxLength(500);
 
             builder.ToTable("Users", "user");
         }

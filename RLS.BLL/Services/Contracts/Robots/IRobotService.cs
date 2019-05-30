@@ -27,5 +27,11 @@ namespace RLS.BLL.Services.Contracts.Robots
 
         Task<CollectionResult<GetDashboardRobotDto>> GetDashboardRobotByFilterParamsAsync(
             RobotFilterParamsDto filterParams, CancellationToken ct = default);
+
+        Task SendNotificationByUserInterestsAsync(CancellationToken ct = default);
+
+        Task CreateFavoriteUserRobotAsync(string userId, int robotId, CancellationToken ct = default);
+
+        Task DeleteFavoriteUserRobotAsync(string userId, int robotId, CancellationToken ct = default);
     }
 }

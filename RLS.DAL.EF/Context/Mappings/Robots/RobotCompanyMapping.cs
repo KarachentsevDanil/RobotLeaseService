@@ -11,9 +11,11 @@ namespace RLS.DAL.EF.Context.Mappings.Robots
         {
             builder.HasKey(t => t.Id);
 
-            builder.Property(t => t.Id).ValueGeneratedOnAdd();
+            builder.Property(p => p.Name).HasMaxLength(250).IsRequired();
 
-            builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.Country).HasMaxLength(250).IsRequired();
+
+            builder.Property(p => p.Description).HasMaxLength(500);
 
             builder.ToTable("Companies", "robot");
         }

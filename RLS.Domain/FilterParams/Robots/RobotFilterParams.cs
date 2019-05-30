@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RLS.Domain.Enums;
 using RLS.Domain.Models;
 using RLS.Domain.Robots;
 
@@ -30,5 +31,11 @@ namespace RLS.Domain.FilterParams.Robots
         public double MinRating { get; set; }
 
         public double MaxRating { get; set; }
+
+        public RobotSortType SortBy { get; set; }
+
+        public string UserInterests { get; set; }
+
+        public bool OnlyFavorite { get; set; }
     }
 }

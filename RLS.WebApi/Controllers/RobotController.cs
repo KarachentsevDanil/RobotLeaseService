@@ -1,14 +1,17 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RLS.BLL.DTOs.FilterParams.Robots;
 using RLS.BLL.DTOs.Robots;
 using RLS.BLL.Services.Contracts.Robots;
+using RLS.BLL.Services.Contracts.Users;
 using RLS.Domain.Enums;
 using RLS.WebApi.Models;
+using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RLS.WebApi.Controllers
@@ -20,9 +23,19 @@ namespace RLS.WebApi.Controllers
     {
         private readonly IRobotService _robotService;
 
-        public RobotController(IRobotService robotService, IMapper mapper) : base(mapper)
+        private readonly IUserService _userService;
+
+        private readonly IBackgroundJobClient _client;
+
+        public RobotController(
+            IRobotService robotService,
+            IBackgroundJobClient client,
+            IUserService userService,
+            IMapper mapper) : base(mapper)
         {
             _robotService = robotService;
+            _userService = userService;
+            _client = client;
         }
 
         [HttpPost("list")]
@@ -35,7 +48,18 @@ namespace RLS.WebApi.Controllers
                 filterParams.UserId = ApiUser.Id;
             }
 
+            if (filterParams.IsUserInterestsSearch)
+            {
+                filterParams.UserInterests = ApiUser.Interests;
+            }
+
             var robots = await _robotService.GetRobotsByFilterParamsAsync(filterParams);
+
+            if (filterParams.IsUserInterestsSearch && !robots.Collection.Any())
+            {
+                _client.Enqueue(() => _userService.AddUserSearchResultAsync(ApiUser.Id, CancellationToken.None));
+            }
+
             return Json(JsonResultData.Success(robots));
         }
 
@@ -83,7 +107,30 @@ namespace RLS.WebApi.Controllers
             robot.UserId = ApiUser.Id;
 
             var result = await _robotService.CreateRobotAsync(robot);
+
+            _client.Enqueue(() => _robotService.SendNotificationByUserInterestsAsync(CancellationToken.None));
+
             return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success(result)));
+        }
+
+        [HttpPost("favorite/{id}")]
+        public async Task<ActionResult> CreateFavoriteUserRobotAsync(int robotId)
+        {
+            BuildUserPrincipal();
+
+            await _robotService.CreateFavoriteUserRobotAsync(ApiUser.Id, robotId);
+
+            return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success()));
+        }
+
+        [HttpDelete("favorite/{id}")]
+        public async Task<ActionResult> DeleteFavoriteUserRobotAsync(int robotId)
+        {
+            BuildUserPrincipal();
+
+            await _robotService.DeleteFavoriteUserRobotAsync(ApiUser.Id, robotId);
+
+            return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success()));
         }
 
         [HttpPut("{id}")]

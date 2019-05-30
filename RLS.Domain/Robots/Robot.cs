@@ -24,6 +24,8 @@ namespace RLS.Domain.Robots
 
         public ICollection<Rental> Rentals { get; set; }
 
+        public ICollection<FavoriteUserRobot> UserFavorites { get; set; }
+
         public Robot()
         {
             Rentals = new List<Rental>();

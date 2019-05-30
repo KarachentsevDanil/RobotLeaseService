@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,7 @@ using RLS.BLL.Configurations.MapperProfiles;
 using RLS.DAL.EF.Context;
 using RLS.WebApi.Configurations.MapperProfiles;
 using RLS.WebApi.Extensions;
+using System;
 
 namespace RLS.WebApi
 {
@@ -21,7 +24,6 @@ namespace RLS.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
@@ -29,8 +31,7 @@ namespace RLS.WebApi
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
-            })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver
@@ -45,6 +46,10 @@ namespace RLS.WebApi
 
             services.ConfigureDatabase<RentalDbContext>(dbConfig);
 
+            var emailConfig = services.AddEmailSenderConfiguration(Configuration);
+
+            services.AddEmailSenderService(emailConfig);
+
             services.RegisterRepositories();
 
             services.RegisterServices();
@@ -56,10 +61,31 @@ namespace RLS.WebApi
             });
 
             services.AddSingleton(c => config.CreateMapper());
+
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration["DatabaseConfiguration:HangfireConnectionString"],
+                    new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                }));
+
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env,
+            IServiceProvider serviceProvider,
+            IBackgroundJobClient backgroundJobClient)
         {
             app.InitializeMigration<RentalDbContext>();
 
@@ -72,6 +98,10 @@ namespace RLS.WebApi
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+            app.ScheduleJobs(serviceProvider, backgroundJobClient);
         }
     }
 }

@@ -10,6 +10,8 @@
 
         public string Password { get; set; }
 
+        public string Interests { get; set; }
+
         public string Phone { get; set; }
     }
 }

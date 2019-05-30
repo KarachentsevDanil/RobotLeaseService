@@ -45,7 +45,8 @@ namespace RLS.WebApi.Controllers
         [Route("login")]
         public async Task<JsonResultData> Login([FromBody] UserLoginModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager
+                .PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
@@ -78,6 +79,7 @@ namespace RLS.WebApi.Controllers
                     FirstName = data.FirstName,
                     LastName = data.LastName,
                     PhoneNumber = data.Phone,
+                    Interests = data.Interests,
                     Role = Role.User
                 };
 
@@ -98,6 +100,7 @@ namespace RLS.WebApi.Controllers
             {
                 new Claim(nameof(Domain.Users.User.Id), user.Id),
                 new Claim(nameof(Domain.Users.User.Email), user.Email),
+                new Claim(nameof(Domain.Users.User.Interests), user.Interests ?? string.Empty),
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString()),

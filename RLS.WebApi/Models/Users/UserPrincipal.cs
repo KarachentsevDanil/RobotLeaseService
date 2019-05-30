@@ -8,6 +8,8 @@ namespace RLS.WebApi.Models.Users
 
         public string Email { get; set; }
 
+        public string Interests { get; set; }
+
         public Role Role { get; set; }
     }
 }
