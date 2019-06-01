@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using RLS.Domain.Enums;
+﻿using RLS.Domain.Enums;
 using RLS.Domain.Models;
 using RLS.Domain.Robots;
+using System;
+using System.Collections.Generic;
 
 namespace RLS.Domain.FilterParams.Robots
 {
@@ -34,8 +34,8 @@ namespace RLS.Domain.FilterParams.Robots
 
         public RobotSortType SortBy { get; set; }
 
-        public string UserInterests { get; set; }
+        public RobotFilterType FilterType { get; set; }
 
-        public bool OnlyFavorite { get; set; }
+        public string UserInterests { get; set; }
     }
 }

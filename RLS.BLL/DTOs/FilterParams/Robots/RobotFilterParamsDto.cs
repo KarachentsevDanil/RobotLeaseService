@@ -30,11 +30,9 @@ namespace RLS.BLL.DTOs.FilterParams.Robots
 
         public double MaxRating { get; set; } = 5;
 
-        public bool IsUserInterestsSearch { get; set; }
+        public RobotFilterType FilterType { get; set; }
 
         public string UserInterests { get; set; }
-
-        public bool OnlyFavorite { get; set; }
 
         public RobotSortType SortBy { get; set; } = RobotSortType.NameAscending;
     }

@@ -20,17 +20,13 @@ namespace RLS.WebApi.Controllers
     {
         private readonly IRentalMessageService _rentalMessageService;
 
-        private readonly IEmailSender _emailSender;
-
         private readonly IBackgroundJobClient _backgroundJobClient;
 
         public RentalMessageController(
             IRentalMessageService rentalMessageService,
-            IEmailSender emailSender,
             IBackgroundJobClient backgroundJobClient,
             IMapper mapper) : base(mapper)
         {
-            _emailSender = emailSender;
             _rentalMessageService = rentalMessageService;
             _backgroundJobClient = backgroundJobClient;
         }

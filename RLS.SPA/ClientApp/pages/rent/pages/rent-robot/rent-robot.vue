@@ -39,6 +39,24 @@
               <div class="panel-body">
                 <div>
                   <div class="form-group">
+                    <label>Sorting By:</label>
+                    <select2
+                      style="width: 100%;"
+                      :configuration="sortingSelectConfiguration"
+                      :options="sortingTypes"
+                      v-model="selectedSortingType"
+                    ></select2>
+                  </div>
+                  <div class="form-group">
+                    <label>Show:</label>
+                    <select2
+                      style="width: 100%;"
+                      :configuration="filterConfiguration"
+                      :options="filterTypes"
+                      v-model="selectedFilterType"
+                    ></select2>
+                  </div>
+                  <div class="form-group">
                     <label v-localize="{i: 'rent.search'}"></label>
                     <input
                       v-localize="{i: 'common.search', attr: 'placeholder'}"
@@ -130,6 +148,70 @@
                 </div>
               </div>
             </div>
+            <div class="panel panel-white" v-if="recentlyOpened">
+              <div class="panel-heading">
+                <h6 class="panel-title">
+                  <i class="icon-android position-left"></i>Last Opened
+                  <a class="heading-elements-toggle">
+                    <i class="icon-more"></i>
+                  </a>
+                </h6>
+              </div>
+
+              <div class="panel-body no-padding robot-list">
+                <div
+                  class="valualble-robot"
+                  v-for="valuableRobot in recentlyOpened"
+                  :key="valuableRobot.Id"
+                >
+                  <div class="col-xs-12 robot-photo">
+                    <img
+                      v-if="valuableRobot.Icon"
+                      :src="valuableRobot.Icon"
+                      class="robot-image"
+                      alt
+                    >
+                    <img
+                      v-else
+                      src="../../../../assets/limitless/images/robot.png"
+                      class="robot-image"
+                      alt
+                    >
+                    <div class="info">
+                      <h6 class="media-heading text-semibold">
+                        <router-link
+                          :to="'/robot-details/'+valuableRobot.Id"
+                        >{{valuableRobot.CompanyName}} {{valuableRobot.ModelName}}</router-link>
+                      </h6>
+                      <ul class="list-inline list-inline-separate text-muted mb-10">
+                        <li>
+                          <span
+                            class="label border-left-primary label-striped"
+                          >{{valuableRobot.TypeName}}</span>
+                        </li>
+                        <p class="info-divider"></p>
+                        <li>
+                          <span
+                            class="label border-left-primary label-striped"
+                          >${{valuableRobot.DailyCosts}} per day.</span>
+                        </li>
+                        <p class="info-divider"></p>
+                        <star-rating
+                          :inline="true"
+                          :star-size="14"
+                          :read-only="true"
+                          :show-rating="false"
+                          :rating="valuableRobot.AverageRating"
+                          :round-start-rating="false"
+                        ></star-rating>
+                      </ul>
+                    </div>
+
+                    <hr class="details-hr">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -164,9 +246,18 @@
 
               <div class="media-body">
                 <h6 class="media-heading text-semibold">
-                  <router-link
-                    :to="'/robot-details/'+robot.Id"
-                  >{{robot.CompanyName}} {{robot.ModelName}}</router-link>
+                  <router-link :to="'/robot-details/'+robot.Id">
+                    <star-rating
+                      v-if="robot.IsFavorite"
+                      :inline="true"
+                      :star-size="14"
+                      :max-rating="1"
+                      :read-only="true"
+                      :show-rating="false"
+                      :rating="1"
+                    ></star-rating>
+                    {{robot.CompanyName}} {{robot.ModelName}}
+                  </router-link>
                 </h6>
 
                 <ul class="list-inline list-inline-separate text-muted mb-10">
@@ -199,10 +290,24 @@
 
                 <router-link
                   :to="'/robot-details/'+robot.Id"
-                  class="btn bg-teal-400 mt-15 legitRipple"
+                  class="width-btn-control btn bg-teal-400 mt-15 legitRipple"
                 >
                   <i class="icon-cart-add position-left"></i> Rent a Robot
                 </router-link>
+                <button
+                  @click="addRobotToFavorite(robot.Id)"
+                  v-if="!robot.IsFavorite"
+                  class="width-btn-control btn bg-pink-400 mt-15 legitRipple"
+                >
+                  <i class="icon-thumbs-up2 position-left"></i> Add to Favorite
+                </button>
+                <button
+                  @click="removeRobotFromFavorite(robot.Id)"
+                  v-if="robot.IsFavorite"
+                  class="width-btn-control btn bg-warning-400 mt-15 legitRipple"
+                >
+                  <i class="icon-thumbs-down position-left"></i> Remove from Favorite
+                </button>
               </div>
             </li>
           </ul>
@@ -253,7 +358,42 @@ export default {
       robots: [],
       types: [],
       companies: [],
+      sortingTypes: [
+        {
+          id: 0,
+          text: "Name A-Z"
+        },
+        {
+          id: 1,
+          text: "Name Z-A"
+        },
+        {
+          id: 2,
+          text: "Price Low to High"
+        },
+        {
+          id: 3,
+          text: "Price High To Low"
+        }
+      ],
+      filterTypes: [
+        {
+          id: 0,
+          text: "All"
+        },
+        {
+          id: 1,
+          text: "Only Favorites"
+        },
+        {
+          id: 2,
+          text: "Only Interested At"
+        }
+      ],
+      selectedSortingType: 0,
+      selectedFilterType: 0,
       models: [],
+      recentlyOpened: [],
       loadedModels: [],
       selectedTypes: [],
       selectedCompanies: [],
@@ -271,6 +411,24 @@ export default {
       term: "",
       startDate: "",
       endDate: "",
+      sortingSelectConfiguration: {
+        placeholder: "Select a sorting type...",
+        multiple: false,
+        templateResult: iconFormat,
+        templateSelection: iconFormat,
+        escapeMarkup: function(m) {
+          return m;
+        }
+      },
+      filterConfiguration: {
+        placeholder: "Select a filter type...",
+        multiple: false,
+        templateResult: iconFormat,
+        templateSelection: iconFormat,
+        escapeMarkup: function(m) {
+          return m;
+        }
+      },
       companySelectConfiguration: {
         placeholder: "Select a companies...",
         multiple: true,
@@ -378,7 +536,9 @@ export default {
         minPrice: this.priceRange[0],
         maxPrice: this.priceRange[1],
         minRating: this.ratingRange[0],
-        maxRating: this.ratingRange[1]
+        maxRating: this.ratingRange[1],
+        sortBy: this.selectedSortingType,
+        filterType: this.selectedFilterType
       };
       this.$store.dispatch(
         storeActionTypes.START_LOADING_ACTION,
@@ -390,6 +550,16 @@ export default {
       this.filters.pagination.total = data.TotalCount;
 
       this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
+    },
+    async addRobotToFavorite(robotId) {
+      await robotService.addRobotToFavorite(robotId);
+      await this.filterRobots();
+      this.$noty.success("Robot sucessfully added to favorite.");
+    },
+    async removeRobotFromFavorite(robotId) {
+      await robotService.removeRobotFromFavorite(robotId);
+      await this.filterRobots();
+      this.$noty.success("Robot sucessfully removed from favorite.");
     }
   },
   computed: {
@@ -443,6 +613,12 @@ export default {
 
     await this.getRobots();
 
+    let recentlyOpened = JSON.parse(localStorage.getItem("recentlyOpened"));
+
+    if (recentlyOpened && recentlyOpened.length) {
+      this.recentlyOpened = recentlyOpened;
+    }
+
     this.$store.dispatch(storeActionTypes.STOP_LOADING_ACTION);
   }
 };
@@ -450,10 +626,94 @@ export default {
 
 <style>
 .icon-robot-image {
-  width: 120px !important;
-  height: 110px !important;
+  width: 200px !important;
+  height: 200px !important;
 }
 label.range-lable-margin {
   margin-bottom: 30px;
+}
+.full-weigth-img {
+  width: 100%;
+}
+
+.width-btn-control {
+  width: 215px !important;
+}
+
+h5.title {
+  font-size: 28px;
+}
+hr.hr-details {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+h5.robot-cost {
+  font-size: 30px;
+}
+div.robot-image {
+  padding-top: 15px;
+}
+div.robot-image > div.panel {
+  padding: 10px;
+  background-color: white;
+}
+
+ul.nav.nav-tabs {
+  margin-bottom: 5px;
+}
+.tab-content > .tab-pane > .panel-body {
+  padding-top: 5px;
+}
+
+div.valualble-robot {
+  padding: 5px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+div.valualble-robot img {
+  width: 90px !important;
+  height: 90px !important;
+  vertical-align: unset !important;
+  padding-right: 5px;
+  margin-bottom: 5px;
+}
+div.valualble-robot .info {
+  display: inline-block;
+}
+div.robot-list {
+  padding-top: 5px !important;
+  padding-bottom: 10px !important;
+}
+div.robot-photo,
+div.robot-details {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+div.valualble-robot:hover div.robot-photo,
+div.valualble-robot:hover div.robot-details:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+hr.details-hr {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+div.valualble-robot .label.label-striped {
+  padding: 2px 8px !important;
+}
+
+p.info-divider {
+  margin: 0 0 4px;
+}
+
+#robot-details-tab .row .panel-heading {
+  background-color: whitesmoke;
+}
+
+div.info {
+  vertical-align: top;
 }
 </style>

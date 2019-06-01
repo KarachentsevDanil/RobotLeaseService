@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "../router";
 
-const baseApiUrl = "https://robot-api.azurewebsites.net";
+const baseApiUrl = "https://localhost:44306";
 
 axios.interceptors.response.use(
     response => {

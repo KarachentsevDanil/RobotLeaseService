@@ -28,6 +28,7 @@ namespace RLS.DAL.EF.Repositories.Robots
         public override async Task<Robot> GetAsync(int id, CancellationToken ct = default)
         {
             return await DbContext.Robots
+                .Include(x => x.UserFavorites)
                 .Include(x => x.User)
                 .Include(x => x.Model)
                 .Include(x => x.Model.Type)
@@ -40,6 +41,7 @@ namespace RLS.DAL.EF.Repositories.Robots
         public async Task<CollectionResult<Robot>> GetRobotByFilterParamsAsync(RobotFilterParams filterParams, CancellationToken ct = default)
         {
             IQueryable<Robot> query = DbContext.Robots
+                .Include(x => x.UserFavorites)
                 .Include(x => x.User)
                 .Include(x => x.Model)
                 .Include(x => x.Model.Type)
@@ -185,10 +187,10 @@ namespace RLS.DAL.EF.Repositories.Robots
             switch (sortType)
             {
                 case RobotSortType.NameAscending:
-                    return query.OrderBy(t => t.Model.Name);
+                    return query.OrderBy(t => t.Model.Company.Name).ThenBy(t => t.Model.Name);
 
                 case RobotSortType.NameDescending:
-                    return query.OrderByDescending(t => t.Model.Name);
+                    return query.OrderByDescending(t => t.Model.Company.Name).ThenByDescending(t => t.Model.Name);
 
                 case RobotSortType.PriceAscending:
                     return query.OrderBy(t => t.DailyCosts);
@@ -266,7 +268,7 @@ namespace RLS.DAL.EF.Repositories.Robots
                     !t.Rentals.Any(r => filterParams.StartDate.Value <= r.EndDate && filterParams.EndDate.Value >= r.StartDate));
             }
 
-            if (filterParams.OnlyFavorite)
+            if (filterParams.FilterType == RobotFilterType.OnlyFavorites)
             {
                 predicate = predicate.And(t => t.UserFavorites.Any(f => f.UserId == filterParams.UserId));
             }

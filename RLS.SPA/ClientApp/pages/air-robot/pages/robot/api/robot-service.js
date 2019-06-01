@@ -82,3 +82,19 @@ export const addRobot = data => {
 
     return httpService.postData(params);
 }
+
+export const addRobotToFavorite = robotId => {
+    let params = {
+        url: apirobot + `favorite/${robotId}`
+    }
+
+    return httpService.postData(params);
+}
+
+export const removeRobotFromFavorite = robotId => {
+    let params = {
+        url: apirobot + `favorite/${robotId}`
+    }
+
+    return httpService.deleteData(params);
+}

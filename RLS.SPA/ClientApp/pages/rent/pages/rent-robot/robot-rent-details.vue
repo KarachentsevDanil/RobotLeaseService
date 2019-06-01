@@ -185,7 +185,9 @@
                 <div class="col-md-6">
                   <div>
                     <div class="panel-heading">
-                      <h5 class="panel-title">Most Popular {{robot.CompanyName}} Models By Robot Count</h5>
+                      <h5
+                        class="panel-title"
+                      >Most Popular {{robot.CompanyName}} Models By Robot Count</h5>
                     </div>
                     <div class="panel-body">
                       <pie-chart
@@ -198,7 +200,9 @@
                 <div class="col-md-6">
                   <div>
                     <div class="panel-heading">
-                      <h5 class="panel-title">Most Popular {{robot.CompanyName}} Models By Rent Count</h5>
+                      <h5
+                        class="panel-title"
+                      >Most Popular {{robot.CompanyName}} Models By Rent Count</h5>
                     </div>
                     <div class="panel-body">
                       <pie-chart
@@ -213,7 +217,9 @@
                 <div class="col-md-12">
                   <div>
                     <div class="panel-heading">
-                      <h5 class="panel-title">Most Popular {{robot.CompanyName}} Models By Robot And Rent Count</h5>
+                      <h5
+                        class="panel-title"
+                      >Most Popular {{robot.CompanyName}} Models By Robot And Rent Count</h5>
                     </div>
                     <div class="panel-body">
                       <bar-chart :data="modelBarChartSettings.data"/>
@@ -344,6 +350,8 @@ export default {
       let robot = (await robotService.getAirrobotById(this.id)).data.Data;
       this.robot = robot;
 
+      this.addItemToLocalStorage(robot);
+
       let filterParams = {
         typeId: robot.TypeId,
         take: 5,
@@ -378,6 +386,25 @@ export default {
       this.modelBarChartSettings.data.robotRentsCount =
         barChartData.RobotRentsCount;
       this.modelBarChartSettings.data.robotsCount = barChartData.RobotsCount;
+    },
+    addItemToLocalStorage(robot) {
+      let robots = JSON.parse(localStorage.getItem("recentlyOpened"));
+
+      if (!robots) {
+        robots = [];
+        robots.push(robot);
+        localStorage.setItem("recentlyOpened", JSON.stringify(robots));
+        return;
+      }
+
+      robots = robots.filter(t => t.Id != robot.Id);
+
+      if (robots.length >= 5) {
+        robots.pop();
+      }
+
+      robots.unshift(robot);
+      localStorage.setItem("recentlyOpened", JSON.stringify(robots));
     },
     fillChartData(chartSettings, data, chartType) {
       chartSettings.data = data;

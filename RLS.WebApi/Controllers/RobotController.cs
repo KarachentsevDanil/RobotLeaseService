@@ -48,14 +48,14 @@ namespace RLS.WebApi.Controllers
                 filterParams.UserId = ApiUser.Id;
             }
 
-            if (filterParams.IsUserInterestsSearch)
+            if (filterParams.FilterType == RobotFilterType.OnlyInterestedAt)
             {
                 filterParams.UserInterests = ApiUser.Interests;
             }
 
             var robots = await _robotService.GetRobotsByFilterParamsAsync(filterParams);
 
-            if (filterParams.IsUserInterestsSearch && !robots.Collection.Any())
+            if (filterParams.FilterType == RobotFilterType.OnlyInterestedAt && !robots.Collection.Any())
             {
                 _client.Enqueue(() => _userService.AddUserSearchResultAsync(ApiUser.Id, CancellationToken.None));
             }
@@ -114,21 +114,21 @@ namespace RLS.WebApi.Controllers
         }
 
         [HttpPost("favorite/{id}")]
-        public async Task<ActionResult> CreateFavoriteUserRobotAsync(int robotId)
+        public async Task<ActionResult> CreateFavoriteUserRobotAsync(int id)
         {
             BuildUserPrincipal();
 
-            await _robotService.CreateFavoriteUserRobotAsync(ApiUser.Id, robotId);
+            await _robotService.CreateFavoriteUserRobotAsync(ApiUser.Id, id);
 
             return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success()));
         }
 
         [HttpDelete("favorite/{id}")]
-        public async Task<ActionResult> DeleteFavoriteUserRobotAsync(int robotId)
+        public async Task<ActionResult> DeleteFavoriteUserRobotAsync(int id)
         {
             BuildUserPrincipal();
 
-            await _robotService.DeleteFavoriteUserRobotAsync(ApiUser.Id, robotId);
+            await _robotService.DeleteFavoriteUserRobotAsync(ApiUser.Id, id);
 
             return StatusCode((int)HttpStatusCode.Created, Json(JsonResultData.Success()));
         }

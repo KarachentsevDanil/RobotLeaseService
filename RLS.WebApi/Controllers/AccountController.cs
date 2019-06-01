@@ -94,6 +94,21 @@ namespace RLS.WebApi.Controllers
             return JsonResultData.Error("ApiUser already exists.");
         }
 
+        [HttpPut]
+        public async Task<JsonResultData> UpdateUserAsync([FromBody] UpdateUserModel data)
+        {
+            var user = await _userManager.FindByIdAsync(data.Id);
+
+            user.FirstName = data.FirstName;
+            user.LastName = data.LastName;
+            user.Interests = data.Interests;
+            user.PhoneNumber = data.PhoneNumber;
+
+            await _userManager.UpdateAsync(user);
+
+            return JsonResultData.Success();
+        }
+
         private string GenerateToken(GetUserDto user)
         {
             var claims = new[]

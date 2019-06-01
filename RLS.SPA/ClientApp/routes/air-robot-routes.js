@@ -6,6 +6,7 @@ import CompanyDashboardPage from "../pages/dashboard/pages/company-dashboard";
 import ModelDashboardPage from "../pages/dashboard/pages/model-dashboard";
 import TypeDashboardPage from "../pages/dashboard/pages/type-dashboard";
 import CommonDashboardPage from "../pages/dashboard/pages/common-dashboard";
+import ProfilePage from "../pages/profile/profile";
 
 import * as routeGuards from "./route-guards";
 
@@ -62,6 +63,13 @@ export default [
     {
         path: "/dashboard",
         component: CommonDashboardPage,
+        beforeEnter: (to, from, next) => {
+            routeGuards.validateRoute(to, from, next);
+        }
+    },
+    {
+        path: "/profile",
+        component: ProfilePage,
         beforeEnter: (to, from, next) => {
             routeGuards.validateRoute(to, from, next);
         }

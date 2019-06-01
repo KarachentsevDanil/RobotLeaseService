@@ -23,6 +23,14 @@
         <div class="navigation-wrapper collapse" id="user-nav">
           <ul class="navigation">
             <li>
+              <router-link
+                  :to="'/profile'"
+                  class="legitRipple"
+                >
+                  User Profile
+                </router-link>
+            </li>
+            <li>
               <a class="legitRipple" v-on:click="logout">
                 <i class="icon-exit"></i>
                 <span>{{language.selectedLanguage == "US" ? "Logout" : "Вийти" }}</span>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RLS.Domain.Users;
 
 namespace RLS.BLL.DTOs.Robots
 {
@@ -38,6 +39,10 @@ namespace RLS.BLL.DTOs.Robots
 
         public int CountOfReviews { get; set; }
 
+        public bool IsFavorite { get; set; }
+
         public IEnumerable<GetShortRobotRentalDto> Rentals { get; set; }
+
+        public ICollection<string> UserFavorites { get; set; }
     }
 }

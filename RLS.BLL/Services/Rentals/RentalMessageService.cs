@@ -1,14 +1,14 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using RLS.BLL.Configurations;
+using RLS.BLL.DTOs.Internal.Messages;
 using RLS.BLL.DTOs.Rentals;
+using RLS.BLL.Services.Contracts.Internal;
 using RLS.BLL.Services.Contracts.Rentals;
 using RLS.DAL.UnitOfWork.Contracts;
 using RLS.Domain.Rentals;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using RLS.BLL.Configurations;
-using RLS.BLL.DTOs.Internal.Messages;
-using RLS.BLL.Services.Contracts.Internal;
 
 namespace RLS.BLL.Services.Rentals
 {
@@ -51,9 +51,21 @@ namespace RLS.BLL.Services.Rentals
         {
             var rental = await _unitOfWork.RentalRepository.GetAsync(item.RentalId, ct);
 
-            string sendTo = rental.UserId == item.UserId ? rental.User.Email : rental.Robot.User.Email;
+            string sendTo = string.Empty;
 
-            string sendFrom = rental.UserId != item.UserId ? rental.User.Email : rental.Robot.User.Email;
+            string sendFrom = string.Empty;
+
+            if (item.UserId == rental.UserId)
+            {
+                sendTo = rental.Robot.User.Email;
+                sendFrom = rental.User.Email;
+            }
+
+            if (item.UserId == rental.Robot.UserId)
+            {
+                sendFrom = rental.Robot.User.Email;
+                sendTo = rental.User.Email;
+            }
 
             string messageToSend = string.Format(
                 _emailSenderConfiguration.NewMessageNotificationTemplate,

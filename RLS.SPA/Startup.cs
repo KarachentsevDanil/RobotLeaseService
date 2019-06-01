@@ -25,7 +25,7 @@ namespace SAT.SPA
             services
               .AddMvc(options =>
               {
-                  options.Filters.Add(new RequireHttpsAttribute());
+                  //options.Filters.Add(new RequireHttpsAttribute());
               }).AddJsonOptions(options =>
               {
                   options.SerializerSettings.ContractResolver

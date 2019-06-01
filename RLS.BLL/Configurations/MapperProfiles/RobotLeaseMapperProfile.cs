@@ -16,6 +16,7 @@ using RLS.Domain.Rentals;
 using RLS.Domain.Robots;
 using RLS.Domain.Users;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using RLS.Domain.Enums;
 
@@ -107,9 +108,14 @@ namespace RLS.BLL.Configurations.MapperProfiles
                 .ForMember(x => x.CompanyName, t => t.MapFrom(p => p.Model.Company.Name))
                 .ForMember(x => x.TypeId, t => t.MapFrom(p => p.Model.TypeId))
                 .ForMember(x => x.TypeName, t => t.MapFrom(p => p.Model.Type.Name))
-                .ForMember(x => x.Description, t => t.MapFrom(p => p.Model.Description))
+                .ForMember(x => x.Description,
+                    t => t.MapFrom(p =>
+                        !string.IsNullOrEmpty(p.Model.Description) && p.Model.Description.Length > 450 ?
+                        p.Model.Description.Substring(0, 450) :
+                        p.Model.Description))
                 .ForMember(x => x.ModelId, t => t.MapFrom(p => p.ModelId))
                 .ForMember(x => x.ModelName, t => t.MapFrom(p => p.Model.Name))
+                .ForMember(x => x.UserFavorites, t => t.MapFrom(p => p.UserFavorites != null ? p.UserFavorites.Select(f => f.UserId) : new List<string>()))
                 .ForMember(x => x.AvarageRating, t => t.MapFrom(p =>
                     p.Rentals != null && p.Rentals.Any(r => r.RobotRating > 0)
                         ? p.Rentals.Where(r => r.RobotRating > 0).Average(x => x.RobotRating)

@@ -79,7 +79,14 @@ namespace RLS.BLL.Services.Robots
             var robotModels =
                 await _unitOfWork.RobotRepository.GetRobotByFilterParamsAsync(filterParams, ct);
 
-            return _mapper.Map<CollectionResult<GetRobotDto>>(robotModels);
+            var result = _mapper.Map<CollectionResult<GetRobotDto>>(robotModels);
+
+            foreach (var robot in result.Collection)
+            {
+                robot.IsFavorite = robot.UserFavorites.Any(t => t == filterParams.UserId);
+            }
+
+            return result;
         }
 
         public async Task<IEnumerable<GetValuableRobotModelDto>> GetMostValuableRobotByFilterParamsAsync(RobotMostValuableFilterParamsDto filterParamsDto,
