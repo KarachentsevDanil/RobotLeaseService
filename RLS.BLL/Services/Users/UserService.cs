@@ -38,6 +38,11 @@ namespace RLS.BLL.Services.Users
         {
             var item = await _unitOfWork.UserRepository.GetAsync(userId, ct);
 
+            if (string.IsNullOrWhiteSpace(item.Interests))
+            {
+                return;
+            }
+
             UserInterestsSearch newItem = new UserInterestsSearch
             {
                 CreatedAt = DateTime.Now,
