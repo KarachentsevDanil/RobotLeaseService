@@ -20,6 +20,6 @@ namespace RLS.DAL.Repositories.Contracts.Robots
 
         Task<DashboardStatisticModel> GetDashboardStatisticModelAsync(CancellationToken ct = default);
 
-        Task<Robot> GetRobotByUserInterestsAsync(string interests, CancellationToken ct = default);
+        Task<Robot> GetRobotByUserInterestsAsync(string userId, string interests, CancellationToken ct = default);
     }
 }

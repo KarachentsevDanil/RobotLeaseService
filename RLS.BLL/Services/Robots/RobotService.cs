@@ -127,7 +127,7 @@ namespace RLS.BLL.Services.Robots
             foreach (var item in userInterestsSearches)
             {
                 Robot robot =
-                    await _unitOfWork.RobotRepository.GetRobotByUserInterestsAsync(item.Interests, ct);
+                    await _unitOfWork.RobotRepository.GetRobotByUserInterestsAsync(item.UserId, item.Interests, ct);
 
                 if (robot != null)
                 {

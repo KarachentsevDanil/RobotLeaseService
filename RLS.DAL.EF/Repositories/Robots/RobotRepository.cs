@@ -161,9 +161,10 @@ namespace RLS.DAL.EF.Repositories.Robots
             return result;
         }
 
-        public async Task<Robot> GetRobotByUserInterestsAsync(string interests, CancellationToken ct = default)
+        public async Task<Robot> GetRobotByUserInterestsAsync(
+            string userId, string interests, CancellationToken ct = default)
         {
-            IQueryable<Robot> query = DbContext.Robots
+            IQueryable<Robot> query = DbContext.Robots.Where(t => t.UserId != userId)
                 .Include(x => x.Model)
                 .Include(x => x.Model.Type)
                 .Include(x => x.Model.Company)

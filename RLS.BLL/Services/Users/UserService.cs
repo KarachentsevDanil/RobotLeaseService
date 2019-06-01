@@ -45,6 +45,7 @@ namespace RLS.BLL.Services.Users
 
             UserInterestsSearch newItem = new UserInterestsSearch
             {
+                UserId = item.Id,
                 CreatedAt = DateTime.Now,
                 Interests = item.Interests
             };
