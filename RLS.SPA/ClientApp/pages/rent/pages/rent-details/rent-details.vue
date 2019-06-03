@@ -110,12 +110,14 @@
                     </div>
                     <div class="col-xs-3 robot-image">
                       <div class="panel panel-body panel-body-accent">
-                        <img v-if="rent.Robot.Photo"
+                        <img
+                          v-if="rent.Robot.Photo"
                           class="full-weigth-img"
                           :src="rent.Robot.Photo"
                           alt
                         >
-                        <img v-else
+                        <img
+                          v-else
                           class="full-weigth-img"
                           src="https://madrobots.ru/upload/resize_cache_imm/iblock/451/600_480_0/451d3e7d95f9d6d5cda141a501afa401.jpg"
                           alt
@@ -337,6 +339,18 @@ export default {
   async beforeMount() {
     let rent = (await rentService.getRentById(this.id)).data.Data;
     this.rent = rent;
+
+    if (this.rent.Status == "Created") {
+      let endDate = new Date(this.rent.EndDate);
+
+      let hourDiff = Math.round((endDate - new Date()) / 1000 / 60 / 60);
+
+      if (hourDiff <= 24) {
+        this.$noty.success(
+          `Your rent will complete in ${hourDiff} hour(s), please return robot on time`
+        );
+      }
+    }
 
     if (this.getUser.Id == this.rent.Owner.Id) {
       this.feedback.feedback = this.rent.OwnerFeedback;

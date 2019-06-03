@@ -98,13 +98,16 @@
           <i class="icon-user-lock text-muted"></i>
         </div>
       </div>
-      <div class="form-group has-feedback has-feedback-left">
-        <textarea
-          class="form-control"
-          v-model="user.description"
-          placeholder="Interests:"
-          rows="5"
-        ></textarea>
+      <div class="form-group">
+        <textarea class="form-control" v-model="user.description" placeholder="Interests:" rows="5"></textarea>
+      </div>
+      <div class="form-group">
+        <input v-model="user.accept" type="checkbox" style="vertical-align: sub;"> Accept
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://robotblob.blob.core.windows.net/robot-html-pages/TermsAndConditions.html"
+        >Terms &amp; Conditions</a>
       </div>
       <div class="form-group">
         <button
@@ -157,7 +160,8 @@ export default {
       firstName: "",
       lastName: "",
       description: "",
-      phone: ""
+      phone: "",
+      accept: false
     },
     labels: {
       ...authTextResources.lables
@@ -198,7 +202,15 @@ export default {
   },
   computed: {
     isInvaild() {
-      return this.$v.$invalid;
+      if (this.$v.$invalid) {
+        return true;
+      }
+
+      if (!this.user.accept) {
+        return true;
+      }
+
+      return false;
     },
     passwordErrors() {
       const errors = [];
