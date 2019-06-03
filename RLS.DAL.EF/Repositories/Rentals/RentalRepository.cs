@@ -12,6 +12,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using RLS.Domain.Enums;
 
 namespace RLS.DAL.EF.Repositories.Rentals
 {
@@ -52,6 +53,18 @@ namespace RLS.DAL.EF.Repositories.Rentals
             };
 
             return result;
+        }
+
+        public async Task<IEnumerable<Rental>> GetUncompletedRentalsAsync(CancellationToken ct = default)
+        {
+            return await DbContext.Rentals
+                .Where(t=> t.Status == RentalStatus.Created)
+                .Include(x => x.User)
+                .Include(x => x.Robot)
+                .ThenInclude(x => x.User)
+                .Include(x => x.Robot.Model)
+                .Include(x => x.Robot.Model.Company)
+                .ToListAsync(ct);
         }
 
         public override async Task<Rental> GetAsync(int id, CancellationToken ct = default)

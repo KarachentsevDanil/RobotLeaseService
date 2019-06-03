@@ -28,7 +28,6 @@
       <div class="panel panel-flat">
         <div class="panel-heading">
           <h5 class="panel-title">
-            Popular Robots
             <a class="heading-elements-toggle">
               <i class="icon-more"></i>
             </a>

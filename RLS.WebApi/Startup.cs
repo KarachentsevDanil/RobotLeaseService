@@ -71,7 +71,7 @@ namespace RLS.WebApi
                 {
                     CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
                     SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
+                    QueuePollInterval = TimeSpan.FromSeconds(30),
                     UseRecommendedIsolationLevel = true,
                     UsePageLocksOnDequeue = true,
                     DisableGlobalLocks = true
@@ -99,7 +99,8 @@ namespace RLS.WebApi
             app.UseHttpsRedirection();
             app.UseMvc();
 
-            app.UseHangfireDashboard();
+            app.UseHangfireDashboard($"/jobs/{Configuration["HangfireSettings:SecurityKey"]}");
+
             app.UseHangfireServer();
             app.ScheduleJobs(serviceProvider, backgroundJobClient);
         }

@@ -1,6 +1,9 @@
 ﻿using Hangfire;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using RLS.BLL.Services.Contracts.Rentals;
 using System;
+using System.Threading;
 
 namespace RLS.WebApi.Extensions
 {
@@ -11,7 +14,12 @@ namespace RLS.WebApi.Extensions
             IServiceProvider serviceProvider,
             IBackgroundJobClient backgroundJobClient)
         {
-            //backgroundJobClient.Schedule(() => );
+            var rentalService = serviceProvider.GetService<IRentalService>();
+
+            backgroundJobClient.Schedule(
+                () => rentalService.SendRentalNotificationAsync(CancellationToken.None),
+                TimeSpan.FromHours(12));
+
             return app;
         }
     }
